@@ -17,4 +17,12 @@
         <item name="android:paddingVertical">15dp</item>
         <item name="android:elevation">2dp</item>
     </style>
+
+
+    <style name="Widget.Material3.Button.ElevatedButton.btn_orange_false"
+        parent="buttonStyle_lato_bold_orange_false">
+        <item name="android:transformPivotX">20dp</item>
+        <item name="android:translationZ">5dp</item>
+        <item name="android:elevation">2dp</item>
+    </style>
 </resources>
