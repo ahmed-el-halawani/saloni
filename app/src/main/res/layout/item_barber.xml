@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="5dp"
+    app:cardCornerRadius="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="5dp"
+        android:orientation="vertical">
+        <com.makeramen.roundedimageview.RoundedImageView
+            android:layout_width="match_parent"
+            app:riv_corner_radius="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/instagram"
+            android:layout_height="100dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Alex Carball"
+            android:layout_marginTop="5dp"/>
+    </LinearLayout>
+
+
+
+</androidx.cardview.widget.CardView >

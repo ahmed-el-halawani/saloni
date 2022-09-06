@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget.Material3.Button.ElevatedButton.btn_orange"
+        parent="buttonStyle_lato_bold_orange">
+        <item name="android:transformPivotX">20dp</item>
+        <item name="android:translationZ">5dp</item>
+        <item name="android:paddingVertical">13dp</item>
+        <item name="android:elevation">2dp</item>
+
+    </style>
+
+    <style name="Widget.Material3.Button.ElevatedButton.btn_white"
+        parent="buttonStyle_lato_bold_white">
+        <item name="android:transformPivotX">20dp</item>
+        <item name="android:translationZ">5dp</item>
+        <item name="android:paddingVertical">15dp</item>
+        <item name="android:elevation">2dp</item>
+    </style>
+</resources>
