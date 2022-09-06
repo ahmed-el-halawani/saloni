@@ -13,17 +13,23 @@
             android:id="@+id/action_splashFragment_to_signInFragment"
             app:destination="@id/signInFragment" />
         <action
-            android:id="@+id/action_splashFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
+            android:id="@+id/action_splashFragment_to_signInFragment2"
+            app:destination="@id/signInFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.demo.saloni.ui.auth.signin.SignInFragment"
         android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_in" />
+        tools:layout="@layout/fragment_sign_in" >
+        <argument
+            android:name="isSalon"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
     <fragment
         android:id="@+id/signUpFragment"
         android:name="com.demo.saloni.ui.auth.signup.SignUpFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up"/>
+        android:label="SignUpFragment" />
 </navigation>

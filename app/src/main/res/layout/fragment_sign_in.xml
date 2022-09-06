@@ -34,7 +34,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_design"
             android:hint="Email/Mobile number"
-            android:inputType="textEmailAddress"
+            android:inputType="textEmailAddress|phone"
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp" />
 
@@ -46,10 +46,12 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/edit_text_design"
             android:hint="Password"
+            android:inputType="textPassword"
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp" />
 
         <Button
+            android:id="@+id/btnLogin"
             style="@style/Widget.Material3.Button.ElevatedButton.btn_orange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,6 +60,7 @@
 
 
         <Button
+            android:id="@+id/btnSignUp"
             style="@style/Widget.Material3.Button.ElevatedButton.btn_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

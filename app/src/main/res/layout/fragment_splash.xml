@@ -27,12 +27,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
+            android:id="@+id/btnLoginAsUser"
             style="@style/Widget.Material3.Button.ElevatedButton.btn_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login as a user" />
 
         <Button
+            android:id="@+id/btnLoginAsSalon"
             style="@style/Widget.Material3.Button.ElevatedButton.btn_orange"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
