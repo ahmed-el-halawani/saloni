@@ -40,6 +40,8 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
             app:cardBackgroundColor="#22FFFFFF"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp"
@@ -70,6 +72,8 @@
             android:id="@+id/cardView4"
             android:layout_width="45dp"
             android:layout_height="45dp"
+            android:clickable="true"
+            android:foreground="?selectableItemBackground"
             app:cardBackgroundColor="#22FFFFFF"
             app:cardCornerRadius="4dp"
             app:cardElevation="0dp"
@@ -87,9 +91,11 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginTop="140dp"
             android:scrollbars="none"
+            android:clipToPadding="false"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -97,7 +103,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp">
+                android:paddingBottom="10dp">
 
                 <TextView
                     android:id="@+id/textView2"
@@ -148,34 +154,28 @@
 
                     <EditText
                         android:id="@+id/etUserName"
+                        style="@style/edit_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/edit_text_design"
-                        android:hint="User name"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="16dp" />
+                        android:hint="User name" />
 
                     <EditText
                         android:id="@+id/etMobileNumber"
+                        style="@style/edit_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/edit_text_design"
                         android:hint="Mobile number"
-                        android:inputType="phone"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="16dp" />
+                        android:inputType="phone" />
 
                     <EditText
                         android:id="@+id/etCivilId"
+                        style="@style/edit_text_style"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:background="@drawable/edit_text_design"
-                        android:hint="Civil ID"
-                        android:paddingHorizontal="10dp"
-                        android:paddingVertical="16dp" />
+                        android:hint="Civil ID" />
                 </LinearLayout>
 
                 <View
@@ -240,7 +240,6 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="end"
-                            android:padding="10dp"
 
                             />
                     </LinearLayout>
@@ -265,14 +264,17 @@
                 </LinearLayout>
 
 
-                <Button
+                <TextView
                     android:id="@+id/btnAddServices"
-                    style="@style/Widget.Material3.Button.ElevatedButton.btn_orange_false"
+                    style="@style/button_style_orange"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:drawableEnd="@drawable/ic_add"
+                    android:drawablePadding="5dp"
+                    android:padding="10dp"
                     android:text="Add "
+                    android:textColor="@color/white"
+                    app:drawableEndCompat="@drawable/ic_add"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/linear_service" />
 
@@ -286,10 +288,12 @@
                     tools:layout_editor_absoluteX="10dp" />
 
                 <LinearLayout
+                    android:id="@+id/linearLayout9"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:layout_marginTop="5dp"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/view4">
 
@@ -303,15 +307,322 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato_bold"
                         android:layout_marginStart="2dp"
-                        android:textColor="@color/splash_color"
+                        android:fontFamily="@font/lato_bold"
                         android:text="(Select days than set daily time)"
+                        android:textColor="@color/splash_color"
                         android:textSize="14dp" />
                 </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/lin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
+
+                    <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
+                        android:id="@+id/tags"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:alignItems="flex_start"
+                        app:flexWrap="wrap"
+                        app:toggle_horizontalSpacing="5dp"
+                        app:toggle_selectableAmount="7">
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag1"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="2dp"
+                            android:gravity="center"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Sat"
+                           />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag2"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="2dp"
+                            android:gravity="center"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Sun"
+                         />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag3"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+
+                            android:layout_margin="2dp"
+                            android:gravity="center"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+
+                            app:toggle_text="Mon"
+                          />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag4"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="2dp"
+
+                            android:gravity="center"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+
+                            app:toggle_text="Tue"
+                           />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag5"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="2dp"
+                            android:gravity="center"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Wed"
+
+                          />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag6"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="2dp"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Thu"
+                           />
+
+                        <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
+                            android:id="@+id/tag7"
+                            android:layout_width="60dp"
+                            android:layout_height="50dp"
+                            android:layout_margin="2dp"
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Fri"
+                           />
+
+                    </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/lin4"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toBottomOf="@+id/lin">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="7.5"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/view">
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@drawable/edit_text_design_date"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:padding="5dp"
+                            android:text="12"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight=".5"
+                            android:fontFamily="@font/lato_bold"
+                            android:gravity="center"
+                            android:text=":"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@drawable/edit_text_design_date"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:padding="5dp"
+                            android:text="12"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/edit_text_design_date"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:padding="5dp"
+
+                            android:text="PM"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/date_design_pm"
+                            android:orientation="vertical"
+                            android:weightSum="3">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?selectableItemBackground"
+                                android:padding="13dp"
+
+                                android:src="@drawable/ic_up"
+                                tools:ignore="NestedWeights" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:background="#60FFFFFF" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?selectableItemBackground"
+                                android:padding="13dp"
+                                android:src="@drawable/ic_down" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="7.5"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/view">
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@drawable/edit_text_design_date"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:padding="5dp"
+                            android:text="12"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginHorizontal="5dp"
+                            android:layout_weight=".5"
+                            android:fontFamily="@font/lato_bold"
+                            android:gravity="center"
+                            android:text=":"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30dp"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2"
+                            android:background="@drawable/edit_text_design_date"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:padding="5dp"
+                            android:text="12"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30sp" />
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/edit_text_design_date"
+                            android:gravity="center"
+                            android:maxLength="2"
+                            android:padding="5dp"
+
+                            android:text="PM"
+                            android:textColor="@color/splash_color"
+                            android:textSize="30sp" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/date_design_pm"
+                            android:orientation="vertical"
+                            android:weightSum="3">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?selectableItemBackground"
+                                android:padding="13dp"
+                                android:src="@drawable/ic_up"
+                                tools:ignore="NestedWeights" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:background="#60FFFFFF" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:foreground="?selectableItemBackground"
+                                android:padding="13dp"
+                                android:src="@drawable/ic_down" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/button_style_blue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:padding="18dp"
+                    android:text="Save"
+                    android:textColor="@color/white"
+                    app:layout_constraintTop_toBottomOf="@+id/lin4" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </ScrollView>
 

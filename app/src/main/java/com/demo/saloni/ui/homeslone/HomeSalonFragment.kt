@@ -1,4 +1,4 @@
-package com.demo.saloni.ui.home
+package com.demo.saloni.ui.homeslone
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

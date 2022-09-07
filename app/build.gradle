@@ -48,8 +48,11 @@ dependencies {
 
     implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+//
+//    implementation 'com.github.ahmedgomaa97:AGCore:1.0.0'
+//    implementation 'com.github.ahmedgomaa97:EasyRecyclerGenerator:2.0.6'
 
-    implementation 'com.github.ahmedgomaa97:AGCore:1.0.0'
-    implementation 'com.github.ahmedgomaa97:EasyRecyclerGenerator:2.0.6'
+    implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
+
 
 }
