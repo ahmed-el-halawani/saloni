@@ -27,9 +27,6 @@
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_homeSalonFragment"
-            app:destination="@id/homeSalonFragment" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -41,8 +38,5 @@
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <fragment
-        android:id="@+id/homeSalonFragment"
-        android:name="com.demo.saloni.ui.home.HomeSalonFragment"
-        android:label="HomeSalonFragment" />
+
 </navigation>

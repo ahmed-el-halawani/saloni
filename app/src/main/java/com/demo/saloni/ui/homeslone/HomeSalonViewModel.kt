@@ -1,4 +1,4 @@
-package com.demo.saloni.ui.home
+package com.demo.saloni.ui.homeslone
 
 import androidx.lifecycle.ViewModel
 

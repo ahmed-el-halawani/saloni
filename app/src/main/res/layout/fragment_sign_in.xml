@@ -50,24 +50,34 @@
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp" />
 
-        <Button
+
+        <TextView
             android:id="@+id/btnLogin"
-            style="@style/Widget.Material3.Button.ElevatedButton.btn_orange"
+            style="@style/button_style_orange"
+            android:textColor="@color/white"
             android:layout_width="match_parent"
+            android:paddingVertical="18dp"
             android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:text="Login " />
+            android:textAllCaps="true"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="Login" />
 
 
-        <Button
+
+        <TextView
             android:id="@+id/btnSignUp"
-            style="@style/Widget.Material3.Button.ElevatedButton.btn_white"
+
+            style="@style/button_style_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
             android:layout_marginTop="5dp"
+            android:textAllCaps="true"
+            android:gravity="center"
             android:text="Sign up"
-            android:textColor="#454E7E" />
+            android:textSize="18sp"
+            android:textColor="@color/splash_color" />
     </LinearLayout>
 
 

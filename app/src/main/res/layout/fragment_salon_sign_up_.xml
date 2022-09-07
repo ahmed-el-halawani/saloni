@@ -116,74 +116,46 @@
                 android:layout_marginVertical="20dp"
                 android:background="@color/light_gray_color" />
 
-            <LinearLayout
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/edit_text_design"
-                android:orientation="horizontal"
+                android:drawableStart="@drawable/facebook"
+                android:drawablePadding="5dp"
+                android:hint="Facebook link"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="16dp">
+                android:paddingVertical="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/facebook" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:hint="Facebook link"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_design"
-                android:orientation="horizontal"
+                android:drawableStart="@drawable/instagram"
+                android:drawablePadding="5dp"
+                android:hint="Instagram"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="16dp">
+                android:paddingVertical="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/twitter" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:hint="Twitter link"
-                    android:textSize="18sp" />
-            </LinearLayout>
-
-            <LinearLayout
+            <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="5dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edit_text_design"
-                android:orientation="horizontal"
-
+                android:drawableStart="@drawable/twitter"
+                android:drawablePadding="5dp"
+                android:hint="Twitter"
                 android:paddingHorizontal="10dp"
-                android:paddingVertical="16dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/instagram" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="10dp"
-                    android:hint="Instagram link"
-                    android:textSize="18sp" />
-            </LinearLayout>
+                android:paddingVertical="14dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
                 android:id="@+id/btnSignUp"
