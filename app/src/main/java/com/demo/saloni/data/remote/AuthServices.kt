@@ -12,11 +12,17 @@ import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 import java.util.function.Consumer
+import kotlin.coroutines.suspendCoroutine
 
 class AuthServices {
 
@@ -26,8 +32,8 @@ class AuthServices {
         onSuccess: Consumer<ClientProfile>,
         onFailure: Consumer<String>,
     ) {
-        Firebase.database.reference.child("users").get().addOnSuccessListener { data ->
-            val u = data.children.map { it.getValue(User::class.java) }.firstOrNull {
+        Firebase.database.reference.child(client_profiles).get().addOnSuccessListener { data ->
+            val u = data.children.map { it.getValue(ClientProfile::class.java) }.firstOrNull {
                 it?.email?.uppercase() == emailOrPhone.uppercase() ||
                         it?.phoneNumber?.uppercase() == emailOrPhone.uppercase()
             }
@@ -36,7 +42,10 @@ class AuthServices {
                 onFailure.accept("user not found")
             } else {
                 Firebase.auth.signInWithEmailAndPassword(u.email, password).addOnSuccessListener {
-                    Firebase.database.reference.child("clients_profiles").child(u.email).get()
+                    if(it.user==null)
+                        onFailure.accept("user not found")
+
+                    Firebase.database.reference.child(client_profiles).child(it.user!!.uid).get()
                         .addOnSuccessListener {
                             val profile = it.getValue(ClientProfile::class.java)
                             if (profile == null)
@@ -44,6 +53,7 @@ class AuthServices {
                             else
                                 onSuccess.accept(profile)
                         }
+
                 }
             }
 
@@ -58,8 +68,8 @@ class AuthServices {
         onSuccess: Consumer<SalonProfile>,
         onFailure: Consumer<String>,
     ) {
-        Firebase.database.reference.child("users").get().addOnSuccessListener { data ->
-            val u = data.children.map { it.getValue(User::class.java) }.firstOrNull {
+        Firebase.database.reference.child(salons_profiles).get().addOnSuccessListener { data ->
+            val u = data.children.map { it.getValue(SalonProfile::class.java) }.firstOrNull {
                 it?.email?.uppercase() == emailOrPhone.uppercase() ||
                         it?.phoneNumber?.uppercase() == emailOrPhone.uppercase()
             }
@@ -68,7 +78,10 @@ class AuthServices {
                 onFailure.accept("user not found")
             } else {
                 Firebase.auth.signInWithEmailAndPassword(u.email, password).addOnSuccessListener {
-                    Firebase.database.reference.child(salons_profiles).child(u.email).get()
+                    if(it.user==null)
+                        onFailure.accept("user not found")
+
+                    Firebase.database.reference.child(salons_profiles).child(it.user!!.uid).get()
                         .addOnSuccessListener {
                             val profile = it.getValue(SalonProfile::class.java)
                             if (profile == null)
@@ -85,7 +98,7 @@ class AuthServices {
     }
 
 
-    fun signUpClient(
+    suspend fun signUpClient(
         image: Uri?,
         name: String,
         civilId: String,
@@ -93,105 +106,67 @@ class AuthServices {
         phoneNumber: String,
         email: String,
         password: String,
-        onSuccess: Consumer<ClientProfile>,
-        onFailure: Consumer<String>,
+    ): ClientProfile {
+        var downloadUri: String? = null;
+        if (image != null) {
 
-        ) {
+            val mountainImagesRef =
+                Firebase.storage.reference.child("clientProfileImages/${image.lastPathSegment}")
+            mountainImagesRef.putFile(image).await()
+            downloadUri ="clientProfileImages/${image.lastPathSegment}"
+        }
 
-        if(image == null)
-        {
-            val clientProfile = ClientProfile(
-                image,name, civilId, dataOfBirth, phoneNumber, email
-            );
-            Firebase.database.reference.child(client_profiles).child(email)
-                .setValue(clientProfile)
-                .addOnSuccessListener { onSuccess.accept(clientProfile) }
-                .addOnFailureListener {
-                    onFailure.accept(
-                        it.message ?: it.localizedMessage
-                    )
-                }
-            return ;
-        }
-        val mountainImagesRef =
-            FirebaseHelpers.storageRef.child("clientProfileImages/${image.lastPathSegment}")
-        mountainImagesRef.putFile(image).addOnCompleteListener { imageTask ->
-            Firebase.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                mountainImagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                    val clientProfile = ClientProfile(
-                        downloadUri.path ?: "",
-                        name, civilId, dataOfBirth, phoneNumber, email
-                    );
-                    Firebase.database.reference.child(client_profiles).child(email)
-                        .setValue(clientProfile)
-                        .addOnSuccessListener { onSuccess.accept(clientProfile) }
-                        .addOnFailureListener {
-                            onFailure.accept(
-                                it.message ?: it.localizedMessage
-                            )
-                        }
-                }
-            }.addOnFailureListener {
-                onFailure.accept(it.message ?: it.localizedMessage)
-            }
-        }.addOnFailureListener {
-            onFailure.accept(it.message ?: it.localizedMessage)
-        }
+        val firebaseAuth = Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        val clientProfile = ClientProfile(
+            downloadUri, name, civilId, dataOfBirth, phoneNumber, email
+        )
+
+        if(firebaseAuth.user==null)
+            throw Exception("user not found")
+
+        Firebase.database.reference.child(client_profiles).child(firebaseAuth.user!!.uid).setValue(clientProfile)
+            .await()
+
+        Firebase.auth.signOut()
+        return clientProfile;
+
     }
 
 
-    fun signUpSalon(
+    suspend fun signUpSalon(
         image: Uri?,
         name: String,
         phoneNumber: String,
         email: String,
+        password: String,
         facebook: String,
         instagram: String,
-        twitter: String,
-        password: String,
-        onSuccess: Consumer<SalonProfile>,
-        onFailure: Consumer<String>,
+        twitter: String
+    ): SalonProfile {
+                var downloadUri: String? = null;
+        try {
+            if (image != null) {
+                val mountainImagesRef =
+                    Firebase.storage.reference.child("salonProfileImages/${image.lastPathSegment}")
+                mountainImagesRef.putFile(image).await()
 
-        ) {
-        if (image == null) {
-            val salonProfile = SalonProfile(
-                image, name, phoneNumber, email, facebook, instagram, twitter
-            );
-            Firebase.database.reference.child(salons_profiles).child(email)
-                .setValue(salonProfile)
-                .addOnSuccessListener { onSuccess.accept(salonProfile) }
-                .addOnFailureListener {
-                    onFailure.accept(
-                        it.message ?: it.localizedMessage
-                    )
-                }
-            return;
-        }
-
-        val mountainImagesRef =
-            FirebaseHelpers.storageRef.child("salonProfileImages/${image.lastPathSegment}")
-        mountainImagesRef.putFile(image).addOnCompleteListener { imageTask ->
-            Firebase.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener {
-                mountainImagesRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                    val salonProfile = SalonProfile(
-                        downloadUri.path ?: "",
-                        name, phoneNumber, email, facebook, instagram, twitter
-                    );
-                    Firebase.database.reference.child(salons_profiles).child(email)
-                        .setValue(salonProfile)
-                        .addOnSuccessListener { onSuccess.accept(salonProfile) }
-                        .addOnFailureListener {
-                            onFailure.accept(
-                                it.message ?: it.localizedMessage
-                            )
-                        }
-                }
-            }.addOnFailureListener {
-                onFailure.accept(it.message ?: it.localizedMessage)
+                downloadUri = "salonProfileImages/${image.lastPathSegment}"
             }
-        }.addOnFailureListener {
-            onFailure.accept(it.message ?: it.localizedMessage)
+        } catch (e: Exception) {
         }
+
+        val firebaseAuth = Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+
+        val salonProfile =
+            SalonProfile(downloadUri, name, phoneNumber, email, facebook, instagram, twitter)
+
+        if (firebaseAuth.user == null)
+            throw Exception("user not found")
+        else
+            Firebase.database.reference.child(salons_profiles).child(firebaseAuth.user!!.uid).setValue(salonProfile).await()
+
+        Firebase.auth.signOut()
+        return salonProfile;
     }
 
 

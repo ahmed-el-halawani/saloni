@@ -34,7 +34,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/edit_text_design"
             android:hint="Email/Mobile number"
-            android:inputType="textEmailAddress|phone"
+            android:inputType="textEmailAddress"
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp" />
 

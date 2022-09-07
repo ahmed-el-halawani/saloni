@@ -1,16 +1,21 @@
 package com.demo.saloni.ui.auth.signin
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.afollestad.vvalidator.form
 import com.demo.saloni.data.remote.AuthServices
 import com.demo.saloni.databinding.FragmentSignInBinding
+import com.demo.saloni.ui.BaseFragment
 
-class SignInFragment : Fragment() {
+private const val TAG = "SignInFragment"
+class SignInFragment : BaseFragment() {
 
     private lateinit var binding: FragmentSignInBinding
 
@@ -28,33 +33,50 @@ class SignInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnLogin.setOnClickListener {
-            val email = binding.etEmail.text
-            val password = binding.etPassword.text
-            if (email.isNullOrBlank()) {
-                binding.etEmail.error = "email must not be empty"
-            } else if (password.isNullOrBlank())
-                binding.etPassword.error = "password must not be empty"
-            if (args.isSalon)
-                AuthServices().signInSalon(email.toString(), password.toString(),
-                    {
 
-                    },
+        form {
+            input(binding.etEmail){
+                isNotEmpty()
+                isEmail()
+            }
+            input(binding.etPassword){
+                isNotEmpty()
+            }
 
-                    {
+            submitWith(binding.btnLogin){
+                if(it.success()){
+                    if (args.isSalon)
+                        AuthServices().signInSalon(binding.etEmail.text.toString(), binding.etPassword.text.toString(),
+                            {
+                                Log.e(TAG, "done login salon: "+it )
+                            },
 
-                    });
-            else
-                AuthServices().signInClient(email.toString(), password.toString(),
-                    {
+                            {
+                                Log.e(TAG, "error: "+it )
+                            });
+                    else
+                        AuthServices().signInClient(binding.etEmail.text.toString(), binding.etPassword.text.toString(),
+                            {
+                                Log.e(TAG, "done login client: "+it )
 
-                    },
+                            },
 
-                    {
+                            {
+                                Log.e(TAG, "error: "+it )
 
-                    });
+                            });
+
+                }
+            }
+
+        }
 
 
+
+        binding.btnSignUp.setOnClickListener {
+            findNavController().navigate(
+                SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
+            )
         }
 
 
