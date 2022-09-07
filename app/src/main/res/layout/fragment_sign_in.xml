@@ -46,10 +46,13 @@
             android:layout_marginBottom="20dp"
             android:background="@drawable/edit_text_design"
             android:hint="Password"
+            android:inputType="textPassword"
             android:paddingHorizontal="10dp"
             android:paddingVertical="16dp" />
 
+
         <TextView
+            android:id="@+id/btnLogin"
             style="@style/button_style_orange"
             android:textColor="@color/white"
             android:layout_width="match_parent"
@@ -61,7 +64,10 @@
             android:text="Login" />
 
 
+
         <TextView
+            android:id="@+id/btnSignUp"
+
             style="@style/button_style_white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
