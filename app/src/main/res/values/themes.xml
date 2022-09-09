@@ -20,6 +20,7 @@
         <item name="android:background">@drawable/button_shape_orange</item>
         <item name="android:clickable">true</item>
         <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="button_style_blue">
@@ -27,6 +28,7 @@
         <item name="android:background">@drawable/button_shape_blue</item>
         <item name="android:clickable">true</item>
         <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="button_style_white">
@@ -35,6 +37,22 @@
         <item name="android:clickable">true</item>
         <item name="android:paddingVertical">18dp</item>
         <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:textSize">18sp</item>
     </style>
+
+    <style name="textView_16dp">
+        <item name="android:fontFamily">@font/lato_bold</item>
+        <item name="android:textSize">16dp</item>
+    </style>
+
+    <style name="icon_tool_bar">
+        <item name="android:foreground">?selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="cardCornerRadius">5dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardMaxElevation">0dp</item>
+        <item name="cardBackgroundColor">#22FFFFFF</item>
+    </style>
+
 
 </resources>
