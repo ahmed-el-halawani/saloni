@@ -1,12 +1,12 @@
 package com.demo.saloni.data.remote.entities
 
-class ClientProfile(
-    val image:String?="",
-    val name:String="",
-    val civilId:String="",
-    val dataOfBirth:String="",
-    val phoneNumber:String="",
-    val email:String="",
+import java.io.Serializable
 
-) {
-}
+class ClientProfile(
+    image: String? = "",
+    name: String = "",
+    val civilId: String = "",
+    val dataOfBirth: String = "",
+    phoneNumber: String = "",
+    email: String = ""
+) : Profile(image, name,  email,phoneNumber, false), Serializable

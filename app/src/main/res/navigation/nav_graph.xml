@@ -15,6 +15,16 @@
         <action
             android:id="@+id/action_splashFragment_to_signInFragment2"
             app:destination="@id/signInFragment" />
+        <action
+            android:id="@+id/action_splashFragment_to_fragmentHomeSalon"
+            app:destination="@id/fragmentHomeSalon"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_fragmentHomeClient2"
+            app:destination="@id/fragmentHomeClient2"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -27,6 +37,16 @@
         <action
             android:id="@+id/action_signInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+        <action
+            android:id="@+id/action_signInFragment_to_fragmentHomeClient2"
+            app:destination="@id/fragmentHomeClient2"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_fragmentHomeSalon"
+            app:destination="@id/fragmentHomeSalon"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -36,6 +56,30 @@
             android:id="@+id/action_signUpFragment_to_signInFragment"
             app:destination="@id/signInFragment"
             app:popUpTo="@id/signInFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentHomeSalon"
+        android:name="com.demo.saloni.ui.homeslone.FragmentHomeSalon"
+        android:label="FragmentHomeSalon" >
+        <action
+            android:id="@+id/action_fragmentHomeSalon_to_salonProfile"
+            app:destination="@id/salonProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentHomeClient2"
+        android:name="com.demo.saloni.ui.homeclient.FragmentHomeClient"
+        android:label="fragment_home_client"
+        tools:layout="@layout/fragment_home_client" />
+    <fragment
+        android:id="@+id/salonProfile"
+        android:name="com.demo.saloni.ui.salon.SalonProfile"
+        android:label="fragment_salon_profile"
+        tools:layout="@layout/fragment_salon_profile" >
+        <action
+            android:id="@+id/action_salonProfile_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
     </fragment>
 

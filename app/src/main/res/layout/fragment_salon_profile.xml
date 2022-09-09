@@ -64,32 +64,55 @@
                 android:src="@drawable/ic_edit" />
         </androidx.cardview.widget.CardView>
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/roundedImageView"
-            android:layout_width="255dp"
-            android:layout_height="168dp"
-            android:layout_marginTop="30dp"
-            android:scaleType="fitXY"
-            android:src="@drawable/image_salon"
+
+        <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardView2" />
+            app:layout_constraintTop_toBottomOf="@+id/cardView2">
 
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivSalonProfileImage"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:paddingHorizontal="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_salon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+                app:riv_corner_radius="20dp" />
+
+            <TextView
+                android:id="@+id/tvSalonName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:text="Hexagone Salon"
+                android:textColor="@color/splash_color"
+                android:textSize="20sp" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:id="@+id/linearLayout4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="5dp"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="16dp"
+
             android:background="@drawable/edit_text_shape"
 
             android:orientation="horizontal"
-
             android:padding="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roundedImageView">
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout2">
 
             <ImageView
                 android:layout_width="25dp"
@@ -99,6 +122,7 @@
                 android:textColor="@color/splash_color" />
 
             <TextView
+                android:id="@+id/tvPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -123,10 +147,11 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4">
 
             <TextView
+                android:id="@+id/tvEmail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-               android:text="salon@email.com"
+                android:text="salon@email.com"
                 android:textColor="@color/splash_color"
                 android:textSize="17sp" />
         </LinearLayout>
@@ -146,6 +171,7 @@
 
 
             <TextView
+                android:id="@+id/tvAddress"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -161,18 +187,20 @@
             android:layout_marginTop="20dp"
             android:gravity="center"
             android:orientation="horizontal"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            app:layout_constraintBottom_toTopOf="@+id/btnLogout"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
 
             <ImageView
+                android:id="@+id/tvInsta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:src="@drawable/instagram" />
 
             <ImageView
+                android:id="@+id/tvFacebook"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -180,6 +208,7 @@
 
             <ImageView
 
+                android:id="@+id/tvTwitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -188,7 +217,7 @@
 
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/btnLogout"
             style="@style/Widget.Material3.Button.ElevatedButton.btn_orange_false"
             android:layout_width="200dp"
             android:layout_height="wrap_content"

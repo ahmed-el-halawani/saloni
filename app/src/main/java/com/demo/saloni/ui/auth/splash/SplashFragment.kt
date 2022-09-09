@@ -4,15 +4,26 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import com.demo.saloni.data.remote.AuthServices
 import com.demo.saloni.databinding.ActivityMainBinding
 import com.demo.saloni.databinding.FragmentSplashBinding
+import com.demo.saloni.ui.auth.signin.SignInFragmentDirections
+import com.demo.saloni.ui.core.BaseFragment
+import com.demo.saloni.ui.core.State
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
-class SplashFragment : Fragment() {
+class SplashFragment : BaseFragment() {
     private val binding by lazy {
         FragmentSplashBinding.inflate(layoutInflater)
     }
+
+    private val vm: SplashViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,6 +34,17 @@ class SplashFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (Firebase.auth.currentUser != null) {
+            vm.getProfile(Firebase.auth.currentUser!!.uid).asLiveData().observe(viewLifecycleOwner) {
+                hideMainLoading()
+                when (it) {
+                    is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    is State.Loading -> showMainLoading()
+                    is State.Success -> navigateToHome(it.data?.isSalon ?: false)
+                }
+            }
+        }
 
         binding.btnLoginAsUser.setOnClickListener {
             findNavController().navigate(
@@ -39,5 +61,12 @@ class SplashFragment : Fragment() {
         }
 
 
+    }
+
+    fun navigateToHome(isSalon: Boolean) {
+        findNavController().navigate(
+            if (isSalon) SplashFragmentDirections.actionSplashFragmentToFragmentHomeSalon()
+            else SplashFragmentDirections.actionSplashFragmentToFragmentHomeClient2()
+        )
     }
 }

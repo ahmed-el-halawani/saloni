@@ -25,6 +25,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/btnEdit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha=".5"
@@ -77,6 +78,7 @@
             app:layout_constraintTop_toTopOf="@+id/cardView2">
 
             <ImageView
+                android:id="@+id/btnProfile"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:alpha=".5"
@@ -109,8 +111,9 @@
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
         <com.makeramen.roundedimageview.RoundedImageView
+            android:id="@+id/ivSalonProfileImage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="130dp"
             android:paddingHorizontal="50dp"
             android:scaleType="centerCrop"
             android:src="@drawable/image_salon"
@@ -120,6 +123,7 @@
             app:riv_corner_radius="20dp" />
 
         <TextView
+            android:id="@+id/tvSalonName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
