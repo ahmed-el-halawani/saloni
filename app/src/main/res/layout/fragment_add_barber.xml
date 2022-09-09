@@ -75,7 +75,7 @@
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
 
-            <ScrollView
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="80dp"
@@ -104,6 +104,8 @@
                         android:id="@+id/btnAddImage"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
+                        android:clickable="true"
+                        android:foreground="?selectableItemBackground"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/shape_image_signup"
                         app:layout_constraintStart_toStartOf="@+id/textView2"
@@ -113,8 +115,6 @@
                             android:id="@+id/ivUserProfileImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="?selectableItemBackground"
-                            android:clickable="true"
                             android:padding="22dp"
                             android:src="@drawable/ic_add_image" />
                     </LinearLayout>
@@ -174,10 +174,11 @@
                         app:layout_constraintTop_toBottomOf="@id/view3" />
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/recyclerView"
+                        android:id="@+id/rvServices"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:nestedScrollingEnabled="true"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/textView5"
@@ -191,16 +192,16 @@
                         android:orientation="horizontal"
 
 
-                        android:weightSum="3"
+                        android:weightSum="4"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/recyclerView">
+                        app:layout_constraintTop_toBottomOf="@id/rvServices">
 
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
-                            android:layout_weight="2"
+                            android:layout_weight="3"
                             android:background="@drawable/button_shape_whe">
 
                             <TextView
@@ -211,13 +212,14 @@
                                 android:textSize="16sp" />
 
                             <Spinner
-                                android:id="@+id/spinner"
+                                android:id="@+id/spServices"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="end"
 
-                                />
+                                tools:ignore="TouchTargetSizeCheck" />
+
                         </LinearLayout>
 
                         <LinearLayout
@@ -229,6 +231,7 @@
                             android:background="@drawable/button_shape_whe">
 
                             <EditText
+                                android:id="@+id/etPrice"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
                                 android:background="@drawable/button_shape_whe"
@@ -295,10 +298,10 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
+                        android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout9"
-                        android:orientation="vertical">
+                        app:layout_constraintTop_toBottomOf="@+id/linearLayout9">
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup
                             android:id="@+id/tags"
@@ -313,74 +316,79 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="1"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="Sat"
-                                app:toggle_textSize="14sp"  />
+                                app:toggle_textSize="14sp" />
 
                             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                                 android:id="@+id/btnSun"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="2"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="Sun"
-                                app:toggle_textSize="14sp"  />
+                                app:toggle_textSize="14sp" />
 
                             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                                 android:id="@+id/btnMon"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="3"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="Mon"
-                                app:toggle_textSize="14sp"/>
+                                app:toggle_textSize="14sp" />
 
                             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                                 android:id="@+id/btnTue"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="4"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="Tue"
-                                app:toggle_textSize="14sp"
-                                />
+                                app:toggle_textSize="14sp" />
 
                             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                                 android:id="@+id/btnWed"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="5"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="Wed"
-                                app:toggle_textSize="14sp"  />
+                                app:toggle_textSize="14sp" />
 
                             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                                 android:id="@+id/btnThu"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="6"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="Thu"
-                                app:toggle_textSize="14sp"  />
+                                app:toggle_textSize="14sp" />
 
                             <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                                 android:id="@+id/btnFri"
                                 android:layout_width="wrap_content"
                                 android:layout_height="40dp"
                                 android:layout_margin="5dp"
+                                android:tag="7"
                                 app:toggle_selectedBackgroundColor="@color/orange"
                                 app:toggle_selectedTextColor="@android:color/white"
                                 app:toggle_text="fri"
-                                app:toggle_textSize="14sp"  />
+                                app:toggle_textSize="14sp" />
 
                         </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
-
 
 
                     </LinearLayout>
@@ -402,6 +410,7 @@
                             app:layout_constraintTop_toTopOf="@+id/view">
 
                             <EditText
+                                android:id="@+id/etHourTime"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -426,6 +435,7 @@
                                 android:textStyle="bold" />
 
                             <EditText
+                                android:id="@+id/etStartMinute"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -438,6 +448,7 @@
                                 android:textSize="30sp" />
 
                             <TextView
+                                android:id="@+id/etStartPmOrAm"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
@@ -445,8 +456,8 @@
                                 android:background="@drawable/edit_text_design_date"
                                 android:gravity="center"
                                 android:maxLength="2"
-                                android:padding="5dp"
 
+                                android:padding="5dp"
                                 android:text="PM"
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
@@ -461,13 +472,14 @@
                                 android:weightSum="3">
 
                                 <ImageView
+                                    android:id="@+id/btnStartAm"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:clickable="true"
                                     android:foreground="?selectableItemBackground"
-                                    android:padding="13dp"
 
+                                    android:padding="13dp"
                                     android:src="@drawable/ic_up"
                                     tools:ignore="NestedWeights" />
 
@@ -478,6 +490,7 @@
                                     android:background="#60FFFFFF" />
 
                                 <ImageView
+                                    android:id="@+id/btnStartPm"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -498,6 +511,7 @@
                             app:layout_constraintTop_toTopOf="@+id/view">
 
                             <EditText
+                                android:id="@+id/etEndHour"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -522,6 +536,7 @@
                                 android:textStyle="bold" />
 
                             <EditText
+                                android:id="@+id/etEndMinet"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_weight="2"
@@ -534,6 +549,7 @@
                                 android:textSize="30sp" />
 
                             <TextView
+                                android:id="@+id/etEndAmOrPm"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
@@ -541,8 +557,8 @@
                                 android:background="@drawable/edit_text_design_date"
                                 android:gravity="center"
                                 android:maxLength="2"
-                                android:padding="5dp"
 
+                                android:padding="5dp"
                                 android:text="PM"
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
@@ -557,9 +573,10 @@
                                 android:weightSum="3">
 
                                 <ImageView
+                                    android:id="@+id/btnEndAm"
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
 
+                                    android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:clickable="true"
                                     android:foreground="?selectableItemBackground"
@@ -574,6 +591,7 @@
                                     android:background="#60FFFFFF" />
 
                                 <ImageView
+                                    android:id="@+id/btnEndPm"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
@@ -586,12 +604,24 @@
 
 
                     </LinearLayout>
-c
+
+                    <Button
+                        android:id="@+id/btnAddBarber"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:text="Add"
+                        android:textColor="#263238"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/lin4" />
+
+                    c
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-            </ScrollView>
+            </androidx.core.widget.NestedScrollView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

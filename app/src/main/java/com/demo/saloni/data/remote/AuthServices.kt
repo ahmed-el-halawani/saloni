@@ -11,7 +11,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class AuthServices {
     private val cashedData = CashedData;
@@ -68,15 +70,13 @@ class AuthServices {
             downloadUri = "clientProfileImages/${image.lastPathSegment}"
         }
 
-        val firebaseAuth = Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        val user = Firebase.auth.createUserWithEmailAndPassword(email, password).await().user ?: throw Exception("user not found")
+
+
         val clientProfile = ClientProfile(
-            downloadUri, name, civilId, dataOfBirth, phoneNumber, email
+            user.uid, downloadUri, name, civilId, dataOfBirth, phoneNumber, email
         )
-
-        if (firebaseAuth.user == null)
-            throw Exception("user not found")
-
-        Firebase.database.reference.child(profiles).child(firebaseAuth.user!!.uid).setValue(clientProfile)
+        Firebase.database.reference.child(profiles).child(user.uid).setValue(clientProfile)
             .await()
 
         Firebase.auth.signOut()
@@ -91,7 +91,7 @@ class AuthServices {
         phoneNumber: String,
         email: String,
         password: String,
-        address:String,
+        address: String,
         facebook: String,
         instagram: String,
         twitter: String
@@ -108,20 +108,29 @@ class AuthServices {
         } catch (e: Exception) {
         }
 
-        val firebaseAuth = Firebase.auth.createUserWithEmailAndPassword(email, password).await()
+        val user = Firebase.auth.createUserWithEmailAndPassword(email, password).await().user ?: throw Exception("user not found")
 
         val salonProfile =
-            SalonProfile(downloadUri, name, phoneNumber, email,address, facebook, instagram, twitter)
+            SalonProfile(user.uid, downloadUri, name, phoneNumber, email, address, facebook, instagram, twitter)
 
-        if (firebaseAuth.user == null)
-            throw Exception("user not found")
-        else
-            Firebase.database.reference.child(profiles).child(firebaseAuth.user!!.uid).setValue(salonProfile).await()
+        Firebase.database.reference.child(profiles).child(user.uid).setValue(salonProfile).await()
 
         Firebase.auth.signOut()
         return salonProfile;
     }
 
+
+    suspend fun getProfile(userId: String) = withContext(Dispatchers.IO) {
+        val z = Firebase.database.reference.child(profiles).child(userId).get().await() ?: throw Exception("profile not found")
+        if (z.child("salon").getValue(Boolean::class.java) == true) {
+            z.getValue(SalonProfile::class.java).also {
+                CashedData.salonProfile = it
+            }
+        } else
+            z.getValue(ClientProfile::class.java).also {
+                CashedData.clientProfile = it
+            }
+    }
 
 }
 

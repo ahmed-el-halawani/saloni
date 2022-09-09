@@ -108,12 +108,12 @@
                     android:padding="15dp"
                     android:text="Select your bank"
                     android:textSize="16sp"
-                    app:layout_constraintEnd_toStartOf="@+id/spinner"
+                    app:layout_constraintEnd_toStartOf="@+id/spServices"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <Spinner
-                    android:id="@+id/spinner"
+                    android:id="@+id/spServices"
                     android:layout_width="wrap_content"
                     android:layout_height="0dp"
                     app:layout_constraintBottom_toBottomOf="parent"

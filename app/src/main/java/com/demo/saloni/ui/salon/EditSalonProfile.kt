@@ -16,6 +16,6 @@ class EditSalonProfile : BaseFragment() {
     val vm:SalonProfileViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
+        return binding.root
     }
 }

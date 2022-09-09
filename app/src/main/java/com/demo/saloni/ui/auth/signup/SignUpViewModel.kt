@@ -25,11 +25,11 @@ class SignUpViewModel : ViewModel() {
     }
 
     fun signUpSalon(
-        image: Uri?, name: String, phoneNumber: String, email: String,address:String, password: String, facebook: String, instagram: String, twitter: String
+        image: Uri?, name: String, phoneNumber: String, email: String, address: String, password: String, facebook: String, instagram: String, twitter: String
     ) = flow {
         emit(State.Loading())
         try {
-            val profile = authService.signUpSalon(image, name, phoneNumber, email,address, password, facebook, instagram, twitter)
+            val profile = authService.signUpSalon(image, name, phoneNumber, email, password, address, facebook, instagram, twitter)
             emit(State.Success(profile));
         } catch (e: Throwable) {
             emit(State.Error(e.message ?: e.localizedMessage))

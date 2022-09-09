@@ -5,16 +5,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.demo.saloni.R
+import com.demo.saloni.databinding.FragmentEditSalonProfileBinding
+import com.demo.saloni.databinding.FragmentSalonProfileBinding
 
 class FragmentEditSalon : Fragment() {
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_edit_salon_profile, container, false)
+    val binding by lazy {
+        FragmentEditSalonProfileBinding.inflate(layoutInflater)
     }
+    val vm:SalonProfileViewModel by viewModels()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return binding.root
+    }
+
+
 }

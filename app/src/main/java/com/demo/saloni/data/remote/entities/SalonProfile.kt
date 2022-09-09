@@ -3,6 +3,7 @@ package com.demo.saloni.data.remote.entities
 import java.io.Serializable
 
 class SalonProfile(
+    var salonId:String="",
     val salonImage: String? = "",
     val salonName: String = "",
     phoneNumber: String = "",
