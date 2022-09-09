@@ -1,12 +1,10 @@
 package com.demo.saloni.ui.homeslone
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import com.demo.saloni.R
 import com.demo.saloni.databinding.FragmentHomeSalonBinding
 import com.demo.saloni.ui.BaseFragment
 
@@ -16,7 +14,7 @@ class FragmentHomeClient : BaseFragment() {
         FragmentHomeSalonBinding.inflate(layoutInflater)
     }
 
-    val vm:HomeSalonViewModel by viewModels()
+    val vm: HomeSalonViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return binding.root
