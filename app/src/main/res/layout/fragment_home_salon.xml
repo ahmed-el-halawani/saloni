@@ -115,16 +115,44 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-        <com.makeramen.roundedimageview.RoundedImageView
-            android:id="@+id/roundedImageView4"
-            android:layout_width="255dp"
-            android:layout_height="168dp"
-            android:layout_marginTop="10dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/image_salon"
+        <LinearLayout
+            android:id="@+id/linearLayout14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+            >
+
+            <com.makeramen.roundedimageview.RoundedImageView
+                android:id="@+id/ivSalonProfileImage2"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:paddingHorizontal="50dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/image_salon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:riv_corner_radius="20dp" />
+
+            <TextView
+                android:id="@+id/tvSalonName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Hexagone Salon"
+                android:textColor="@color/splash_color"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/ivSalonProfileImage"
+                app:layout_constraintStart_toStartOf="@+id/ivSalonProfileImage"
+                app:layout_constraintTop_toBottomOf="@+id/ivSalonProfileImage" />
+        </LinearLayout>
+
+
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
@@ -132,7 +160,7 @@
             android:layout_marginTop="20dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/roundedImageView4"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout14"
             app:spanCount="4"
             tools:listitem="@layout/item_barber" />
 

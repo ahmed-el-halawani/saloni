@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentHomeSalon">
+    app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.demo.saloni.ui.auth.splash.SplashFragment"
@@ -24,6 +24,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_splashFragment_to_fragmentHomeSalon"
+            app:destination="@id/fragmentHomeSalon"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_splashFragment_to_fragmentHomeClient"
+            app:destination="@id/fragmentHomeClient"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -40,6 +50,16 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
+        <action
+            android:id="@+id/action_signInFragment_to_fragmentHomeSalon"
+            app:destination="@id/fragmentHomeSalon"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_signInFragment_to_fragmentHomeClient"
+            app:destination="@id/fragmentHomeClient"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
@@ -88,6 +108,11 @@
         <action
             android:id="@+id/action_fragmentSalonProfile2_to_fragmentEditSalon"
             app:destination="@id/fragmentEditSalon" />
+        <action
+            android:id="@+id/action_fragmentSalonProfile2_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/fragmentReservations"
@@ -98,5 +123,10 @@
         android:id="@+id/fragmentReport"
         android:name="com.demo.saloni.ui.report.FragmentReport"
         android:label="FragmentReport" />
+    <fragment
+        android:id="@+id/fragmentHomeClient"
+        android:name="com.demo.saloni.ui.homeclient.FragmentHomeClient"
+        android:label="fragment_home_client"
+        tools:layout="@layout/fragment_home_client" />
 
 </navigation>

@@ -41,19 +41,20 @@ class SplashFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//<<<<<<< HEAD
-//        if (Firebase.auth.currentUser != null) {
-//            vm.getProfile(Firebase.auth.currentUser!!.uid).asLiveData().observe(viewLifecycleOwner) {
-//                hideMainLoading()
-//                when (it) {
-//                    is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-//                    is State.Loading -> showMainLoading()
-//                    is State.Success -> navigateToHome(it.data?.isSalon ?: false)
-//                }
-//            }
-//        }
-//=======
+
         bindSplashAnimation()
+
+
+        if (Firebase.auth.currentUser != null) {
+            vm.getProfile(Firebase.auth.currentUser!!.uid).asLiveData().observe(viewLifecycleOwner) {
+                hideMainLoading()
+                when (it) {
+                    is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    is State.Loading -> showMainLoading()
+                    is State.Success -> navigateToHome(it.data?.isSalon ?: false)
+                }
+            }
+        }
 
         binding.btnLoginAsUser.setOnClickListener {
             findNavController().navigate(
@@ -72,13 +73,13 @@ class SplashFragment : BaseFragment() {
 
     }
 
-//<<<<<<< HEAD
-//    fun navigateToHome(isSalon: Boolean) {
-//        findNavController().navigate(
-//            if (isSalon) SplashFragmentDirections.actionSplashFragmentToFragmentHomeSalon()
-//            else SplashFragmentDirections.actionSplashFragmentToFragmentHomeClient2()
-//        )
-//=======
+    fun navigateToHome(isSalon: Boolean) {
+        findNavController().navigate(
+            if (isSalon) SplashFragmentDirections.actionSplashFragmentToFragmentHomeSalon()
+            else SplashFragmentDirections.actionSplashFragmentToFragmentHomeClient()
+        )
+    }
+
     private fun bindSplashAnimation() {
         topAnim = AnimationUtils.loadAnimation(activity, R.anim.top_animation)
         bottomAnim = AnimationUtils.loadAnimation(activity, R.anim.buttom_animation)

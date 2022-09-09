@@ -66,7 +66,7 @@ class SignInFragment : BaseFragment() {
     fun navigateToHome() {
         findNavController().navigate(
             if (args.isSalon) SignInFragmentDirections.actionSignInFragmentToFragmentHomeSalon()
-            else SignInFragmentDirections.actionSignInFragmentToFragmentHomeClient2()
+            else SignInFragmentDirections.actionSignInFragmentToFragmentHomeClient()
         )
     }
 }

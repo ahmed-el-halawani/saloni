@@ -35,23 +35,16 @@ class FragmentHomeSalon : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        binding.apply {
-//
-//            Glide.with(requireContext()).load(Firebase.storage.reference
-//                .child(vm.salonProfile?.salonImage ?: ""))
-//                .into(binding.ivSalonProfileImage)
-//
-//            binding.tvSalonName.text = vm.salonProfile?.salonName
-//
-//
-//        }
-//
-//
-//        binding.btnProfile.setOnClickListener {
-//            findNavController().navigate(
-//                FragmentHomeSalonDirections.actionFragmentHomeSalonToSalonProfile()
-//            )
-//        }
+        binding.apply {
+
+            Glide.with(requireContext()).load(Firebase.storage.reference
+                .child(vm.salonProfile?.salonImage ?: ""))
+                .into(binding.ivSalonProfileImage2)
+
+            binding.tvSalonName2.text = vm.salonProfile?.salonName
+
+
+        }
         binding.btnSalonProfile.setOnClickListener {
             findNavController().navigate(
                 FragmentHomeSalonDirections.actionFragmentHomeSalonToFragmentSalonProfile2()
