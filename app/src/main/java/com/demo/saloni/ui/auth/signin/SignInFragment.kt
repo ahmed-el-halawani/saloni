@@ -5,18 +5,21 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.widget.doOnTextChanged
-import androidx.fragment.app.Fragment
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.afollestad.vvalidator.form
 import com.demo.saloni.data.remote.AuthServices
 import com.demo.saloni.databinding.FragmentSignInBinding
-import com.demo.saloni.ui.BaseFragment
+import com.demo.saloni.ui.core.BaseFragment
+import com.demo.saloni.ui.core.State
 
 private const val TAG = "SignInFragment"
-class SignInFragment : BaseFragment() {
 
+class SignInFragment : BaseFragment() {
+    private val vm: SignInViewModel by viewModels()
     private lateinit var binding: FragmentSignInBinding
 
     val args: SignInFragmentArgs by navArgs()
@@ -33,52 +36,37 @@ class SignInFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         form {
-            input(binding.etEmail){
+            input(binding.etEmail) {
                 isNotEmpty()
                 isEmail()
             }
-            input(binding.etPassword){
-                isNotEmpty()
-            }
+            input(binding.etPassword) { isNotEmpty() }
 
-            submitWith(binding.btnLogin){
-                if(it.success()){
-                    if (args.isSalon)
-                        AuthServices().signInSalon(binding.etEmail.text.toString(), binding.etPassword.text.toString(),
-                            {
-                                Log.e(TAG, "done login salon: "+it )
-                            },
-
-                            {
-                                Log.e(TAG, "error: "+it )
-                            });
-                    else
-                        AuthServices().signInClient(binding.etEmail.text.toString(), binding.etPassword.text.toString(),
-                            {
-                                Log.e(TAG, "done login client: "+it )
-
-                            },
-
-                            {
-                                Log.e(TAG, "error: "+it )
-
-                            });
-
+            submitWith(binding.btnLogin) {
+                if (it.success()) {
+                    vm.signIn(binding.etEmail.text.toString(), binding.etPassword.text.toString(), args.isSalon).asLiveData().observe(viewLifecycleOwner) {
+                        hideMainLoading()
+                        when (it) {
+                            is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            is State.Loading -> showMainLoading()
+                            is State.Success -> navigateToHome()
+                        }
+                    }
                 }
             }
-
         }
-
 
 
         binding.btnSignUp.setOnClickListener {
-            findNavController().navigate(
-                SignInFragmentDirections.actionSignInFragmentToSignUpFragment()
-            )
+            findNavController().navigate( SignInFragmentDirections.actionSignInFragmentToSignUpFragment() )
         }
+    }
 
-
+    fun navigateToHome() {
+        findNavController().navigate(
+            if (args.isSalon) SignInFragmentDirections.actionSignInFragmentToFragmentHomeSalon()
+            else SignInFragmentDirections.actionSignInFragmentToFragmentHomeClient()
+        )
     }
 }

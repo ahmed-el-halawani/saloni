@@ -1,15 +1,19 @@
 package com.demo.saloni.ui.homeslone
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.bumptech.glide.Glide
 import com.demo.saloni.R
 import com.demo.saloni.databinding.FragmentHomeSalonBinding
-import com.demo.saloni.ui.BaseFragment
-import com.demo.saloni.ui.auth.signin.SignInFragmentDirections
+import com.demo.saloni.ui.core.BaseFragment
+import com.firebase.ui.storage.images.FirebaseImageLoader
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 
 class FragmentHomeSalon : BaseFragment() {
 
@@ -27,9 +31,20 @@ class FragmentHomeSalon : BaseFragment() {
         return binding.root
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.apply {
+
+            Glide.with(requireContext()).load(Firebase.storage.reference
+                .child(vm.salonProfile?.salonImage ?: ""))
+                .into(binding.ivSalonProfileImage2)
+
+            binding.tvSalonName2.text = vm.salonProfile?.salonName
+
+
+        }
         binding.btnSalonProfile.setOnClickListener {
             findNavController().navigate(
                 FragmentHomeSalonDirections.actionFragmentHomeSalonToFragmentSalonProfile2()
