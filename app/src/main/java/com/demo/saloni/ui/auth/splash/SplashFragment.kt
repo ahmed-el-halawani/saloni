@@ -5,12 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.demo.saloni.data.remote.AuthServices
 import com.demo.saloni.databinding.ActivityMainBinding
+import com.demo.saloni.R
 import com.demo.saloni.databinding.FragmentSplashBinding
 import com.demo.saloni.ui.auth.signin.SignInFragmentDirections
 import com.demo.saloni.ui.core.BaseFragment
@@ -24,6 +27,9 @@ class SplashFragment : BaseFragment() {
     }
 
     private val vm: SplashViewModel by viewModels()
+    private var topAnim: Animation? = null
+    private var bottomAnim: Animation? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,16 +41,19 @@ class SplashFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (Firebase.auth.currentUser != null) {
-            vm.getProfile(Firebase.auth.currentUser!!.uid).asLiveData().observe(viewLifecycleOwner) {
-                hideMainLoading()
-                when (it) {
-                    is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    is State.Loading -> showMainLoading()
-                    is State.Success -> navigateToHome(it.data?.isSalon ?: false)
-                }
-            }
-        }
+//<<<<<<< HEAD
+//        if (Firebase.auth.currentUser != null) {
+//            vm.getProfile(Firebase.auth.currentUser!!.uid).asLiveData().observe(viewLifecycleOwner) {
+//                hideMainLoading()
+//                when (it) {
+//                    is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+//                    is State.Loading -> showMainLoading()
+//                    is State.Success -> navigateToHome(it.data?.isSalon ?: false)
+//                }
+//            }
+//        }
+//=======
+        bindSplashAnimation()
 
         binding.btnLoginAsUser.setOnClickListener {
             findNavController().navigate(
@@ -63,10 +72,17 @@ class SplashFragment : BaseFragment() {
 
     }
 
-    fun navigateToHome(isSalon: Boolean) {
-        findNavController().navigate(
-            if (isSalon) SplashFragmentDirections.actionSplashFragmentToFragmentHomeSalon()
-            else SplashFragmentDirections.actionSplashFragmentToFragmentHomeClient2()
-        )
+//<<<<<<< HEAD
+//    fun navigateToHome(isSalon: Boolean) {
+//        findNavController().navigate(
+//            if (isSalon) SplashFragmentDirections.actionSplashFragmentToFragmentHomeSalon()
+//            else SplashFragmentDirections.actionSplashFragmentToFragmentHomeClient2()
+//        )
+//=======
+    private fun bindSplashAnimation() {
+        topAnim = AnimationUtils.loadAnimation(activity, R.anim.top_animation)
+        bottomAnim = AnimationUtils.loadAnimation(activity, R.anim.buttom_animation)
+        binding.ivLogo.animation = topAnim
+        binding.linearButtons.animation = bottomAnim
     }
 }

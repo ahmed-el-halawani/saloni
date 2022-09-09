@@ -7,40 +7,50 @@
     android:background="@color/splash_color"
     tools:context=".ui.auth.splash.SplashFragment">
 
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        android:src="@drawable/logo"/>-->
+    <ImageView
+        android:id="@+id/ivLogo"
+        android:layout_width="130dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_logo_splash"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <LinearLayout
+        android:id="@+id/linearButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="vertical"
         android:padding="40dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <TextView
             android:id="@+id/btnLoginAsUser"
-            style="@style/Widget.Material3.Button.ElevatedButton.btn_white"
-            android:layout_width="match_parent"
+            style="@style/button_style_white"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:text="Login as a user" />
+            android:gravity="center"
+            android:text="Login as a user"
+            android:textAllCaps="true"
+            android:textColor="@color/splash_color" />
 
-        <Button
+        <TextView
             android:id="@+id/btnLoginAsSalon"
-            style="@style/Widget.Material3.Button.ElevatedButton.btn_orange"
-            android:layout_width="match_parent"
+            style="@style/button_style_orange"
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Login as salon owner" />
-
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:paddingVertical="18dp"
+            android:text="Login as salon owner"
+            android:textAllCaps="true"
+            android:textColor="@color/white" />
 
     </LinearLayout>
 
