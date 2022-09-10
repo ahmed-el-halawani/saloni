@@ -617,7 +617,7 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/lin4" />
 
-                    c
+
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
