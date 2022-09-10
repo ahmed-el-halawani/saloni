@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/fragmentHomeSalon">
+    app:startDestination="@id/fragmentBarberServices">
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.demo.saloni.ui.auth.splash.SplashFragment"
@@ -98,5 +98,9 @@
         android:id="@+id/fragmentReport"
         android:name="com.demo.saloni.ui.report.FragmentReport"
         android:label="FragmentReport" />
+    <fragment
+        android:id="@+id/fragmentBarberServices"
+        android:name="com.demo.saloni.ui.barberpreview.FragmentBarberServices"
+        android:label="FragmentBarberServices" />
 
 </navigation>
