@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.demo.saloni.databinding.FragmentSignUpBinding
+import com.demo.saloni.ui.core.BaseFragment
 import com.google.android.material.tabs.TabLayoutMediator
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : BaseFragment() {
     private lateinit var binding: FragmentSignUpBinding
 
 
@@ -17,8 +18,11 @@ class SignUpFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
         binding = FragmentSignUpBinding.inflate(inflater, container, false);
+        setBackButton(binding.btnBack)
+
         return binding.root
     }
 

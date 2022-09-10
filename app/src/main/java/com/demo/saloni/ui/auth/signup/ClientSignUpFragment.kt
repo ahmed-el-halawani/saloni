@@ -123,7 +123,7 @@ class ClientSignUpFragment : BaseFragment() {
     private fun initButtons() {
         binding.btnLogin.setOnClickListener {
             findNavController().navigate(
-                SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(true)
+                SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(false)
             )
         }
     }

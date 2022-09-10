@@ -1,10 +1,9 @@
-package com.demo.saloni.ui.salon
+package com.demo.saloni.ui.barber
 
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,26 +15,35 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.afollestad.vvalidator.form
-import com.demo.saloni.R
-import com.demo.saloni.data.remote.entities.*
-import com.demo.saloni.databinding.*
-import com.demo.saloni.ui.auth.signup.SignUpFragmentDirections
+import com.bumptech.glide.Glide
+import com.demo.saloni.data.remote.entities.Days
+import com.demo.saloni.data.remote.entities.Service
+import com.demo.saloni.data.remote.entities.ServicesType
+import com.demo.saloni.data.remote.entities.ShiftTime
+import com.demo.saloni.databinding.FragmentEditBarberProfileBinding
+import com.demo.saloni.databinding.ItemBarberServicesBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
-import com.newcore.easyrecyclergenerator.rvList
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
 import java.io.FileNotFoundException
-import java.util.*
 
-class FragmentAddBarber : BaseFragment() {
-    private val TAG = "FragmentAddBarber"
-    val binding by lazy {
-        FragmentAddBarberBinding.inflate(layoutInflater)
+
+class EditBarberProfile : BaseFragment() {
+
+    val binding: FragmentEditBarberProfileBinding by lazy {
+        FragmentEditBarberProfileBinding.inflate(layoutInflater)
     }
+    val args: EditBarberProfileArgs by navArgs()
+    val vm: EditBarberViewModel by viewModels()
+
+    private val TAG = "FragmentAddBarber"
+
     private lateinit var startForResult: ActivityResultLauncher<Intent>;
 
-    val vm: AddBarberViewModel by viewModels()
 
     private val servicesAdapter by lazy {
         rvSingleList(
@@ -64,7 +72,7 @@ class FragmentAddBarber : BaseFragment() {
                 try {
                     vm.imageUri = it.data?.data
                     Log.e(TAG, "image.lastPathSegment: " + vm.imageUri?.lastPathSegment)
-                    binding.ivUserProfileImage.setImageURI(vm.imageUri)
+                    binding.ivProfileImage.setImageURI(vm.imageUri)
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
                     Toast.makeText(
@@ -86,13 +94,65 @@ class FragmentAddBarber : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initBarberData(savedInstanceState == null)
+
+
         initForm()
         changeAmPm()
         initProfileImage()
         addServiceForm()
+        addDays()
 
 
     }
+
+    private fun addDays() {
+        binding.tags.setOnSelectListener { themedButton ->
+            if (themedButton.isSelected)
+                vm.selectedDays.add(Days(themedButton.tag.toString(), themedButton.text))
+            else
+                vm.selectedDays.removeIf { it.dayIndex == themedButton.tag.toString() }
+        }
+    }
+
+    private fun initBarberData(isFirstTime: Boolean) {
+        val barber = args.barber
+        binding.apply {
+            if (vm.imageUri == null)
+                if (barber.image != null) {
+                    Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(ivProfileImage)
+                }
+
+            refreshServiceList()
+
+            val days = listOf(tag1, tag2, tag3, tag4, tag5, tag6, tag7)
+
+            vm.selectedDays.forEach {
+                tags.selectButton(days[it.dayIndex.toInt() - 1])
+            }
+
+            if (isFirstTime) {
+                etUserName.setText(barber.name)
+                etMobileNumber.setText(barber.phone)
+                etCivilId.setText(barber.civilId)
+
+
+                barber.shiftStartIn?.apply {
+                    etStartHour.setText(hour)
+                    etStartMinit.setText(minut)
+                    etStartAmOrPm.setText(amOrPm)
+                }
+
+                barber.shiftEntIn?.apply {
+                    etEndHour.setText(hour)
+                    etEndMint.setText(minut)
+                    etEndAmOrPm.setText(amOrPm)
+                }
+            }
+
+        }
+    }
+
 
     private fun addServiceForm() {
         form {
@@ -110,17 +170,17 @@ class FragmentAddBarber : BaseFragment() {
                 isDecimal().greaterThan(0.0)
             }
 
-            input(binding.etStartMinute) {
+            input(binding.etStartMinit) {
                 isNotEmpty()
                 isNumber().lessThan(60).greaterThan(-1)
             }
 
-            input(binding.etHourTime) {
+            input(binding.etStartHour) {
                 isNotEmpty()
                 isNumber().lessThan(60).greaterThan(-1)
             }
 
-            input(binding.etEndMinet) {
+            input(binding.etEndMint) {
                 isNotEmpty()
                 isNumber().lessThan(60).greaterThan(-1)
             }
@@ -169,20 +229,21 @@ class FragmentAddBarber : BaseFragment() {
                 isNotEmpty()
             }
 
-            submitWith(binding.btnAddBarber) { formResult ->
+            submitWith(binding.btnSave) { formResult ->
                 if (formResult.success()) {
-                    val workingDays = binding.tags.buttons.filter { it.isSelected }
+                    val workingDays = vm.selectedDays
                     if (workingDays.isEmpty()) {
                         Toast.makeText(context, "must select working days", Toast.LENGTH_SHORT).show()
                     } else if (vm.selectedServices.isEmpty()) {
                         Toast.makeText(context, "must add services", Toast.LENGTH_SHORT).show()
                     } else {
-                        vm.addBarber(
+                        vm.editBarber(
+                            args.barber.barberId,
                             binding.etUserName.text.toString(),
                             binding.etMobileNumber.text.toString(),
                             binding.etCivilId.text.toString(),
                             vm.imageUri,
-                            workingDays.map { Days(it.tag.toString(), it.text) },
+                            workingDays,
                             vm.selectedServices,
                             getShiftStartIn(),
                             getShiftEndIn()
@@ -192,7 +253,7 @@ class FragmentAddBarber : BaseFragment() {
                                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                                 is State.Loading -> showMainLoading()
                                 is State.Success -> {
-                                    Toast.makeText(context, "Barber added successfully", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Barber edited Successfully", Toast.LENGTH_SHORT).show()
                                     findNavController().popBackStack()
                                 }
                             }
@@ -212,25 +273,26 @@ class FragmentAddBarber : BaseFragment() {
     }
 
     fun getShiftStartIn(): ShiftTime {
-        return ShiftTime(binding.etHourTime.text.toString(), binding.etStartMinute.text.toString(), binding.etStartPmOrAm.text.toString())
+        return ShiftTime(binding.etStartHour.text.toString(), binding.etStartMinit.text.toString(), binding.etStartAmOrPm.text.toString())
     }
 
     fun getShiftEndIn(): ShiftTime {
-        return ShiftTime(binding.etEndHour.text.toString(), binding.etEndMinet.text.toString(), binding.etEndAmOrPm.text.toString())
+        return ShiftTime(binding.etEndHour.text.toString(), binding.etEndMint.text.toString(), binding.etEndAmOrPm.text.toString())
     }
+
 
     fun changeAmPm() {
         binding.btnStartAm.setOnClickListener {
-            binding.etStartPmOrAm.text = "AM"
+            binding.etStartAmOrPm.setText("AM")
         }
         binding.btnStartPm.setOnClickListener {
-            binding.etStartPmOrAm.text = "PM"
+            binding.etStartAmOrPm.setText("PM")
         }
         binding.btnEndAm.setOnClickListener {
-            binding.etEndAmOrPm.text = "AM"
+            binding.etEndAmOrPm.setText("AM")
         }
         binding.btnEndPm.setOnClickListener {
-            binding.etEndAmOrPm.text = "PM"
+            binding.etEndAmOrPm.setText("PM")
         }
     }
 

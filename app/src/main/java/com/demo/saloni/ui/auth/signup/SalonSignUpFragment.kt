@@ -32,6 +32,7 @@ class SalonSignUpFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         binding = FragmentSalonSignUpBinding.inflate(inflater, container, false);
 
         startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {

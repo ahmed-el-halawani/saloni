@@ -23,6 +23,8 @@ class FragmentSalonProfile : BaseFragment() {
     val vm: SalonProfileViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setBackButton(binding.btnBack)
+
         return binding.root
     }
 
@@ -31,12 +33,12 @@ class FragmentSalonProfile : BaseFragment() {
 
         binding.apply {
             Glide.with(requireContext())
-                .load(Firebase.storage.reference.child(vm.salonProfile?.salonImage ?: ""))
+                .load(Firebase.storage.reference.child(vm.salonProfile?.image ?: ""))
                 .into(binding.ivSalonProfileImage)
 
-            binding.tvSalonName.text = vm.salonProfile!!.salonName
+            tvSalonName.text = vm.salonProfile!!.name
 
-            tvSalonName.text = vm.salonProfile!!.phoneNumber
+            tvPhoneNumber.text = vm.salonProfile!!.phoneNumber
             tvEmail.text = vm.salonProfile!!.email
             tvAddress.text = vm.salonProfile!!.address
 

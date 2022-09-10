@@ -4,10 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.ViewModel
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.SalonServices
-import com.demo.saloni.data.remote.entities.Barber
-import com.demo.saloni.data.remote.entities.Days
-import com.demo.saloni.data.remote.entities.Service
-import com.demo.saloni.data.remote.entities.ServicesType
+import com.demo.saloni.data.remote.entities.*
 import com.demo.saloni.ui.core.State
 import kotlinx.coroutines.flow.flow
 
@@ -16,7 +13,7 @@ class AddBarberViewModel : ViewModel() {
     val selectedServices = ArrayList<Service>()
     var imageUri: Uri? = null;
 
-    val salonServices = SalonServices();
+    val salonServices = SalonServices.getInstance();
 
 
     fun addBarber(
@@ -26,8 +23,8 @@ class AddBarberViewModel : ViewModel() {
         image: Uri?,
         workingDays: List<Days> = emptyList(),
         services: List<Service> = emptyList(),
-        shiftStartIn:String="",
-        shiftEntIn:String=""
+        shiftStartIn: ShiftTime =ShiftTime(),
+        shiftEntIn:ShiftTime=ShiftTime()
     ) = flow {
         emit(State.Loading())
         try {
@@ -37,5 +34,7 @@ class AddBarberViewModel : ViewModel() {
             emit(State.Error(e.message?:e.localizedMessage))
         }
     }
+
+
 
 }

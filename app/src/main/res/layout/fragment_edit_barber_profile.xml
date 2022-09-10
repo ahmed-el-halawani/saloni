@@ -50,6 +50,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
+                android:id="@+id/btnBack"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:padding="12dp"
@@ -60,7 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/lato_bold"
-            android:text="Edit salon"
+            android:text="Edit Barber"
             android:textColor="@color/white"
             android:textSize="20dp"
             app:layout_constraintBottom_toBottomOf="@+id/cardView2"
@@ -118,7 +119,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.cardview.widget.CardView
-                    android:id="@+id/cardView"
+                    android:id="@+id/btnAddImage"
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:layout_marginTop="5dp"
@@ -132,6 +133,7 @@
                         android:layout_height="match_parent">
 
                         <ImageView
+                            android:id="@+id/ivProfileImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="center"
@@ -150,7 +152,7 @@
                     android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/cardView">
+                    app:layout_constraintTop_toBottomOf="@+id/btnAddImage">
 
                     <EditText
                         android:id="@+id/etUserName"
@@ -253,6 +255,7 @@
                         android:background="@drawable/button_shape_whe">
 
                         <EditText
+                            android:id="@+id/etPrice"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/button_shape_whe"
@@ -337,9 +340,9 @@
                             android:layout_height="50dp"
                             android:layout_margin="2dp"
                             android:gravity="center"
+                            android:tag="1"
                             app:toggle_selectedBackgroundColor="@color/orange"
-                            app:toggle_text="Sat"
-                           />
+                            app:toggle_text="Sat" />
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                             android:id="@+id/tag2"
@@ -347,9 +350,9 @@
                             android:layout_height="50dp"
                             android:layout_margin="2dp"
                             android:gravity="center"
+                            android:tag="2"
                             app:toggle_selectedBackgroundColor="@color/orange"
-                            app:toggle_text="Sun"
-                         />
+                            app:toggle_text="Sun" />
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                             android:id="@+id/tag3"
@@ -358,10 +361,10 @@
 
                             android:layout_margin="2dp"
                             android:gravity="center"
-                            app:toggle_selectedBackgroundColor="@color/orange"
+                            android:tag="3"
 
-                            app:toggle_text="Mon"
-                          />
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Mon" />
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                             android:id="@+id/tag4"
@@ -370,10 +373,10 @@
                             android:layout_margin="2dp"
 
                             android:gravity="center"
-                            app:toggle_selectedBackgroundColor="@color/orange"
+                            android:tag="4"
 
-                            app:toggle_text="Tue"
-                           />
+                            app:toggle_selectedBackgroundColor="@color/orange"
+                            app:toggle_text="Tue" />
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                             android:id="@+id/tag5"
@@ -381,28 +384,28 @@
                             android:layout_height="50dp"
                             android:layout_margin="2dp"
                             android:gravity="center"
+                            android:tag="5"
                             app:toggle_selectedBackgroundColor="@color/orange"
-                            app:toggle_text="Wed"
 
-                          />
+                            app:toggle_text="Wed" />
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                             android:id="@+id/tag6"
                             android:layout_width="60dp"
                             android:layout_height="50dp"
                             android:layout_margin="2dp"
+                            android:tag="6"
                             app:toggle_selectedBackgroundColor="@color/orange"
-                            app:toggle_text="Thu"
-                           />
+                            app:toggle_text="Thu" />
 
                         <nl.bryanderidder.themedtogglebuttongroup.ThemedButton
                             android:id="@+id/tag7"
                             android:layout_width="60dp"
                             android:layout_height="50dp"
                             android:layout_margin="2dp"
+                            android:tag="7"
                             app:toggle_selectedBackgroundColor="@color/orange"
-                            app:toggle_text="Fri"
-                           />
+                            app:toggle_text="Fri" />
 
                     </nl.bryanderidder.themedtogglebuttongroup.ThemedToggleButtonGroup>
 
@@ -425,6 +428,7 @@
                         app:layout_constraintTop_toTopOf="@+id/view">
 
                         <EditText
+                            android:id="@+id/etStartHour"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
@@ -449,6 +453,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:id="@+id/etStartMinit"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
@@ -460,7 +465,8 @@
                             android:textColor="@color/splash_color"
                             android:textSize="30sp" />
 
-                        <TextView
+                        <EditText
+                            android:id="@+id/etStartAmOrPm"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
@@ -468,8 +474,9 @@
                             android:background="@drawable/edit_text_design_date"
                             android:gravity="center"
                             android:maxLength="2"
-                            android:padding="5dp"
+                            android:editable="false"
 
+                            android:padding="5dp"
                             android:text="PM"
                             android:textColor="@color/splash_color"
                             android:textSize="30sp" />
@@ -484,13 +491,14 @@
                             android:weightSum="3">
 
                             <ImageView
+                                android:id="@+id/btnStartAm"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:clickable="true"
                                 android:foreground="?selectableItemBackground"
-                                android:padding="13dp"
 
+                                android:padding="13dp"
                                 android:src="@drawable/ic_up"
                                 tools:ignore="NestedWeights" />
 
@@ -501,6 +509,7 @@
                                 android:background="#60FFFFFF" />
 
                             <ImageView
+                                android:id="@+id/btnStartPm"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -521,6 +530,7 @@
                         app:layout_constraintTop_toTopOf="@+id/view">
 
                         <EditText
+                            android:id="@+id/etEndHour"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
@@ -545,6 +555,7 @@
                             android:textStyle="bold" />
 
                         <EditText
+                            android:id="@+id/etEndMint"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_weight="2"
@@ -556,7 +567,9 @@
                             android:textColor="@color/splash_color"
                             android:textSize="30sp" />
 
-                        <TextView
+                        <EditText
+                            android:editable="false"
+                            android:id="@+id/etEndAmOrPm"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
                             android:layout_marginStart="10dp"
@@ -564,8 +577,8 @@
                             android:background="@drawable/edit_text_design_date"
                             android:gravity="center"
                             android:maxLength="2"
-                            android:padding="5dp"
 
+                            android:padding="5dp"
                             android:text="PM"
                             android:textColor="@color/splash_color"
                             android:textSize="30sp" />
@@ -580,9 +593,10 @@
                             android:weightSum="3">
 
                             <ImageView
+                                android:id="@+id/btnEndAm"
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
 
+                                android:layout_height="wrap_content"
                                 android:layout_weight="1"
                                 android:clickable="true"
                                 android:foreground="?selectableItemBackground"
@@ -597,6 +611,7 @@
                                 android:background="#60FFFFFF" />
 
                             <ImageView
+                                android:id="@+id/btnEndPm"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -611,6 +626,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/btnSave"
                     style="@style/button_style_blue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -1,19 +1,13 @@
-package com.demo.saloni.ui.homeslone
+package com.demo.saloni.ui.salonpreview
 
 import androidx.lifecycle.ViewModel
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.SalonServices
-import com.demo.saloni.data.remote.entities.Barber
 import com.demo.saloni.ui.core.State
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.onEach
-import java.util.concurrent.Flow
 
-class HomeSalonViewModel : ViewModel() {
-    val salonProfile = CashedData.salonProfile;
-
+class SalonPreviewViewModel :ViewModel() {
     val salonServices = SalonServices.getInstance()
-
 
     fun getBarbers(salonId:String) = flow {
         try {

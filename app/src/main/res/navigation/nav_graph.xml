@@ -91,6 +91,9 @@
         <action
             android:id="@+id/action_fragmentHomeSalon_to_fragmentReport"
             app:destination="@id/fragmentReport" />
+        <action
+            android:id="@+id/action_fragmentHomeSalon_to_barberProfile"
+            app:destination="@id/barberProfile" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddBarber"
@@ -127,6 +130,48 @@
         android:id="@+id/fragmentHomeClient"
         android:name="com.demo.saloni.ui.homeclient.FragmentHomeClient"
         android:label="fragment_home_client"
-        tools:layout="@layout/fragment_home_client" />
+        tools:layout="@layout/fragment_home_client" >
+        <action
+            android:id="@+id/action_fragmentHomeClient_to_salonPreview"
+            app:destination="@id/salonPreview" />
+    </fragment>
+    <fragment
+        android:id="@+id/barberProfile"
+        android:name="com.demo.saloni.ui.barber.BarberProfile"
+        android:label="BarberProfile" >
+        <action
+            android:id="@+id/action_barberProfile_to_editBarberProfile"
+            app:destination="@id/editBarberProfile" />
+        <argument
+            android:name="barberId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/editBarberProfile"
+        android:name="com.demo.saloni.ui.barber.EditBarberProfile"
+        android:label="EditBarberProfile" >
+        <argument
+            android:name="barber"
+            app:argType="com.demo.saloni.data.remote.entities.Barber" />
+    </fragment>
+    <fragment
+        android:id="@+id/salonPreview"
+        android:name="com.demo.saloni.ui.salonpreview.SalonPreview"
+        android:label="SalonPreview" >
+        <action
+            android:id="@+id/action_salonPreview_to_fragmentBarberPreview"
+            app:destination="@id/fragmentBarberPreview" />
+        <argument
+            android:name="salon"
+            app:argType="com.demo.saloni.data.remote.entities.SalonProfile" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentBarberPreview"
+        android:name="com.demo.saloni.ui.barberpreview.FragmentBarberPreview"
+        android:label="FragmentBarberPreview" >
+        <argument
+            android:name="barber"
+            app:argType="com.demo.saloni.data.remote.entities.Barber" />
+    </fragment>
 
 </navigation>
