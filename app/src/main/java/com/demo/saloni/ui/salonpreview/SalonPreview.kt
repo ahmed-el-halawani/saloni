@@ -35,7 +35,7 @@ class SalonPreview : BaseFragment() {
 
     private val vm:SalonPreviewViewModel by viewModels()
 
-    val barbersAdapter by lazy {
+    private val barbersAdapter by lazy {
         rvSingleList(binding.rvBarbers, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = GridLayoutManager(requireContext(), 4)) {
             listBuilder { itemBarberBinding, barber ->
                 if (!barber.image.isNullOrBlank())
