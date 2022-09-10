@@ -2,7 +2,6 @@ package com.demo.saloni.ui.auth.signup
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,14 +10,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.afollestad.vvalidator.form
 import com.demo.saloni.databinding.FragmentClientSignUpBinding
-import com.demo.saloni.databinding.FragmentSalonSignUpBinding
-import com.demo.saloni.ui.BaseFragment
+import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
 import java.io.FileNotFoundException
 
@@ -34,7 +31,7 @@ class ClientSignUpFragment : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentClientSignUpBinding.inflate(inflater, container, false);
         startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -108,10 +105,10 @@ class ClientSignUpFragment : BaseFragment() {
                         binding.etEmail.text.toString(),
                         binding.etPassword.text.toString(),
                     ).asLiveData().observe(viewLifecycleOwner) {
-                            hideLoading()
+                            hideMainLoading()
                             when (it) {
                                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                is State.Loading -> showLoading()
+                                is State.Loading -> showMainLoading()
                                 is State.Success ->
                                     findNavController().navigate(
                                         SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(false)

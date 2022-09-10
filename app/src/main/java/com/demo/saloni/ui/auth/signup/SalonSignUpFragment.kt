@@ -16,7 +16,7 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.afollestad.vvalidator.form
 import com.demo.saloni.databinding.FragmentSalonSignUpBinding
-import com.demo.saloni.ui.BaseFragment
+import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
 import java.io.FileNotFoundException
 
@@ -96,16 +96,17 @@ class SalonSignUpFragment : BaseFragment() {
                         binding.etSalonName.text.toString(),
                         binding.etMobileNumber.text.toString(),
                         binding.etEmail.text.toString(),
+                        binding.etAddress.text.toString(),
                         binding.etPassword.text.toString(),
                         "facebook",
                         "insta",
                         "twitter"
                     )
                         .asLiveData().observe(viewLifecycleOwner) {
-                            hideLoading()
+                            hideMainLoading()
                             when (it) {
                                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                is State.Loading -> showLoading()
+                                is State.Loading -> showMainLoading()
                                 is State.Success ->
                                     findNavController().navigate(
                                         SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(true)
