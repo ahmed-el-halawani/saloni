@@ -25,15 +25,15 @@ import com.newcore.easyrecyclergenerator.rvSingleList
 
 class SalonPreview : BaseFragment() {
 
-    private val binding : FragmentSalonPreviewBinding by lazy {
+    private val binding: FragmentSalonPreviewBinding by lazy {
         FragmentSalonPreviewBinding.inflate(layoutInflater)
     }
 
-    private val args:SalonPreviewArgs by navArgs()
+    private val args: SalonPreviewArgs by navArgs()
 
     private val salon by lazy { args.salon }
 
-    private val vm:SalonPreviewViewModel by viewModels()
+    private val vm: SalonPreviewViewModel by viewModels()
 
     private val barbersAdapter by lazy {
         rvSingleList(binding.rvBarbers, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = GridLayoutManager(requireContext(), 4)) {
@@ -45,7 +45,7 @@ class SalonPreview : BaseFragment() {
 
                 itemBarberBinding.container.setOnClickListener {
                     findNavController().navigate(
-                        SalonPreviewDirections.actionSalonPreviewToFragmentBarberPreview(barber)
+                        SalonPreviewDirections.actionSalonPreviewToFragmentBarberServices(barber, salon)
                     )
                 }
             }
@@ -55,7 +55,7 @@ class SalonPreview : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
+    ): View {
         // Inflate the layout for this fragment
         setBackButton(binding.btnBack)
         return binding.root
@@ -80,11 +80,10 @@ class SalonPreview : BaseFragment() {
             tvSalonName2.text = salon.name
             tvAddress.text = salon.address
             tvPhoneNumber.text = salon.phoneNumber
-            tvEmail.text =salon.email
+            tvEmail.text = salon.email
 
         }
     }
-
 
 
 }

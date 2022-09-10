@@ -158,20 +158,23 @@
         android:id="@+id/salonPreview"
         android:name="com.demo.saloni.ui.salonpreview.SalonPreview"
         android:label="SalonPreview" >
-        <action
-            android:id="@+id/action_salonPreview_to_fragmentBarberPreview"
-            app:destination="@id/fragmentBarberPreview" />
         <argument
             android:name="salon"
             app:argType="com.demo.saloni.data.remote.entities.SalonProfile" />
+        <action
+            android:id="@+id/action_salonPreview_to_fragmentBarberServices"
+            app:destination="@id/fragmentBarberServices" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentBarberPreview"
-        android:name="com.demo.saloni.ui.barberpreview.FragmentBarberPreview"
-        android:label="FragmentBarberPreview" >
+        android:id="@+id/fragmentBarberServices"
+        android:name="com.demo.saloni.ui.barberpreview.FragmentBarberServices"
+        android:label="FragmentBarberServices" >
         <argument
             android:name="barber"
             app:argType="com.demo.saloni.data.remote.entities.Barber" />
+        <argument
+            android:name="salon"
+            app:argType="com.demo.saloni.data.remote.entities.SalonProfile" />
     </fragment>
 
 </navigation>
