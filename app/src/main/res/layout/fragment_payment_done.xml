@@ -214,7 +214,7 @@
                         app:layout_constraintStart_toEndOf="@+id/circleImageView2" />
 
                     <TextView
-                        android:id="@+id/textView11"
+                        android:id="@+id/tvPhoneNumber"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="5dp"
@@ -227,7 +227,7 @@
                         app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
                     <TextView
-                        android:id="@+id/textView12"
+                        android:id="@+id/tvTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:background="@drawable/button_shape_blue_light"
@@ -240,7 +240,7 @@
 
 
                     <TextView
-                        android:id="@+id/textView13"
+                        android:id="@+id/tvDate"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
@@ -249,7 +249,7 @@
                         android:padding="3dp"
                         android:text="31 Aug 2022"
                         android:textSize="11sp"
-                        app:layout_constraintEnd_toStartOf="@+id/textView12"
+                        app:layout_constraintEnd_toStartOf="@+id/tvTime"
                         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -262,9 +262,9 @@
                         android:text="20 KNET Paid"
                         android:textColor="@color/white"
                         android:textSize="11sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                        app:layout_constraintEnd_toEndOf="@+id/textView12"
-                        app:layout_constraintStart_toStartOf="@+id/textView13" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                        app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                        app:layout_constraintStart_toStartOf="@+id/tvDate" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

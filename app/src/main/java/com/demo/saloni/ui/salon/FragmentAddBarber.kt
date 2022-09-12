@@ -63,9 +63,8 @@ class FragmentAddBarber : BaseFragment() {
             if (it.resultCode == Activity.RESULT_OK) {
                 try {
                     vm.imageUri = it.data?.data
-                    Log.e(TAG, "image.lastPathSegment: " + vm.imageUri?.lastPathSegment)
                     binding.ivUserProfileImage.setImageURI(vm.imageUri)
-                } catch (e: FileNotFoundException) {
+                } catch (e: Throwable) {
                     e.printStackTrace()
                     Toast.makeText(
                         requireContext(),

@@ -16,6 +16,7 @@ import com.demo.saloni.databinding.FragmentHomeClientBinding
 import com.demo.saloni.databinding.ItemSalonBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -67,6 +68,13 @@ class FragmentHomeClient : BaseFragment() {
                 Glide.with(requireContext()).load(Firebase.storage.reference.child(client.image!!)).into(civClient)
 
             tvUsername.text = client.name
+
+            btnProfile.setOnClickListener {
+                    Firebase.auth.signOut()
+                    findNavController().navigate(
+                        FragmentHomeClientDirections.actionFragmentHomeClientToSplashFragment()
+                    )
+            }
 
         }
 
