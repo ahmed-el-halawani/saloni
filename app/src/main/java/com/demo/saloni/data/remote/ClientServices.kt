@@ -2,8 +2,10 @@ package com.demo.saloni.data.remote
 
 import android.net.Uri
 import androidx.core.net.toFile
+import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.Keys.barber_child
 import com.demo.saloni.data.remote.Keys.profiles
+import com.demo.saloni.data.remote.Keys.reservations
 import com.demo.saloni.data.remote.entities.*
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -17,6 +19,7 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
+import java.util.*
 import java.util.concurrent.Flow
 
 class ClientServices {
@@ -51,23 +54,19 @@ class ClientServices {
         })
         return salonsFlow;
     }
-//
-//    private val barberEventListener = object : ValueEventListener {
-//        override fun onDataChange(snapshot: DataSnapshot) {
-//            barberFlow.value = snapshot.getValue(Barber::class.java)?:throw Exception("barber not found")
-//        }
-//
-//        override fun onCancelled(error: DatabaseError) {
-//            throw Exception(error.message)
-//        }
-//    }
-//
-//    fun getBarber(barberId: String): StateFlow<Barber?> {
-//        barberPath?.removeEventListener(barberEventListener)
-//        barberPath = barbersPath.child(barberId)
-//        barberPath?.addValueEventListener(barberEventListener)
-//        return barberFlow;
-//    }
 
+
+    suspend fun addReservation(
+        reservation: Reservation
+    ): String {
+        val user = Firebase.auth.currentUser ?: throw Exception("you are not logged in")
+
+        val newReservation = Firebase.database.reference.child(reservations).push()
+        reservation.reservationId = newReservation.key ?: UUID.randomUUID().toString();
+        reservation.client = CashedData.clientProfile;
+        newReservation.setValue(reservation).await()
+
+        return reservation.reservationId;
+    }
 
 }

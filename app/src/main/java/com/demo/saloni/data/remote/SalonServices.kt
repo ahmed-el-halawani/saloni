@@ -3,7 +3,9 @@ package com.demo.saloni.data.remote
 import android.net.Uri
 import androidx.core.net.toFile
 import com.demo.saloni.data.remote.Keys.barber_child
+import com.demo.saloni.data.remote.Keys.reservations
 import com.demo.saloni.data.remote.entities.*
+import com.demo.saloni.ui.core.State
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,6 +23,7 @@ import java.util.concurrent.Flow
 class SalonServices {
     private val barbersFlow = MutableStateFlow(emptyList<Barber>())
     private val barberFlow = MutableStateFlow<Barber?>(null)
+    private val reservationFlow = MutableStateFlow<State<List<Reservation>>>(State.Loading())
 
     private val barbersPath = Firebase.database.reference.child(barber_child)
     private var barberPath: DatabaseReference? = null
@@ -122,6 +125,29 @@ class SalonServices {
             }
         })
         return barbersFlow;
+    }
+
+
+    fun getReservation(barberId: String): StateFlow<State<List<Reservation>>> {
+        reservationFlow.value = State.Loading()
+        Firebase.database.reference.child(reservations).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                reservationFlow.value = State.Success(
+                    snapshot.children.mapNotNull {
+                        val reservation = it.getValue(Reservation::class.java)
+                        if (reservation != null && reservation.barberId == barberId)
+                            reservation
+                        else
+                            null
+                    }
+                )
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                reservationFlow.value = State.Error(error.message)
+            }
+        })
+        return reservationFlow;
     }
 
     private val barberEventListener = object : ValueEventListener {

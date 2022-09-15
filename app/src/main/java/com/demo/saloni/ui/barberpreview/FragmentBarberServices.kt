@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.util.toRange
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -13,6 +14,8 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.demo.saloni.R
+import com.demo.saloni.data.remote.entities.PaymentMethods
+import com.demo.saloni.data.remote.entities.Reservation
 import com.demo.saloni.data.remote.entities.Service
 import com.demo.saloni.data.remote.entities.ServicesType
 import com.demo.saloni.databinding.FragmentBarberServicesBinding
@@ -72,17 +75,36 @@ class FragmentBarberServices : BaseFragment() {
 
     val timeAdapter by lazy {
         val timeFormatter = SimpleDateFormat("h:mm a")
-        val timeList = Array(48) {
-            timeFormatter.format(
-                Calendar.getInstance().apply {
-                    set(Calendar.HOUR, 0)
-                    set(Calendar.MINUTE, 0)
-                    set(Calendar.AM_PM, Calendar.AM)
-                    add(Calendar.MINUTE, it * 30)
-                }.time
-            )
+
+        val month = 1;
+        val year = 2000;
+        val day = 1
+
+        val startShift = Calendar.getInstance().apply {
+            set(Calendar.MONTH, month)
+            set(Calendar.YEAR, year)
+            set(Calendar.HOUR, args.barber.shiftStartIn!!.hour.toInt())
+            set(Calendar.MINUTE, args.barber.shiftStartIn!!.minut.toInt())
+            set(Calendar.AM_PM, if (args.barber.shiftStartIn!!.amOrPm == "AM") Calendar.AM else Calendar.PM)
         }
-        rvSingleList(binding.rvTime, ItemTimeBinding::inflate, timeList.toList(), LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)) {
+
+
+        val list = ArrayList<String>()
+
+        val endShiftMode = if (args.barber.shiftEntIn!!.amOrPm == "AM") Calendar.AM else Calendar.PM;
+
+
+        for (i in 0..24) {
+            if (startShift.get(Calendar.HOUR) == args.barber.shiftEntIn!!.hour.toInt() && startShift.get(Calendar.AM_PM) == endShiftMode) {
+                break;
+            }
+            val time = startShift.apply {
+                add(Calendar.HOUR, 1)
+            }
+            list.add(timeFormatter.format(time.time))
+
+        }
+        rvSingleList(binding.rvTime, ItemTimeBinding::inflate, list.toList(), LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)) {
             listBuilder { binding, date ->
                 binding.tvTime.text = date
                 if (vm.selectedTime == timeFormatter.parse(date))
@@ -109,9 +131,7 @@ class FragmentBarberServices : BaseFragment() {
             initForm()
 
             if (barber.image != null) {
-                Glide.with(requireContext()).load(
-                    Firebase.storage.reference.child(barber.image!!)
-                ).into(ivBarberImage)
+                Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(ivBarberImage)
             }
 
             tvName.text = barber.name
@@ -160,6 +180,10 @@ class FragmentBarberServices : BaseFragment() {
             cash.isChecked = vm.isCash
             kent.isChecked = !vm.isCash
 
+            radioGroup.setOnCheckedChangeListener { radioGroup, i ->
+                vm.isCash = cash.isChecked
+            }
+
             listOf(cvBeardCut, cvHairCut, cvCleaning, cvColoring).forEach { cardView ->
                 cardView.setOnClickListener {
                     if (vm.selectedServices.contains(cardView.tag as Service)) {
@@ -184,7 +208,10 @@ class FragmentBarberServices : BaseFragment() {
                 } else if (vm.selectedTime == null) {
                     Toast.makeText(context, "you must select time", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
+                    vm.addReservation(args.barber.barberId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner){
+                        Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
+
+                    }
                 }
             }
 
