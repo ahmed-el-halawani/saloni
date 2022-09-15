@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -29,7 +28,7 @@
             android:id="@+id/constraintLayout7"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -71,19 +70,20 @@
             android:id="@+id/constraintLayout8"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:paddingHorizontal="10dp"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout7">
 
-<!--            <com.makeramen.roundedimageview.RoundedImageView-->
-<!--                android:id="@+id/roundedImageView"-->
-<!--                android:layout_width="255dp"-->
-<!--                android:layout_height="168dp"-->
-<!--                android:scaleType="fitXY"-->
-<!--                android:src="@drawable/image_salon"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toTopOf="parent" />-->
+            <!--            <com.makeramen.roundedimageview.RoundedImageView-->
+            <!--                android:id="@+id/roundedImageView"-->
+            <!--                android:layout_width="255dp"-->
+            <!--                android:layout_height="168dp"-->
+            <!--                android:scaleType="fitXY"-->
+            <!--                android:src="@drawable/image_salon"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <com.makeramen.roundedimageview.RoundedImageView
                 android:id="@+id/ivSalonProfileImage"

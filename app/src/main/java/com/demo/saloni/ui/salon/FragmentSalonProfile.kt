@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-
 import com.demo.saloni.databinding.FragmentSalonProfileBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.google.firebase.auth.ktx.auth
@@ -22,7 +20,11 @@ class FragmentSalonProfile : BaseFragment() {
     }
     val vm: SalonProfileViewModel by viewModels()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         setBackButton(binding.btnBack)
 
         return binding.root
@@ -47,6 +49,10 @@ class FragmentSalonProfile : BaseFragment() {
                 findNavController().navigate(
                     FragmentSalonProfileDirections.actionFragmentSalonProfile2ToSplashFragment()
                 )
+            }
+
+            binding.btnEditSalon.setOnClickListener {
+                findNavController().navigate(FragmentSalonProfileDirections.actionFragmentSalonProfile2ToFragmentEditSalon())
             }
 
 
