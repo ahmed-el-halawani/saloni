@@ -134,6 +134,11 @@
         <action
             android:id="@+id/action_fragmentHomeClient_to_salonPreview"
             app:destination="@id/salonPreview" />
+        <action
+            android:id="@+id/action_fragmentHomeClient_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/barberProfile"

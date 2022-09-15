@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="#16454E7E"
     android:layout_marginBottom="5dp"
     android:elevation="0dp"
+    app:cardBackgroundColor="#16454E7E"
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +23,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView2"
+                android:id="@+id/ivUserProfileImage"
                 android:layout_width="47dp"
                 android:layout_height="46dp"
                 android:src="@drawable/profile"
@@ -31,15 +31,15 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/tvUsername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/lato_bold"
                 android:text="Username"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                app:layout_constraintTop_toTopOf="@+id/circleImageView2" />
+                app:layout_constraintStart_toEndOf="@+id/ivUserProfileImage"
+                app:layout_constraintTop_toTopOf="@+id/ivUserProfileImage" />
 
             <ImageView
                 android:id="@+id/imageView5"
@@ -48,11 +48,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 android:src="@drawable/ic_mobile"
-                app:layout_constraintBottom_toBottomOf="@+id/circleImageView2"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView2" />
+                app:layout_constraintBottom_toBottomOf="@+id/ivUserProfileImage"
+                app:layout_constraintStart_toEndOf="@+id/ivUserProfileImage" />
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/tvPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toTopOf="@+id/imageView5" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/tvTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_shape_blue_light"
@@ -78,7 +78,7 @@
 
 
             <TextView
-                android:id="@+id/textView13"
+                android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -87,22 +87,84 @@
                 android:padding="3dp"
                 android:text="31 Aug 2022"
                 android:textSize="11sp"
-                app:layout_constraintEnd_toStartOf="@+id/textView12"
+                app:layout_constraintEnd_toStartOf="@+id/tvTime"
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <TextView
+            <FrameLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@drawable/button_shape_green"
-                android:fontFamily="@font/lato_bold"
-                android:padding="3dp"
-                android:text="20 KNET Paid"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                app:layout_constraintBottom_toBottomOf="@+id/textView11"
-                app:layout_constraintEnd_toEndOf="@+id/textView12"
-                app:layout_constraintStart_toStartOf="@+id/textView13" />
+                app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                app:layout_constraintStart_toStartOf="@+id/tvDate">
+
+                <LinearLayout
+                    android:id="@+id/container"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/button_shape_green"
+                    android:orientation="horizontal"
+                    android:paddingHorizontal="4dp">
+
+                    <TextView
+                        android:id="@+id/tvTotalPrice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/lato_bold"
+                        android:padding="3dp"
+                        android:text="20"
+                        android:textColor="@color/white"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                        app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                        app:layout_constraintStart_toStartOf="@+id/tvDate" />
+
+                    <TextView
+                        android:id="@+id/tvCash"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/lato_bold"
+                        android:padding="3dp"
+                        android:text="Cash Paid"
+                        android:textColor="@color/black"
+                        android:textSize="11sp"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                        app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                        app:layout_constraintStart_toStartOf="@+id/tvDate" />
+
+                    <LinearLayout
+                        android:id="@+id/kent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/lato_bold"
+                            android:padding="3dp"
+                            android:text="KNET Paid"
+                            android:textColor="@color/white"
+                            android:textSize="11sp"
+                            app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                            app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                            app:layout_constraintStart_toStartOf="@+id/tvDate" />
+
+                        <ImageView
+                            android:id="@+id/imageView6"
+                            android:layout_width="10dp"
+                            android:layout_height="15dp"
+                            android:layout_gravity="center_vertical"
+                            app:srcCompat="@drawable/ic_done" />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </FrameLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -118,6 +180,7 @@
             tools:layout_editor_absoluteX="5dp" />
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvServices"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
@@ -125,6 +188,7 @@
             app:layout_constraintTop_toBottomOf="@+id/view6"
             app:spanCount="4"
             tools:itemCount="4"
+            tools:layout_editor_absoluteX="10dp"
             tools:listitem="@layout/item_services" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 

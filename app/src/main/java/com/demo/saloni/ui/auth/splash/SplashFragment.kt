@@ -51,7 +51,10 @@ class SplashFragment : BaseFragment() {
                 when (it) {
                     is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     is State.Loading -> showMainLoading()
-                    is State.Success -> navigateToHome(it.data?.salon ?: false)
+                    is State.Success -> {
+
+                        navigateToHome(it.data?.salon ?: false)
+                    }
                 }
             }
         }

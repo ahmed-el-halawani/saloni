@@ -20,7 +20,7 @@ data class ShiftTime(
     var hour: String = "",
     var minut: String = "",
     var amOrPm: String = "",
-)
+):Serializable
 
 fun Barber.update(
     name: String? = null,
