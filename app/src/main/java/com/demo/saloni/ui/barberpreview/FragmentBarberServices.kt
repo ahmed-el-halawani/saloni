@@ -1,6 +1,8 @@
 package com.demo.saloni.ui.barberpreview
 
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,8 +31,11 @@ import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvList
 import com.newcore.easyrecyclergenerator.rvSingleList
 import java.text.SimpleDateFormat
+import java.time.Month
 import java.util.*
+import kotlin.math.log
 
+@SuppressLint("SimpleDateFormat")
 class FragmentBarberServices : BaseFragment() {
 
     val binding: FragmentBarberServicesBinding by lazy {
@@ -46,9 +51,13 @@ class FragmentBarberServices : BaseFragment() {
 
     val args: FragmentBarberServicesArgs by navArgs()
 
+    val barber by lazy {
+        args.barber
+    }
+
+
     val daysAdapter by lazy {
         rvSingleList(binding.rvDays, ItemCalenderBinding::inflate, emptyList<Date>(), layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)) {
-
 
             val dayNumberFormatter = SimpleDateFormat("dd")
             val dayNameFormatter = SimpleDateFormat("EEE")
@@ -61,14 +70,23 @@ class FragmentBarberServices : BaseFragment() {
                 else
                     itemCalenderBinding.container.setBackgroundColor(resources.getColor(android.R.color.transparent))
 
-                itemCalenderBinding.container.setOnClickListener {
-                    if (vm.selectedDay == null || vm.selectedDay != date) {
-                        vm.currentSelectedItem?.setBackgroundColor(resources.getColor(android.R.color.transparent))
-                        it.setBackgroundColor(resources.getColor(R.color.orange))
-                        vm.selectedDay = date
-                        vm.currentSelectedItem = it
+
+                if (barber.workingDays.any { it.dayName.uppercase() == dayNameFormatter.format(date).uppercase() }) {
+                    itemCalenderBinding.container.setOnClickListener {
+                        if (vm.selectedDay == null || vm.selectedDay != date) {
+                            vm.currentSelectedItem?.setBackgroundColor(resources.getColor(android.R.color.transparent))
+                            it.setBackgroundColor(resources.getColor(R.color.orange))
+                            vm.selectedDay = date
+                            vm.date.apply { time = date }
+                            vm.currentSelectedItem = it
+                        }
                     }
+                } else {
+                    itemCalenderBinding.container.setBackgroundColor(
+                        resources.getColor(R.color.notActiveColor)
+                    )
                 }
+
             }
         }
     }
@@ -116,6 +134,16 @@ class FragmentBarberServices : BaseFragment() {
                     vm.currentSelectedTimeItem?.setBackgroundColor(resources.getColor(android.R.color.transparent))
                     binding.tvTime.setBackgroundColor(resources.getColor(R.color.orange))
                     vm.currentSelectedTimeItem = it
+
+                    val calenderFromDate = Calendar.getInstance().apply {
+                        time = timeFormatter.parse(date) ?: Date()
+                    }
+                    vm.date.apply {
+                        set(Calendar.HOUR, calenderFromDate.get(Calendar.HOUR))
+                        set(Calendar.MINUTE, calenderFromDate.get(Calendar.MINUTE))
+                        set(Calendar.AM_PM, calenderFromDate.get(Calendar.AM_PM))
+                    }
+
                     vm.selectedTime = timeFormatter.parse(date);
                 }
             }
@@ -125,12 +153,11 @@ class FragmentBarberServices : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         timeAdapter
-        val barber = args.barber
         binding.apply {
 
             initForm()
 
-            if (barber.image != null) {
+            if (!barber.image.isNullOrBlank()) {
                 Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(ivBarberImage)
             }
 
@@ -196,6 +223,8 @@ class FragmentBarberServices : BaseFragment() {
                 }
             }
 
+
+            changeMonth()
             initDays()
 
 
@@ -208,7 +237,7 @@ class FragmentBarberServices : BaseFragment() {
                 } else if (vm.selectedTime == null) {
                     Toast.makeText(context, "you must select time", Toast.LENGTH_SHORT).show()
                 } else {
-                    vm.addReservation(args.barber.barberId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner){
+                    vm.addReservation(args.barber.barberId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner) {
                         Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
 
                     }
@@ -218,10 +247,49 @@ class FragmentBarberServices : BaseFragment() {
         }
     }
 
+    private fun changeMonth() {
+        binding.apply {
+            btnNextMonth.setOnClickListener {
+                vm.calender.add(Calendar.MONTH, 1)
+                vm.calender.set(Calendar.DAY_OF_MONTH, 1)
+                vm.selectedDay = null
+                initDays()
+            }
+
+            btnPrevMonth.setOnClickListener {
+                if (vm.calender > Calendar.getInstance()) {
+                    vm.calender.add(Calendar.MONTH, -1)
+                    vm.calender.set(Calendar.DAY_OF_MONTH, 1)
+                    vm.selectedDay = null
+                }
+
+                if (vm.calender.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH))
+                    vm.calender.set(Calendar.DAY_OF_MONTH, Calendar.getInstance().get(Calendar.DAY_OF_MONTH))
+
+                initDays()
+
+            }
+
+
+        }
+    }
+
+
     private fun initDays() {
-        val days = Array(vm.calender.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+        binding.btnPrevMonth.isVisible = vm.calender > Calendar.getInstance()
+
+        binding.tvMonthYear.text = SimpleDateFormat("MMMM yyyy").format(vm.calender.time)
+
+        var daysLength = vm.calender.getActualMaximum(Calendar.DAY_OF_MONTH)
+
+        if (vm.calender.get(Calendar.MONTH) == Calendar.getInstance().get(Calendar.MONTH)) {
+            daysLength = vm.calender.getActualMaximum(Calendar.DAY_OF_MONTH) - Calendar.getInstance().get(Calendar.DAY_OF_MONTH) + 1
+        }
+
+        val days = Array(daysLength) {
             Calendar.getInstance().run {
-                set(Calendar.DAY_OF_MONTH, it + 1)
+                time = vm.calender.time
+                set(Calendar.DAY_OF_MONTH, vm.calender.get(Calendar.DAY_OF_MONTH) + it)
                 time
             }
         }

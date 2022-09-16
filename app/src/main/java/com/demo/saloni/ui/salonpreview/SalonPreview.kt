@@ -74,7 +74,7 @@ class SalonPreview : BaseFragment() {
         }
 
         binding.apply {
-            if (salon.image != null)
+            if (!salon.image.isNullOrBlank())
                 Glide.with(requireContext()).load(Firebase.storage.reference.child(salon.image!!)).into(ivSalonProfileImage2)
 
             tvSalonName2.text = salon.name

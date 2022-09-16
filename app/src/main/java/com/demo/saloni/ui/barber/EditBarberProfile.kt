@@ -119,7 +119,7 @@ class EditBarberProfile : BaseFragment() {
         val barber = args.barber
         binding.apply {
             if (vm.imageUri == null)
-                if (barber.image != null) {
+                if (!barber.image.isNullOrBlank()) {
                     Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(ivProfileImage)
                 }
 

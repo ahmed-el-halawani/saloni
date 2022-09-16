@@ -1,5 +1,6 @@
 package com.demo.saloni.ui.barberpreview
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.view.View
 import androidx.lifecycle.SavedStateHandle
@@ -19,6 +20,8 @@ class BarberServiceViewModel() : ViewModel() {
     val selectedServices = ArrayList<Service>()
     var selectedDay: Date? = null
     var selectedTime: Date? = null
+
+    var date = Calendar.getInstance()
     var isCash: Boolean = true
 
     val calender = Calendar.getInstance()
@@ -33,12 +36,12 @@ class BarberServiceViewModel() : ViewModel() {
         barberId: String = "",
         services: List<Service> = emptyList(),
         paymentMethod: PaymentMethods = PaymentMethods.Cash,
-    ) = flow<State<String>> {
+    ) = flow {
         emit(State.Loading())
         try {
             val res = clientService.addReservation(
                 Reservation(
-                    barberId, services, paymentMethod
+                    barberId, services, date.time, paymentMethod
                 )
             );
             emit(State.Success(res))

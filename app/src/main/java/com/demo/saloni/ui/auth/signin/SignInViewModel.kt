@@ -11,23 +11,10 @@ import kotlinx.coroutines.flow.flow
 class SignInViewModel : ViewModel() {
     private val auth = AuthServices()
 
-    fun signIn(emailOrPhone: String, password: String, isSalon: Boolean) =
-        if (isSalon) signInSalon(emailOrPhone, password) else signInClient(emailOrPhone, password)
-
-    private fun signInClient(emailOrPhone: String, password: String) = flow {
+    fun signIn(emailOrPhone: String, password: String) = flow {
         emit(State.Loading())
         try {
-            val response = auth.signInClient(emailOrPhone, password)
-            emit(State.Success(response))
-        } catch (e: Throwable) {
-            emit(State.Error(message = e.message ?: e.localizedMessage))
-        }
-    }
-
-    private fun signInSalon(emailOrPhone: String, password: String) = flow {
-        emit(State.Loading())
-        try {
-            val response = auth.signInSalon(emailOrPhone, password)
+            val response = auth.signIn(emailOrPhone, password)
             emit(State.Success(response))
         } catch (e: Throwable) {
             emit(State.Error(message = e.message ?: e.localizedMessage))

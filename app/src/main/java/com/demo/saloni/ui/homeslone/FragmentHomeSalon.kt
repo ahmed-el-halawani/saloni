@@ -55,10 +55,8 @@ class FragmentHomeSalon : BaseFragment() {
     ): View {
         return binding.apply {
 
-            if (vm.salonProfile?.image != null)
-                Glide.with(requireContext()).load(
-                    Firebase.storage.reference.child(vm.salonProfile?.image ?: "")
-                ).into(binding.ivSalonProfileImage2)
+            if (!vm.salonProfile?.image.isNullOrBlank())
+                Glide.with(requireContext()).load(Firebase.storage.reference.child(vm.salonProfile?.image ?: "")).into(binding.ivSalonProfileImage2)
 
             tvSalonName2.text = vm.salonProfile?.name
 
