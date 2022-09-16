@@ -167,6 +167,7 @@
 
 
         <Button
+            android:id="@+id/btnScann"
             style="@style/Widget.Material3.Button.ElevatedButton.btn_orange_false"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

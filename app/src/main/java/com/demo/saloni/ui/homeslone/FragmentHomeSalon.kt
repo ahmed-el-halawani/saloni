@@ -81,6 +81,11 @@ class FragmentHomeSalon : BaseFragment() {
     }
 
     private fun initActions() {
+        binding.btnScann.setOnClickListener {
+            findNavController().navigate(
+                FragmentHomeSalonDirections.actionFragmentHomeSalonToFragmentSalonScanQr()
+            )
+        }
         binding.btnSalonProfile.setOnClickListener {
             findNavController().navigate(
                 FragmentHomeSalonDirections.actionFragmentHomeSalonToFragmentSalonProfile2()

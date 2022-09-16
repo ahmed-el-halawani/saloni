@@ -80,7 +80,7 @@ class FragmentHomeClient : BaseFragment() {
 
             binding.btnNotification.setOnClickListener {
                 findNavController().navigate(
-                    FragmentHomeClientDirections.actionFragmentHomeClientToClientQrFragment()
+                    FragmentHomeClientDirections.actionFragmentHomeClientToPaymentDone()
                 )
             }
 

@@ -241,7 +241,7 @@ class FragmentBarberServices : BaseFragment() {
                     vm.addReservation(args.barber.barberId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner) {
                         Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(
-                            FragmentBarberServicesDirections.actionFragmentBarberServicesToClientQrFragment()
+                            FragmentBarberServicesDirections.actionFragmentBarberServicesToPaymentDone()
                         )
                     }
                 }
