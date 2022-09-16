@@ -6,10 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.bumptech.glide.Glide
 import com.demo.saloni.databinding.FragmentEditSalonProfileBinding
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.storage.ktx.storage
 
 class FragmentEditSalon : Fragment() {
 
@@ -37,7 +34,7 @@ class FragmentEditSalon : Fragment() {
             etSalonName.setText(vm.salonProfile!!.name)
             etMobileNumber.setText(vm.salonProfile!!.name)
             etAddress.setText(vm.salonProfile!!.name)
-            
+
 
         }
     }
