@@ -31,7 +31,7 @@
             android:id="@+id/constraintLayout9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="20dp"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
@@ -65,9 +65,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayout11"
             android:layout_width="match_parent"
-            android:layout_marginTop="80dp"
             android:layout_height="0dp"
-            android:paddingHorizontal="10dp"
+            android:layout_marginTop="50dp"
+            android:paddingHorizontal="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textView14"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
@@ -137,37 +137,36 @@
 
         <LinearLayout
             android:id="@+id/textView14"
+            style="@style/button_style_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/button_style_blue"
-            android:layout_marginBottom="10dp"
             android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/lato_bold"
                 android:gravity="start"
                 android:padding="18dp"
                 android:text="Total amount"
-                android:textSize="18sp"
-                android:fontFamily="@font/lato_bold"
                 android:textColor="@color/white"
-                />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
-                android:padding="18dp"
-                android:gravity="end"
-                android:textSize="18sp"
                 android:fontFamily="@font/lato_bold"
+                android:gravity="end"
+                android:padding="18dp"
                 android:text="65"
                 android:textColor="@color/white"
-                />
+                android:textSize="18sp" />
 
         </LinearLayout>
 
