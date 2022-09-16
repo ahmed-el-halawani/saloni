@@ -7,4 +7,5 @@ object Keys {
     const val profiles = "profiles"
     const val barber_child = "barber_child"
     const val reservations = "reservations"
+    const val reports = "reports"
 }

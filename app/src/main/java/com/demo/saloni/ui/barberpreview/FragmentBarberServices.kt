@@ -12,6 +12,7 @@ import androidx.core.util.toRange
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -239,7 +240,9 @@ class FragmentBarberServices : BaseFragment() {
                 } else {
                     vm.addReservation(args.barber.barberId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner) {
                         Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
-
+                        findNavController().navigate(
+                            FragmentBarberServicesDirections.actionFragmentBarberServicesToClientQrFragment()
+                        )
                     }
                 }
             }

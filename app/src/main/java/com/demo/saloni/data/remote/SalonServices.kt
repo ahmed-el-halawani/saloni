@@ -3,6 +3,7 @@ package com.demo.saloni.data.remote
 import android.net.Uri
 import androidx.core.net.toFile
 import com.demo.saloni.data.remote.Keys.barber_child
+import com.demo.saloni.data.remote.Keys.reports
 import com.demo.saloni.data.remote.Keys.reservations
 import com.demo.saloni.data.remote.entities.*
 import com.demo.saloni.ui.core.State
@@ -167,4 +168,12 @@ class SalonServices {
         return barberFlow;
     }
 
+
+    suspend fun readQr(reservationId: String): Reservation {
+        val reservationPath = Firebase.database.reference.child(reservations).child(reservationId)
+        val reservation = reservationPath.get().await().getValue(Reservation::class.java) ?: throw Exception("Reservation not exist")
+        reservationPath.removeValue().await()
+        Firebase.database.reference.child(reports).child(reservationId).setValue(reservation).await()
+        return reservation;
+    }
 }

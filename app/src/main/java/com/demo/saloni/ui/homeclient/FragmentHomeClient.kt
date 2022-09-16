@@ -61,6 +61,7 @@ class FragmentHomeClient : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         val client = vm.clientProfile!!
 
         binding.apply {
@@ -73,6 +74,13 @@ class FragmentHomeClient : BaseFragment() {
                 Firebase.auth.signOut()
                 findNavController().navigate(
                     FragmentHomeClientDirections.actionFragmentHomeClientToSplashFragment()
+                )
+            }
+
+
+            binding.btnNotification.setOnClickListener {
+                findNavController().navigate(
+                    FragmentHomeClientDirections.actionFragmentHomeClientToClientQrFragment()
                 )
             }
 
