@@ -15,6 +15,7 @@ import com.demo.saloni.data.remote.AuthServices
 import com.demo.saloni.databinding.FragmentSignInBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.google.firebase.database.snapshot.BooleanNode
 
 private const val TAG = "SignInFragment"
 
@@ -28,13 +29,13 @@ class SignInFragment : BaseFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         binding = FragmentSignInBinding.inflate(inflater, container, false);
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        test();
 
         form {
             input(binding.etEmail) {
@@ -45,28 +46,51 @@ class SignInFragment : BaseFragment() {
 
             submitWith(binding.btnLogin) {
                 if (it.success()) {
-                    vm.signIn(binding.etEmail.text.toString(), binding.etPassword.text.toString(), args.isSalon).asLiveData().observe(viewLifecycleOwner) {
-                        hideMainLoading()
-                        when (it) {
-                            is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                            is State.Loading -> showMainLoading()
-                            is State.Success -> navigateToHome()
-                        }
-                    }
+                    login(binding.etEmail.text.toString(), binding.etPassword.text.toString())
                 }
             }
+
         }
 
 
         binding.btnSignUp.setOnClickListener {
-            findNavController().navigate( SignInFragmentDirections.actionSignInFragmentToSignUpFragment() )
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
         }
     }
 
-    fun navigateToHome() {
+    private fun login(user:String,password:String) {
+        vm.signIn(user,password).asLiveData().observe(viewLifecycleOwner) {
+            hideMainLoading()
+            when (it) {
+                is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                is State.Loading -> showMainLoading()
+                is State.Success -> navigateToHome(it.data!!.salon)
+            }
+        }
+    }
+
+    private fun navigateToHome(isSalon: Boolean) {
         findNavController().navigate(
-            if (args.isSalon) SignInFragmentDirections.actionSignInFragmentToFragmentHomeSalon()
+            if (isSalon) SignInFragmentDirections.actionSignInFragmentToFragmentHomeSalon()
             else SignInFragmentDirections.actionSignInFragmentToFragmentHomeClient()
         )
     }
+
+    fun test(){
+        binding.apply {
+
+            btnClient.setOnClickListener {
+                binding.etEmail.setText("client@gmail.com")
+                binding.etPassword.setText("12345678")
+            }
+
+            btnSalon.setOnClickListener {
+                binding.etEmail.setText("user@gmail.com")
+                binding.etPassword.setText("12345678")
+            }
+        }
+    }
+
+
+
 }

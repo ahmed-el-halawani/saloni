@@ -99,7 +99,7 @@
                 app:layout_constraintStart_toStartOf="@+id/tvDate">
 
                 <LinearLayout
-                    android:id="@+id/container"
+                    android:id="@+id/paymentContainer"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/button_shape_green"

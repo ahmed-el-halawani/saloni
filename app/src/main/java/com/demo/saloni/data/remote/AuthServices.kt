@@ -18,10 +18,10 @@ import kotlinx.coroutines.withContext
 class AuthServices {
     private val cashedData = CashedData;
 
-    suspend fun signInClient(
+    suspend fun signIn(
         emailOrPhone: String,
         password: String,
-    ): ClientProfile {
+    ): Profile {
         val clientProfiles = Firebase.database.reference.child(profiles).get().await()
 
         val profile = clientProfiles.children.map { it.getValue(Profile::class.java) }.firstOrNull {
@@ -30,26 +30,10 @@ class AuthServices {
 
 
         val user = Firebase.auth.signInWithEmailAndPassword(profile.email, password).await().user ?: throw Exception("Client Not Found")
-        val client = clientProfiles.child(user.uid).getValue(ClientProfile::class.java) ?: throw Exception("Client Not Found")
-        cashedData.clientProfile = client
-        return client
+
+        return getProfile(user.uid) ?: throw Exception("profile not found")
     }
 
-    suspend fun signInSalon(
-        emailOrPhone: String,
-        password: String,
-    ): SalonProfile {
-        val salonProfiles = Firebase.database.reference.child(profiles).get().await()
-
-        val profile = salonProfiles.children.map { it.getValue(Profile::class.java) }.firstOrNull {
-            it?.email?.uppercase() == emailOrPhone.uppercase() || it?.phoneNumber?.uppercase() == emailOrPhone.uppercase()
-        } ?: throw Exception("User Not Found")
-
-        val user = Firebase.auth.signInWithEmailAndPassword(profile.email, password).await().user ?: throw Exception("User Not Found")
-        val salonProfile = salonProfiles.child(user.uid).getValue(SalonProfile::class.java) ?: throw Exception("Client Not Found")
-        cashedData.salonProfile = salonProfile;
-        return salonProfile;
-    }
 
 
     suspend fun signUpClient(

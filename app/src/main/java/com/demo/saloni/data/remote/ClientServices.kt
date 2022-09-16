@@ -59,8 +59,6 @@ class ClientServices {
     suspend fun addReservation(
         reservation: Reservation
     ): String {
-        val user = Firebase.auth.currentUser ?: throw Exception("you are not logged in")
-
         val newReservation = Firebase.database.reference.child(reservations).push()
         reservation.reservationId = newReservation.key ?: UUID.randomUUID().toString();
         reservation.client = CashedData.clientProfile;

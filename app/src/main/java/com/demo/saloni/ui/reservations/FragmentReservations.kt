@@ -1,17 +1,21 @@
 package com.demo.saloni.ui.reservations
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.demo.saloni.R
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.entities.Barber
+import com.demo.saloni.data.remote.entities.PaymentMethods
 import com.demo.saloni.data.remote.entities.Reservation
 import com.demo.saloni.data.remote.entities.Service
 import com.demo.saloni.databinding.FragmentReservationsBinding
@@ -23,7 +27,10 @@ import com.demo.saloni.ui.core.State
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
+import java.text.SimpleDateFormat
+import java.util.*
 
+@SuppressLint("SimpleDateFormat")
 class FragmentReservations : BaseFragment() {
 
     val vm: ReservationSalonViewModel by viewModels()
@@ -33,10 +40,34 @@ class FragmentReservations : BaseFragment() {
     }
 
     val reservationAdapter by lazy {
+        val dayNumberFormatter = SimpleDateFormat("dd MMMM,yyyy")
+        val timeFormatter = SimpleDateFormat("h:mm a")
+
         rvSingleList(binding.rcReservation, ItemReservationBinding::inflate, emptyList<Reservation>()) {
             listBuilder { itemReservationBinding, reservation ->
-                if (reservation.client?.image != null) {
+                if (!reservation.client?.image.isNullOrBlank()) {
                     Glide.with(requireContext()).load(Firebase.storage.reference.child(reservation.client?.image!!)).into(itemReservationBinding.ivUserProfileImage)
+                }
+                reservation.apply {
+                    val date = Calendar.getInstance().apply {
+                        time = reservation.date ?: Date()
+                    }
+                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toString()
+
+                    itemReservationBinding.tvDate.text = dayNumberFormatter.format(date.time)
+                    itemReservationBinding.tvTime.text = timeFormatter.format(date.time)
+                    when (reservation.paymentMethod) {
+                        PaymentMethods.Cash -> {
+                            itemReservationBinding.paymentContainer.setBackgroundColor(resources.getColor(R.color.white))
+                            itemReservationBinding.tvTotalPrice.setTextColor(resources.getColor(R.color.black))
+                        }
+                        PaymentMethods.Kent -> {
+                            itemReservationBinding.tvCash.isVisible = false
+                            itemReservationBinding.kent.isVisible = true
+                        }
+                    }
+
+
                 }
 
                 rvSingleList(itemReservationBinding.rvServices, ItemServicesBinding::inflate, reservation.services) {
@@ -49,10 +80,10 @@ class FragmentReservations : BaseFragment() {
     }
 
     val barbersAdapter by lazy {
-        rvSingleList(binding.rcBarberList, ItemBarberBinding::inflate, emptyList<Barber>()) {
+        rvSingleList(binding.rcBarberList, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)) {
             listBuilder { itemBarberBinding, barber ->
                 itemBarberBinding.tvBarberName.text = barber.name
-                if (barber.image != null)
+                if (!barber.image.isNullOrBlank())
                     Glide.with(requireContext()).load(
                         Firebase.storage.reference.child(barber.image!!)
                     ).into(itemBarberBinding.ivBarberImage)
@@ -74,8 +105,8 @@ class FragmentReservations : BaseFragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
+        setBackButton(binding.btnBack)
         return binding.root
     }
 

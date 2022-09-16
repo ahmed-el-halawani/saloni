@@ -34,9 +34,9 @@ class FragmentSalonProfile : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            Glide.with(requireContext())
-                .load(Firebase.storage.reference.child(vm.salonProfile?.image ?: ""))
-                .into(binding.ivSalonProfileImage)
+
+            if (!vm.salonProfile?.image.isNullOrBlank())
+                Glide.with(requireContext()).load(Firebase.storage.reference.child(vm.salonProfile?.image!!)).into(binding.ivSalonProfileImage)
 
             tvSalonName.text = vm.salonProfile!!.name
 

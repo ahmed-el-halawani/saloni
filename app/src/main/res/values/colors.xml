@@ -9,5 +9,7 @@
     <color name="light_weight_black2">#3B454E7E</color>
     <color name="green">#40B84C</color>
     <color name="selectedItemColor">#C7F395</color>
+    <color name="notActiveColor">#8F7E7E7E</color>
+
 
 </resources>

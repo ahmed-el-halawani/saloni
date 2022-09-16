@@ -50,7 +50,7 @@ class BarberProfile : BaseFragment() {
                     val barber = state.data!!;
                     initActions(barber)
 
-                    if (barber.image != null) {
+                    if (!barber.image.isNullOrBlank()) {
                         Glide.with(requireContext()).load(
                             Firebase.storage.reference.child(barber.image!!)
                         ).into(ivBarberProfile)

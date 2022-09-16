@@ -33,7 +33,7 @@ class FragmentHomeClient : BaseFragment() {
         rvSingleList(binding.rcSalon, ItemSalonBinding::inflate, emptyList<SalonProfile>()) {
             listBuilder { itemSalonBinding, salonProfile ->
                 itemSalonBinding.apply {
-                    if (salonProfile.image != null)
+                    if (!salonProfile.image.isNullOrEmpty())
                         Glide.with(requireContext()).load(Firebase.storage.reference.child(salonProfile.image)).into(ivSalonImage)
 
                     tvSalonName.text = salonProfile.name
@@ -64,16 +64,16 @@ class FragmentHomeClient : BaseFragment() {
         val client = vm.clientProfile!!
 
         binding.apply {
-            if (client.image != null)
-                Glide.with(requireContext()).load(Firebase.storage.reference.child(client.image!!)).into(civClient)
+            if (!client.image.isNullOrEmpty())
+                Glide.with(requireContext()).load(Firebase.storage.reference.child(client.image)).into(civClient)
 
             tvUsername.text = client.name
 
             btnProfile.setOnClickListener {
-                    Firebase.auth.signOut()
-                    findNavController().navigate(
-                        FragmentHomeClientDirections.actionFragmentHomeClientToSplashFragment()
-                    )
+                Firebase.auth.signOut()
+                findNavController().navigate(
+                    FragmentHomeClientDirections.actionFragmentHomeClientToSplashFragment()
+                )
             }
 
         }
@@ -83,7 +83,7 @@ class FragmentHomeClient : BaseFragment() {
             when (it) {
                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 is State.Loading -> showMainLoading()
-                is State.Success -> slaonAdapter.setList(it.data?: emptyList())
+                is State.Success -> slaonAdapter.setList(it.data ?: emptyList())
             }
         }
 
