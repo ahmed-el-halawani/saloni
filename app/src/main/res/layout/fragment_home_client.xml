@@ -29,19 +29,16 @@
             android:id="@+id/constraintLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:padding="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnNotification"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:cardBackgroundColor="#22FFFFFF"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="0dp"
-                app:cardMaxElevation="0dp"
+                style="@style/icon_tool_bar"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -49,18 +46,15 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="12dp"
+                    android:padding="10dp"
                     android:src="@drawable/ic_done" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnProfile"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                app:cardBackgroundColor="#22FFFFFF"
-                app:cardCornerRadius="4dp"
-                app:cardElevation="0dp"
-                app:cardMaxElevation="0dp"
+                style="@style/icon_tool_bar"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -68,7 +62,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="12dp"
+                    android:padding="10dp"
                     android:src="@drawable/ic_profile" />
             </androidx.cardview.widget.CardView>
 
@@ -77,8 +71,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:paddingHorizontal="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
 
             <LinearLayout
@@ -86,7 +81,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -96,8 +91,6 @@
                     android:layout_width="80dp"
                     android:layout_height="80dp"
                     android:src="@drawable/client_image" />
-
-
                 <TextView
                     android:id="@+id/tvUsername"
                     android:layout_width="match_parent"
@@ -113,14 +106,13 @@
                 android:id="@+id/rcSalon"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:clipToPadding="false"
                 android:layout_marginTop="10dp"
-                tools:listitem="@layout/item_salon"
+                android:clipToPadding="false"
+                android:paddingHorizontal="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout10"
-                tools:layout_editor_absoluteX="10dp" />
-
-
+                tools:layout_editor_absoluteX="10dp"
+                tools:listitem="@layout/item_salon" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
