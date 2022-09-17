@@ -239,7 +239,6 @@ class SalonServices {
         val salonPath = Firebase.database.reference.child(profiles).child(salonId)
         val salonP = salonPath.get().await().getValue(SalonProfile::class.java)?.apply {
             this.name = salon.name
-            this.email = salon.email
             this.address = salon.address
             this.facebook = salon.facebook
             this.instagram = salon.instagram

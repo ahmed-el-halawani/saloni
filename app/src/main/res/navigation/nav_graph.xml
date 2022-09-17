@@ -145,6 +145,9 @@
         <action
             android:id="@+id/action_fragmentHomeClient_to_paymentDone"
             app:destination="@id/paymentDone" />
+        <action
+            android:id="@+id/action_fragmentHomeClient_to_fragmentClientProfile"
+            app:destination="@id/fragmentClientProfile" />
     </fragment>
     <fragment
         android:id="@+id/barberProfile"
@@ -222,5 +225,22 @@
             android:name="barberId"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/fragmentClientProfile"
+        android:name="com.demo.saloni.ui.clientprofile.FragmentClientProfile"
+        android:label="FragmentClientProfile" >
+        <action
+            android:id="@+id/action_fragmentClientProfile_to_fragmentEditProfileClient"
+            app:destination="@id/fragmentEditProfileClient" />
+        <action
+            android:id="@+id/action_fragmentClientProfile_to_splashFragment"
+            app:destination="@id/splashFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentEditProfileClient"
+        android:name="com.demo.saloni.ui.clientprofile.FragmentEditProfileClient"
+        android:label="FragmentEditProfileClient" />
 
 </navigation>

@@ -11,6 +11,8 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.demo.saloni.R
+import com.demo.saloni.data.local.CashedData
+import com.demo.saloni.data.remote.entities.ClientProfile
 import com.demo.saloni.data.remote.entities.SalonProfile
 import com.demo.saloni.databinding.FragmentHomeClientBinding
 import com.demo.saloni.databinding.ItemSalonBinding
@@ -66,15 +68,19 @@ class FragmentHomeClient : BaseFragment() {
         val client = vm.clientProfile!!
 
         binding.apply {
-            if (!client.image.isNullOrEmpty())
-                glide().load(Firebase.storage.reference.child(client.image!!)).into(civClient)
-
-            tvUsername.text = client.name
+            initView()
 
             btnProfile.setOnClickListener {
-                Firebase.auth.signOut()
+                findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+                    if (destination.id == R.id.fragmentHomeClient) {
+                        try {
+                            binding.initView()
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
                 findNavController().navigate(
-                    FragmentHomeClientDirections.actionFragmentHomeClientToSplashFragment()
+                    FragmentHomeClientDirections.actionFragmentHomeClientToFragmentClientProfile()
                 )
             }
 
@@ -97,6 +103,13 @@ class FragmentHomeClient : BaseFragment() {
         }
 
 
+    }
+
+    private fun FragmentHomeClientBinding.initView() {
+        if (!CashedData.clientProfile!!.image.isNullOrEmpty())
+            glide().load(Firebase.storage.reference.child(CashedData.clientProfile!!.image!!)).into(civClient)
+
+        tvUsername.text = CashedData.clientProfile!!.name
     }
 
 }

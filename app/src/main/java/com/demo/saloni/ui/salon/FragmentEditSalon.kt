@@ -16,6 +16,7 @@ import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import com.afollestad.vvalidator.form
 import com.bumptech.glide.Glide
+import com.demo.saloni.data.remote.entities.SalonProfile
 import com.demo.saloni.databinding.FragmentEditSalonProfileBinding
 import com.demo.saloni.ui.auth.signup.SignUpFragmentDirections
 import com.demo.saloni.ui.core.BaseFragment
@@ -104,7 +105,8 @@ class FragmentEditSalon : BaseFragment() {
 
 
                     vm.editSalon(
-                        vm.salonProfile!!.apply {
+
+                        SalonProfile().apply {
                             name = binding.etSalonName.text.toString()
                             phoneNumber = binding.etMobileNumber.text.toString()
                             address = binding.etAddress.text.toString()

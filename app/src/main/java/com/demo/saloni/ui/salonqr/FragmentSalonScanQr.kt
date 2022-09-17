@@ -1,5 +1,8 @@
 package com.demo.saloni.ui.salonqr
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Bundle
@@ -9,9 +12,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
@@ -24,6 +31,7 @@ import com.demo.saloni.databinding.FragmentSalonScanQrBinding
 import com.demo.saloni.databinding.ItemServicesBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.firebaseGlide
 import com.demo.saloni.ui.core.glide
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
@@ -42,16 +50,39 @@ class FragmentSalonScanQr : BaseFragment() {
 
     val vm: SalonScanQrViewModel by viewModels()
 
+    var requestPermissionLauncher: ActivityResultLauncher<String>? = null;
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         setBackButton(binding.btnBack)
+        requestPermissionLauncher = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()
+        ) { isGranted: Boolean ->
+            if (isGranted) {
+                initAction()
+            } else {
+                hideMainLoading()
+                findNavController().popBackStack()
+                Toast.makeText(context, "cant read qr without permission", Toast.LENGTH_SHORT).show()
+            }
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            initAction()
+        } else {
+            requestPermissionLauncher?.launch(Manifest.permission.CAMERA)
+        }
+
+
+    }
+
+    private fun initAction() {
         initScanner()
 
         vm.barber.asLiveData().observe(viewLifecycleOwner) {
@@ -63,6 +94,9 @@ class FragmentSalonScanQr : BaseFragment() {
                     val barber = it.data!!
                     binding.tvClientName.text = barber.name
                     binding.tvPhoneNumber.text = barber.phone
+                    if (!barber.image.isNullOrBlank())
+                        firebaseGlide(barber.image!!, binding.ivBarberImage2)
+
                 }
             }
         }
@@ -75,7 +109,7 @@ class FragmentSalonScanQr : BaseFragment() {
                 is State.Success -> {
                     val salon = it.data!!
                     if (!salon.image.isNullOrBlank())
-                        glide().load(salon.image).into(binding.ivSalonPreviewImage)
+                        firebaseGlide(salon.image!!, binding.ivSalonPreviewImage)
 
                 }
             }
@@ -105,7 +139,6 @@ class FragmentSalonScanQr : BaseFragment() {
 
 
         }
-
     }
 
     private val TAG = "FragmentSalonScanQr"

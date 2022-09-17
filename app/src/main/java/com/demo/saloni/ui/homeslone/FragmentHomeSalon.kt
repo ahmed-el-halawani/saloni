@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.demo.saloni.R
+import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.entities.Barber
 import com.demo.saloni.databinding.FragmentHomeSalonBinding
 import com.demo.saloni.databinding.ItemBarberBinding
@@ -56,17 +57,22 @@ class FragmentHomeSalon : BaseFragment() {
     ): View {
         return binding.apply {
 
-            if (!vm.salonProfile?.image.isNullOrBlank())
-                glide().load(Firebase.storage.reference.child(vm.salonProfile?.image ?: "")).into(binding.ivSalonProfileImage2)
-
-            tvSalonName2.text = vm.salonProfile?.name
+            initView()
 
         }.root
+    }
+
+    private fun FragmentHomeSalonBinding.initView() {
+        if (!CashedData.salonProfile?.image.isNullOrBlank())
+            glide().load(Firebase.storage.reference.child(vm.salonProfile?.image ?: "")).into(binding.ivSalonProfileImage2)
+
+        tvSalonName2.text = CashedData.salonProfile?.name
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initActions()
 
         vm.getBarbers(vm.salonProfile!!.salonId).asLiveData().observe(viewLifecycleOwner) {
@@ -88,6 +94,14 @@ class FragmentHomeSalon : BaseFragment() {
             )
         }
         binding.btnSalonProfile.setOnClickListener {
+            findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+                if (destination.id == R.id.fragmentHomeSalon) {
+                    try {
+                        binding.initView()
+                    } catch (e: Exception) {
+                    }
+                }
+            }
             findNavController().navigate(
                 FragmentHomeSalonDirections.actionFragmentHomeSalonToFragmentSalonProfile2()
             )

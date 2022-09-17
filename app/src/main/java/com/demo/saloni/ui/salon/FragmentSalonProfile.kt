@@ -3,12 +3,15 @@ package com.demo.saloni.ui.salon
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.demo.saloni.R
+import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.databinding.FragmentSalonProfileBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.glide
@@ -17,7 +20,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class FragmentSalonProfile : BaseFragment() {
-
+    private val TAG = "FragmentSalonProfile"
     val binding by lazy {
         FragmentSalonProfileBinding.inflate(layoutInflater)
     }
@@ -33,21 +36,25 @@ class FragmentSalonProfile : BaseFragment() {
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onResume() {
+        super.onResume()
 
+        initView()
+    }
+
+    private fun initView() {
         binding.apply {
 
-            if (!vm.salonProfile?.image.isNullOrBlank())
-                glide().load(Firebase.storage.reference.child(vm.salonProfile?.image!!)).into(binding.ivSalonProfileImage)
+            if (!CashedData.salonProfile?.image.isNullOrBlank())
+                glide().load(Firebase.storage.reference.child(CashedData.salonProfile?.image!!)).into(binding.ivSalonProfileImage)
 
-            if (vm.salonProfile != null) {
-                val salon = vm.salonProfile!!
-                tvSalonName.text = vm.salonProfile!!.name
+            if (CashedData.salonProfile != null) {
+                val salon = CashedData.salonProfile!!
+                tvSalonName.text = CashedData.salonProfile!!.name
 
-                tvPhoneNumber.text = vm.salonProfile!!.phoneNumber
-                tvEmail.text = vm.salonProfile!!.email
-                tvAddress.text = vm.salonProfile!!.address
+                tvPhoneNumber.text = CashedData.salonProfile!!.phoneNumber
+                tvEmail.text = CashedData.salonProfile!!.email
+                tvAddress.text = CashedData.salonProfile!!.address
 
                 btnInsta.setOnClickListener {
                     setUrlView(salon.instagram)
@@ -71,6 +78,15 @@ class FragmentSalonProfile : BaseFragment() {
             }
 
             binding.btnEditSalon.setOnClickListener {
+                findNavController().addOnDestinationChangedListener { controller, destination, arguments ->
+                    if (destination.id == R.id.fragmentSalonProfile2) {
+                        Log.e(TAG, "initView: " + destination.id + ": " + R.id.fragmentClientProfile)
+                        try {
+                            initView()
+                        } catch (e: Exception) {
+                        }
+                    }
+                }
                 findNavController().navigate(FragmentSalonProfileDirections.actionFragmentSalonProfile2ToFragmentEditSalon())
             }
 
