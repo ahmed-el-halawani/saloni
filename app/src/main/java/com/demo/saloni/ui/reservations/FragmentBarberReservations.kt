@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.demo.saloni.R
@@ -18,10 +19,8 @@ import com.demo.saloni.data.remote.entities.Barber
 import com.demo.saloni.data.remote.entities.PaymentMethods
 import com.demo.saloni.data.remote.entities.Reservation
 import com.demo.saloni.data.remote.entities.Service
-import com.demo.saloni.databinding.FragmentReservationsBinding
-import com.demo.saloni.databinding.ItemBarberBinding
-import com.demo.saloni.databinding.ItemReservationBinding
-import com.demo.saloni.databinding.ItemServicesBinding
+import com.demo.saloni.databinding.*
+import com.demo.saloni.ui.barberpreview.FragmentBarberServicesDirections
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
 import com.demo.saloni.ui.core.glide
@@ -32,13 +31,15 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("SimpleDateFormat")
-class FragmentReservations : BaseFragment() {
+class FragmentBarberReservations : BaseFragment() {
 
     val vm: ReservationSalonViewModel by viewModels()
 
     val binding: FragmentReservationsBinding by lazy {
         FragmentReservationsBinding.inflate(layoutInflater)
     }
+
+    val args: FragmentBarberReservationsArgs by navArgs()
 
     val reservationAdapter by lazy {
         val dayNumberFormatter = SimpleDateFormat("dd MMMM,yyyy")
@@ -80,31 +81,6 @@ class FragmentReservations : BaseFragment() {
         }
     }
 
-    val barbersAdapter by lazy {
-        rvSingleList(binding.rcBarberList, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)) {
-            listBuilder { itemBarberBinding, barber ->
-                itemBarberBinding.tvBarberName.text = barber.name
-                if (!barber.image.isNullOrBlank())
-                    glide().load(
-                        Firebase.storage.reference.child(barber.image!!)
-                    ).into(itemBarberBinding.ivBarberImage)
-
-                itemBarberBinding.container.setOnClickListener {
-                    vm.getReservations(barber.barberId).asLiveData().observe(viewLifecycleOwner) {
-                        hideMainLoading()
-                        when (it) {
-                            is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                            is State.Loading -> showMainLoading()
-                            is State.Success -> {
-                                reservationAdapter.setList(it.data!!)
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -117,13 +93,15 @@ class FragmentReservations : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        vm.getBarbers(CashedData.salonProfile!!.salonId).asLiveData().observe(viewLifecycleOwner) {
+        binding.rcBarberList.isVisible = false
+        binding.textView2.isVisible = false
+        vm.getReservations(args.barberId).asLiveData().observe(viewLifecycleOwner) {
             hideMainLoading()
             when (it) {
                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 is State.Loading -> showMainLoading()
                 is State.Success -> {
-                    barbersAdapter.setList(it.data!!)
+                    reservationAdapter.setList(it.data!!)
                 }
             }
         }

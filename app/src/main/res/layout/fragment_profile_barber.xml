@@ -81,6 +81,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout13">
 
+            <Button
+                style="@style/Widget.Material3.Button.ElevatedButton.btn_orange_false"
+                android:id="@+id/btnReservationList"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:drawableEnd="@drawable/ic_next"
+                android:focusable="true"
+                android:text="Reservations List"
+                android:textAllCaps="true"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivBarberProfile"
                 android:layout_width="80dp"
@@ -116,14 +131,16 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvName" />
 
             <ScrollView
+                android:id="@+id/scrollView2"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
                 android:scrollbars="none"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/btnReservationList"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvSalonName">
+
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -431,19 +448,6 @@
                         </LinearLayout>
 
                     </LinearLayout>
-
-                    <Button
-                        android:id="@+id/btnReservationList"
-                        style="@style/Widget.Material3.Button.ElevatedButton.btn_orange"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:drawableEnd="@drawable/ic_next"
-                        android:text="Reservations List"
-                        android:textAllCaps="true"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.demo.saloni.data.remote
 
 import android.net.Uri
+import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.Keys.barber_child
 import com.demo.saloni.data.remote.Keys.profiles
 import com.demo.saloni.data.remote.Keys.reports
@@ -24,6 +25,7 @@ class SalonServices {
     private val barbersFlow = MutableStateFlow(emptyList<Barber>())
     private val barberFlow = MutableStateFlow<Barber?>(null)
     private val reservationFlow = MutableStateFlow<State<List<Reservation>>>(State.Loading())
+    private val reportsFlow = MutableStateFlow<State<List<Reservation>>>(State.Loading())
 
     private val barbersPath = Firebase.database.reference.child(barber_child)
     private var barberPath: DatabaseReference? = null
@@ -128,6 +130,28 @@ class SalonServices {
     }
 
 
+    fun getReports(barberId: String): StateFlow<State<List<Reservation>>> {
+        reportsFlow.value = State.Loading()
+        Firebase.database.reference.child(reports).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                reportsFlow.value = State.Success(
+                    snapshot.children.mapNotNull {
+                        val reservation = it.getValue(Reservation::class.java)
+                        if (reservation != null && reservation.barberId == barberId)
+                            reservation
+                        else
+                            null
+                    }
+                )
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                reportsFlow.value = State.Error(error.message)
+            }
+        })
+        return reportsFlow;
+    }
+
     fun getReservation(barberId: String): StateFlow<State<List<Reservation>>> {
         reservationFlow.value = State.Loading()
         Firebase.database.reference.child(reservations).addValueEventListener(object : ValueEventListener {
@@ -188,4 +212,45 @@ class SalonServices {
         Firebase.database.reference.child(reports).child(reservationId).setValue(reservation).await()
         return reservation;
     }
+
+
+    suspend fun editSalon(
+        salonId: String,
+        image: Uri? = null,
+        salon: SalonProfile
+    ): SalonProfile {
+        var downloadUri: String? = null;
+        try {
+            if (image != null) {
+                val mountainImagesRef =
+                    Firebase.storage.reference.child("salonProfileImages/${image.lastPathSegment}")
+                try {
+                    mountainImagesRef.downloadUrl.await()
+                } catch (e: StorageException) {
+                    mountainImagesRef.putFile(image).await()
+                }
+                downloadUri = "salonProfileImages/${image.lastPathSegment}"
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+        val salonPath = Firebase.database.reference.child(profiles).child(salonId)
+        val salonP = salonPath.get().await().getValue(SalonProfile::class.java)?.apply {
+            this.name = salon.name
+            this.email = salon.email
+            this.address = salon.address
+            this.facebook = salon.facebook
+            this.instagram = salon.instagram
+            this.twitter = salon.twitter
+            this.phoneNumber = salon.phoneNumber
+            downloadUri?.let { this.image = it }
+            salonPath.setValue(this).await()
+        } ?: throw Exception("salon not found")
+
+        CashedData.salonProfile = salonP
+        return salonP;
+    }
+
 }

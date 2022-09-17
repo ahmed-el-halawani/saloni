@@ -1,5 +1,7 @@
 package com.demo.saloni.ui.salon
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.demo.saloni.databinding.FragmentSalonProfileBinding
 import com.demo.saloni.ui.core.BaseFragment
+import com.demo.saloni.ui.core.glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -36,13 +39,29 @@ class FragmentSalonProfile : BaseFragment() {
         binding.apply {
 
             if (!vm.salonProfile?.image.isNullOrBlank())
-                Glide.with(requireContext()).load(Firebase.storage.reference.child(vm.salonProfile?.image!!)).into(binding.ivSalonProfileImage)
+                glide().load(Firebase.storage.reference.child(vm.salonProfile?.image!!)).into(binding.ivSalonProfileImage)
 
-            tvSalonName.text = vm.salonProfile!!.name
+            if (vm.salonProfile != null) {
+                val salon = vm.salonProfile!!
+                tvSalonName.text = vm.salonProfile!!.name
 
-            tvPhoneNumber.text = vm.salonProfile!!.phoneNumber
-            tvEmail.text = vm.salonProfile!!.email
-            tvAddress.text = vm.salonProfile!!.address
+                tvPhoneNumber.text = vm.salonProfile!!.phoneNumber
+                tvEmail.text = vm.salonProfile!!.email
+                tvAddress.text = vm.salonProfile!!.address
+
+                btnInsta.setOnClickListener {
+                    setUrlView(salon.instagram)
+                }
+                btnFacebook.setOnClickListener {
+                    setUrlView(salon.facebook)
+                }
+
+                btnTwitter.setOnClickListener {
+                    setUrlView(salon.twitter)
+                }
+
+            }
+
 
             binding.btnLogout.setOnClickListener {
                 Firebase.auth.signOut()
@@ -57,5 +76,14 @@ class FragmentSalonProfile : BaseFragment() {
 
 
         }
+    }
+
+    private fun setUrlView(urlLink: String) {
+        var url = urlLink
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent)
     }
 }

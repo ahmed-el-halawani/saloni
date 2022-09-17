@@ -156,6 +156,9 @@
         <argument
             android:name="barberId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_barberProfile_to_fragmentBarberReservations"
+            app:destination="@id/fragmentBarberReservations" />
     </fragment>
     <fragment
         android:id="@+id/editBarberProfile"
@@ -209,6 +212,14 @@
         android:label="Model3dViewer" >
         <argument
             android:name="link"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragmentBarberReservations"
+        android:name="com.demo.saloni.ui.reservations.FragmentBarberReservations"
+        android:label="FragmentBarberReservations" >
+        <argument
+            android:name="barberId"
             app:argType="string" />
     </fragment>
 

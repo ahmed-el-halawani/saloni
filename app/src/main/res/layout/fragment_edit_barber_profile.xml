@@ -68,7 +68,8 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cardView4"
+                android:id="@+id/btnSave"
+
                 style="@style/icon_tool_bar"
                 android:layout_width="38dp"
                 android:layout_height="38dp"
@@ -627,17 +628,6 @@
 
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/btnSave"
-                        style="@style/button_style_blue"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:gravity="center"
-                        android:padding="18dp"
-                        android:text="Save"
-                        android:textColor="@color/white"
-                        app:layout_constraintTop_toBottomOf="@+id/lin4" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

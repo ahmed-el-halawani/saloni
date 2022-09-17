@@ -3,18 +3,19 @@ package com.demo.saloni.data.remote.entities
 import java.io.Serializable
 
 class SalonProfile(
-    var salonId: String = "",
+    val salonId: String = "",
     salonImage: String? = "",
     salonName: String = "",
     phoneNumber: String = "",
     email: String = "",
-    val address: String = "",
-    val facebook: String = "",
-    val instagram: String = "",
-    val twitter: String = "",
+    var address: String = "",
+    var facebook: String = "",
+    var instagram: String = "",
+    var twitter: String = "",
 
     salon: Boolean = true,
 ) : Profile(salonImage, salonName, email, phoneNumber, salon), Serializable {
+
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

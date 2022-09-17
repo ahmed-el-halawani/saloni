@@ -29,6 +29,7 @@ import com.demo.saloni.databinding.ItemCalenderBinding
 import com.demo.saloni.databinding.ItemTimeBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvList
@@ -168,7 +169,7 @@ class FragmentBarberServices : BaseFragment() {
             }
 
             if (barber.model3DFirstStyle!!.image.isNotBlank())
-                Glide.with(requireContext()).load(barber.model3DFirstStyle!!.image).into(binding.ivHairCut3d1)
+                glide().load(barber.model3DFirstStyle!!.image).into(binding.ivHairCut3d1)
         } else {
             binding.ivHairCut3d1.visibility = View.INVISIBLE
         }
@@ -180,7 +181,7 @@ class FragmentBarberServices : BaseFragment() {
             }
 
             if (barber.model3DSecondStyle!!.image.isNotBlank())
-                Glide.with(requireContext()).load(barber.model3DSecondStyle!!.image).into(binding.ivHairCut3d2)
+                glide().load(barber.model3DSecondStyle!!.image).into(binding.ivHairCut3d2)
 
         } else {
             binding.ivHairCut3d2.visibility = View.INVISIBLE
@@ -198,7 +199,10 @@ class FragmentBarberServices : BaseFragment() {
                     if (it.data!!)
                         AlertDialog.Builder(requireContext()).apply {
                             setMessage("You have an incomplete reservation?")
-                            setPositiveButton("OK") { _, _ ->
+                            setPositiveButton("OK") { d, _ ->
+                                d.dismiss()
+                            }
+                            setOnDismissListener {
                                 findNavController().popBackStack()
                             }
                         }.show()
@@ -213,7 +217,7 @@ class FragmentBarberServices : BaseFragment() {
             initForm()
 
             if (!barber.image.isNullOrBlank()) {
-                Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(ivBarberImage)
+                glide().load(Firebase.storage.reference.child(barber.image!!)).into(ivBarberImage)
             }
 
             tvName.text = barber.name

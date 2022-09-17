@@ -16,6 +16,7 @@ import com.demo.saloni.databinding.FragmentHomeClientBinding
 import com.demo.saloni.databinding.ItemSalonBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -34,7 +35,7 @@ class FragmentHomeClient : BaseFragment() {
             listBuilder { itemSalonBinding, salonProfile ->
                 itemSalonBinding.apply {
                     if (!salonProfile.image.isNullOrEmpty())
-                        Glide.with(requireContext()).load(Firebase.storage.reference.child(salonProfile.image)).into(ivSalonImage)
+                        glide().load(Firebase.storage.reference.child(salonProfile.image!!)).into(ivSalonImage)
 
                     tvSalonName.text = salonProfile.name
                     tvSalonAddress.text = salonProfile.address
@@ -66,7 +67,7 @@ class FragmentHomeClient : BaseFragment() {
 
         binding.apply {
             if (!client.image.isNullOrEmpty())
-                Glide.with(requireContext()).load(Firebase.storage.reference.child(client.image)).into(civClient)
+                glide().load(Firebase.storage.reference.child(client.image!!)).into(civClient)
 
             tvUsername.text = client.name
 
