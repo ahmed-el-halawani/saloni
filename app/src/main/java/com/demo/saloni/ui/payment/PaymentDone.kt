@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
@@ -43,6 +44,8 @@ class PaymentDone : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         binding.ivReservationIdQr.setOnClickListener {
             findNavController().popBackStack()
         }
@@ -79,10 +82,32 @@ class PaymentDone : BaseFragment() {
         vm.getReservation().asLiveData().observe(viewLifecycleOwner) {
             hideMainLoading()
             when (it) {
-                is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                is State.Error -> {
+                    if (it.message == "reservation not found") {
+                        binding.reservationData.isVisible = false
+                        binding.tvNoReservations.isVisible = true
+                    } else {
+                        Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
                 is State.Loading -> showMainLoading()
                 is State.Success -> {
                     val reservation = it.data!!;
+                    binding.reservationData.isVisible = true
+                    binding.tvNoReservations.isVisible = false
+                    binding.btnRemoveReservation.setOnClickListener {
+                        vm.cancelReservation(reservation.reservationId).asLiveData().observe(viewLifecycleOwner) { cancelState ->
+                            hideMainLoading()
+                            when (cancelState) {
+                                is State.Error -> Toast.makeText(context, cancelState.message, Toast.LENGTH_SHORT).show()
+                                is State.Loading -> showMainLoading()
+                                is State.Success -> {
+                                    binding.reservationData.isVisible = false
+                                    binding.tvNoReservations.isVisible = true
+                                }
+                            }
+                        }
+                    }
                     binding.ivReservationIdQr.setImageBitmap(encodeAsBitmap(reservation.reservationId))
                     rvSingleList(binding.rvServices, ItemServicesBinding::inflate, reservation.services ?: emptyList(), LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)) {
                         listBuilder { itemServicesBinding, service ->

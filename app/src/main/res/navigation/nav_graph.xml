@@ -191,6 +191,9 @@
             app:destination="@id/paymentDone"
             app:launchSingleTop="true"
             app:popUpTo="@id/fragmentHomeClient" />
+        <action
+            android:id="@+id/action_fragmentBarberServices_to_model3dViewer"
+            app:destination="@id/model3dViewer" />
     </fragment>
     <fragment
         android:id="@+id/paymentDone"
@@ -200,5 +203,13 @@
         android:id="@+id/fragmentSalonScanQr"
         android:name="com.demo.saloni.ui.salonqr.FragmentSalonScanQr"
         android:label="FragmentSalonScanQr" />
+    <fragment
+        android:id="@+id/model3dViewer"
+        android:name="com.demo.saloni.ui.model3dviewer.Model3dViewer"
+        android:label="Model3dViewer" >
+        <argument
+            android:name="link"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

@@ -177,9 +177,13 @@ class SalonServices {
     }
 
 
-    suspend fun readQr(reservationId: String): Reservation {
+    suspend fun readQr(reservationId: String, salonId: String): Reservation {
         val reservationPath = Firebase.database.reference.child(reservations).child(reservationId)
         val reservation = reservationPath.get().await().getValue(Reservation::class.java) ?: throw Exception("Reservation not exist")
+
+        if (reservation.salonId != salonId)
+            throw Exception("this reservation for another salon")
+
         reservationPath.removeValue().await()
         Firebase.database.reference.child(reports).child(reservationId).setValue(reservation).await()
         return reservation;

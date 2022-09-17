@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.ClientServices
 import com.demo.saloni.data.remote.Keys
+import com.demo.saloni.data.remote.Keys.reservations
 import com.demo.saloni.data.remote.SalonServices
 import com.demo.saloni.data.remote.entities.Barber
 import com.demo.saloni.data.remote.entities.Reservation
@@ -17,7 +18,9 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import java.sql.RowId
 
 class PaymentDoneViewModel : ViewModel() {
@@ -51,6 +54,17 @@ class PaymentDoneViewModel : ViewModel() {
         }
 
         return reservationFlow!!;
+
+    }
+
+    fun cancelReservation(reservationId: String) = flow {
+        emit(State.Loading())
+        try {
+            Firebase.database.reference.child(reservations).child(reservationId).removeValue().await()
+            emit(State.Success(Unit))
+        } catch (e: Exception) {
+            emit(State.Error(e.message ?: e.localizedMessage))
+        }
 
     }
 
