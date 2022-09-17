@@ -20,6 +20,7 @@ import com.demo.saloni.databinding.FragmentPaymentDoneBinding
 import com.demo.saloni.databinding.ItemServicesBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.glide
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -71,7 +72,7 @@ class PaymentDone : BaseFragment() {
                 is State.Success -> {
                     val salon = it.data!!
                     if (!salon.image.isNullOrBlank())
-                        Glide.with(requireContext()).load(salon.image).into(binding.ivSalonPreviewImage)
+                        glide().load(salon.image).into(binding.ivSalonPreviewImage)
 
                 }
             }

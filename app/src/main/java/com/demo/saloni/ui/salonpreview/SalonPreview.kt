@@ -18,6 +18,7 @@ import com.demo.saloni.databinding.FragmentSalonPreviewBinding
 import com.demo.saloni.databinding.ItemBarberBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.glide
 import com.demo.saloni.ui.homeslone.FragmentHomeSalonDirections
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -39,7 +40,7 @@ class SalonPreview : BaseFragment() {
         rvSingleList(binding.rvBarbers, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = GridLayoutManager(requireContext(), 4)) {
             listBuilder { itemBarberBinding, barber ->
                 if (!barber.image.isNullOrBlank())
-                    Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(itemBarberBinding.ivBarberImage)
+                    glide().load(Firebase.storage.reference.child(barber.image!!)).into(itemBarberBinding.ivBarberImage)
 
                 itemBarberBinding.tvBarberName.text = barber.name
 
@@ -75,7 +76,7 @@ class SalonPreview : BaseFragment() {
 
         binding.apply {
             if (!salon.image.isNullOrBlank())
-                Glide.with(requireContext()).load(Firebase.storage.reference.child(salon.image!!)).into(ivSalonProfileImage2)
+                glide().load(Firebase.storage.reference.child(salon.image!!)).into(ivSalonProfileImage2)
 
             tvSalonName2.text = salon.name
             tvAddress.text = salon.address

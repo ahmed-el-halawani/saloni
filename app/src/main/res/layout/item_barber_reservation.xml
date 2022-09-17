@@ -16,12 +16,13 @@
         android:gravity="center"
         android:padding="5dp"
         android:orientation="vertical">
+
         <com.makeramen.roundedimageview.RoundedImageView
             android:layout_width="match_parent"
-            app:riv_corner_radius="10dp"
+            android:layout_height="100dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/image_salon"
-            android:layout_height="100dp"/>
+            android:src="@drawable/placeholder"
+            app:riv_corner_radius="10dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

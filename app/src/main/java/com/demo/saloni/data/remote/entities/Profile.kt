@@ -4,10 +4,10 @@ import com.google.firebase.database.IgnoreExtraProperties
 import java.io.Serializable
 
 open class Profile(
-    val image:String?="",
-    val name:String="",
-    val email:String="",
-    val phoneNumber:String="",
+    var image:String?="",
+    var name:String="",
+    var email:String="",
+    var phoneNumber:String="",
     val salon:Boolean=false):Serializable{
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

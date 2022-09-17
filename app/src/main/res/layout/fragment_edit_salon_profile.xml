@@ -116,27 +116,32 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
 
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/btnAddImage"
                         android:layout_width="120dp"
                         android:layout_height="70dp"
 
                         android:layout_marginTop="10dp"
                         android:background="@drawable/shape_image_signup"
+                        android:clickable="true"
+                        android:foreground="?selectableItemBackground"
                         app:cardCornerRadius="10dp"
-
                         app:layout_constraintStart_toStartOf="@+id/textView2"
                         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
                         <ImageView
-                            android:id="@+id/ivProfileImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="?selectableItemBackground"
-                            android:clickable="true"
                             android:padding="20dp"
                             android:src="@drawable/ic_add_image" />
-                    </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/ivProfileImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent" />
+
+
+                    </FrameLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -174,24 +179,26 @@
                             android:hint="Address" />
 
                         <EditText
-                            android:id="@+id/etPassword"
+                            android:id="@+id/etPassword2"
                             style="@style/edit_text_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_design"
                             android:hint="Password"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            android:visibility="gone" />
 
                         <EditText
-                            android:id="@+id/etConfirmPassword"
+                            android:id="@+id/etConfirmPassword2"
                             style="@style/edit_text_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:background="@drawable/edit_text_design"
                             android:hint="Confirm password"
-                            android:inputType="textPassword" />
+                            android:inputType="textPassword"
+                            android:visibility="gone" />
 
                         <View
                             android:layout_width="match_parent"
@@ -201,6 +208,7 @@
 
 
                         <EditText
+                            android:id="@+id/etFacebook"
                             style="@style/edit_text_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -212,6 +220,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:id="@+id/etInsta"
                             style="@style/edit_text_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -224,6 +233,7 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
                         <EditText
+                            android:id="@+id/etTwitter"
                             style="@style/edit_text_style"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

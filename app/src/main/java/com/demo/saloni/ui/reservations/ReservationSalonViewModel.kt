@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.SalonServices
 import com.demo.saloni.data.remote.entities.Barber
+import com.demo.saloni.data.remote.entities.Reservation
 import com.demo.saloni.ui.core.State
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
@@ -25,5 +26,6 @@ class ReservationSalonViewModel : ViewModel() {
     }
 
     fun getReservations(barberId: String) = salonServices.getReservation(barberId)
+    fun getReports(barberId: String) = salonServices.getReports(barberId)
 
 }

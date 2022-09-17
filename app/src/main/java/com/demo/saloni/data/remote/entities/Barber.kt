@@ -16,7 +16,25 @@ data class Barber(
     var shiftEntIn: ShiftTime? = ShiftTime(),
     val model3DFirstStyle: Model3D? = Model3D("https://sketchfab.com/models/0e85a8381b6642b5b2426b7a9585f3c4/embed?autostart=1", ""),
     val model3DSecondStyle: Model3D? = Model3D("https://sketchfab.com/models/0e85a8381b6642b5b2426b7a9585f3c4/embed?autostart=1", ""),
-) : Serializable
+) : Serializable {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Barber
+
+        if (barberId != other.barberId) return false
+
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        var result = barberId.hashCode()
+        result = 31 * result + salonId.hashCode()
+        return result
+    }
+}
 
 data class ShiftTime(
     var hour: String = "",

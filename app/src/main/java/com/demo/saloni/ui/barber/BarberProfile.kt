@@ -1,6 +1,7 @@
 package com.demo.saloni.ui.barber
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.bumptech.glide.Glide
+import com.demo.saloni.ui.core.glide
 import com.demo.saloni.R
 import com.demo.saloni.data.remote.entities.Barber
 import com.demo.saloni.data.remote.entities.ServicesType
@@ -41,6 +42,7 @@ class BarberProfile : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         vm.getBarber(args.barberId).asLiveData().observe(viewLifecycleOwner) { state ->
             hideMainLoading()
             when (state) {
@@ -51,7 +53,7 @@ class BarberProfile : BaseFragment() {
                     initActions(barber)
 
                     if (!barber.image.isNullOrBlank()) {
-                        Glide.with(requireContext()).load(
+                        glide().load(
                             Firebase.storage.reference.child(barber.image!!)
                         ).into(ivBarberProfile)
                     }
@@ -101,7 +103,10 @@ class BarberProfile : BaseFragment() {
                 findNavController().navigate(BarberProfileDirections.actionBarberProfileToEditBarberProfile(barber))
             }
 
-            btnReservationList.setOnClickListener { }
+            binding.btnReservationList.setOnClickListener {
+                Log.e("TAG", "onViewCreated: btnReservationList clicked")
+                findNavController().navigate(BarberProfileDirections.actionBarberProfileToFragmentBarberReservations(args.barberId))
+            }
         }
     }
 

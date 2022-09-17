@@ -26,6 +26,7 @@ import com.demo.saloni.databinding.FragmentEditBarberProfileBinding
 import com.demo.saloni.databinding.ItemBarberServicesBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.glide
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -120,7 +121,7 @@ class EditBarberProfile : BaseFragment() {
         binding.apply {
             if (vm.imageUri == null)
                 if (!barber.image.isNullOrBlank()) {
-                    Glide.with(requireContext()).load(Firebase.storage.reference.child(barber.image!!)).into(ivProfileImage)
+                    glide().load(Firebase.storage.reference.child(barber.image!!)).into(ivProfileImage)
                 }
 
             refreshServiceList()
