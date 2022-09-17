@@ -1,5 +1,6 @@
 package com.demo.saloni.ui.model3dviewer
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,7 +21,9 @@ class Model3dViewer : BaseFragment() {
         return binding.root
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        binding.webview.settings.javaScriptEnabled = true
         binding.webview.loadUrl(args.link)
     }
 }
