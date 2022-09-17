@@ -207,7 +207,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/view5">
 
                         <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/circleImageView2"
+                            android:id="@+id/ivBarberImage2"
                             android:layout_width="47dp"
                             android:layout_height="46dp"
                             android:src="@drawable/profile"
@@ -222,8 +222,8 @@
                             android:layout_marginTop="4dp"
                             android:fontFamily="@font/lato_bold"
                             android:text="Username"
-                            app:layout_constraintStart_toEndOf="@+id/circleImageView2"
-                            app:layout_constraintTop_toTopOf="@+id/circleImageView2" />
+                            app:layout_constraintStart_toEndOf="@+id/ivBarberImage2"
+                            app:layout_constraintTop_toTopOf="@+id/ivBarberImage2" />
 
                         <ImageView
                             android:id="@+id/imageView5"
@@ -232,8 +232,8 @@
                             android:layout_marginStart="10dp"
                             android:layout_marginBottom="5dp"
                             android:src="@drawable/ic_mobile"
-                            app:layout_constraintBottom_toBottomOf="@+id/circleImageView2"
-                            app:layout_constraintStart_toEndOf="@+id/circleImageView2" />
+                            app:layout_constraintBottom_toBottomOf="@+id/ivBarberImage2"
+                            app:layout_constraintStart_toEndOf="@+id/ivBarberImage2" />
 
                         <TextView
                             android:id="@+id/tvPhoneNumber"
