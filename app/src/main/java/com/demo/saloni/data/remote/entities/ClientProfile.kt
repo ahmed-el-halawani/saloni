@@ -6,12 +6,12 @@ class ClientProfile(
     val userId: String = "",
     image: String? = "",
     name: String = "",
-    val civilId: String = "",
-    val dataOfBirth: String = "",
+    var civilId: String = "",
+    var dataOfBirth: String = "",
     phoneNumber: String = "",
     email: String = "",
     salon: Boolean = false,
-    ) : Profile(image, name, email, phoneNumber, salon), Serializable{
+) : Profile(image, name, email, phoneNumber, salon), Serializable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false

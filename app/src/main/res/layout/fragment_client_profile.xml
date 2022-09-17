@@ -13,7 +13,7 @@
         <View
             android:id="@+id/view"
             android:layout_width="wrap_content"
-            android:layout_height="150dp"
+            android:layout_height="120dp"
             android:background="@drawable/round_linear"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +57,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
+                    android:id="@+id/btnEdit"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="8dp"
@@ -166,11 +167,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/linearLayout5"
+                android:id="@+id/linearLayout16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:background="@drawable/edit_text_shape"
                 android:orientation="horizontal"
                 android:padding="15dp"
@@ -180,30 +181,7 @@
 
 
                 <TextView
-                    android:id="@+id/tvAddress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="Jalan DI Pandjation No 8"
-                    android:textColor="@color/splash_color"
-                    android:textSize="17sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/linearLayout16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="5dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/edit_text_shape"
-                android:orientation="horizontal"
-                android:padding="15dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
-
-
-                <TextView
+                    android:id="@+id/tvCivilId"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
@@ -212,36 +190,6 @@
                     android:textSize="17sp" />
             </LinearLayout>
 
-
-            <LinearLayout
-                android:id="@+id/linearLayout7"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="20dp"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/linearLayout16"
-                tools:layout_editor_absoluteX="20dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/instagram" />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/facebook" />
-
-                <ImageView
-
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/twitter" />
-            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

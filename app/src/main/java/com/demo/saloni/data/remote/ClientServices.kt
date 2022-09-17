@@ -67,5 +67,40 @@ class ClientServices {
         return reservation.reservationId;
     }
 
+    suspend fun editClient(
+        clientId: String,
+        image: Uri? = null,
+        client: ClientProfile
+    ): ClientProfile {
+        var downloadUri: String? = null;
+        try {
+            if (image != null) {
+                val mountainImagesRef =
+                    Firebase.storage.reference.child("clientProfileImages/${image.lastPathSegment}")
+                try {
+                    mountainImagesRef.downloadUrl.await()
+                } catch (e: StorageException) {
+                    mountainImagesRef.putFile(image).await()
+                }
+                downloadUri = "clientProfileImages/${image.lastPathSegment}"
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+
+
+        val clientPath = Firebase.database.reference.child(profiles).child(clientId)
+        val clientP = clientPath.get().await().getValue(ClientProfile::class.java)?.apply {
+            this.name = client.name
+            this.phoneNumber = client.phoneNumber
+            this.dataOfBirth = client.dataOfBirth
+            this.civilId = client.civilId
+            downloadUri?.let { this.image = it }
+            clientPath.setValue(this).await()
+        } ?: throw Exception("client not found")
+
+        CashedData.clientProfile = clientP
+        return clientP;
+    }
 
 }
