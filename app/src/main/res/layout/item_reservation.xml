@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="5dp"
-    android:elevation="0dp"
-    app:cardBackgroundColor="#16454E7E"
+    android:elevation="4dp"
+    android:layout_marginHorizontal="2dp"
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,12 +32,14 @@
 
             <TextView
                 android:id="@+id/tvUsername"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
+                android:textSize="14sp"
                 android:fontFamily="@font/lato_bold"
                 android:text="Username"
+                app:layout_constraintEnd_toStartOf="@+id/tvDate"
                 app:layout_constraintStart_toEndOf="@+id/ivUserProfileImage"
                 app:layout_constraintTop_toTopOf="@+id/ivUserProfileImage" />
 
@@ -53,13 +55,14 @@
 
             <TextView
                 android:id="@+id/tvPhoneNumber"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:fontFamily="@font/lato_bold"
                 android:text="01026241544"
+
                 android:textColor="@color/splash_color"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                 app:layout_constraintStart_toEndOf="@+id/imageView5"
                 app:layout_constraintTop_toTopOf="@+id/imageView5" />
@@ -81,7 +84,7 @@
                 android:id="@+id/tvDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="3dp"
                 android:background="@drawable/button_shape_blue_light"
                 android:fontFamily="@font/lato_bold"
                 android:padding="3dp"
@@ -91,80 +94,74 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+            <LinearLayout
+                android:id="@+id/paymentContainer"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/button_shape_green"
+                android:orientation="horizontal"
+                android:padding="2dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
-                app:layout_constraintEnd_toEndOf="@+id/tvTime"
-                app:layout_constraintStart_toStartOf="@+id/tvDate">
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/tvUsername"
+                app:layout_constraintTop_toTopOf="@+id/tvPhoneNumber">
+
+                <TextView
+                    android:id="@+id/tvTotalPrice"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:paddingHorizontal="10dp"
+                    android:text="20"
+                    android:textColor="@color/white"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                    app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                    app:layout_constraintStart_toStartOf="@+id/tvDate" />
+
+                <TextView
+                    android:id="@+id/tvCash"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lato_bold"
+                    android:paddingHorizontal="10dp"
+                    android:text="Cash Paid"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
+                    app:layout_constraintEnd_toEndOf="@+id/tvTime"
+                    app:layout_constraintStart_toStartOf="@+id/tvDate" />
 
                 <LinearLayout
-                    android:id="@+id/paymentContainer"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/button_shape_green"
+                    android:id="@+id/kent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:gravity="center_vertical"
                     android:orientation="horizontal"
-                    android:paddingHorizontal="4dp">
+                    android:visibility="gone">
 
                     <TextView
-                        android:id="@+id/tvTotalPrice"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:fontFamily="@font/lato_bold"
                         android:padding="3dp"
-                        android:text="20"
+                        android:text="KNET Paid"
                         android:textColor="@color/white"
                         android:textSize="11sp"
                         app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
                         app:layout_constraintEnd_toEndOf="@+id/tvTime"
                         app:layout_constraintStart_toStartOf="@+id/tvDate" />
 
-                    <TextView
-                        android:id="@+id/tvCash"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/lato_bold"
-                        android:padding="3dp"
-                        android:text="Cash Paid"
-                        android:textColor="@color/black"
-                        android:textSize="11sp"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
-                        app:layout_constraintEnd_toEndOf="@+id/tvTime"
-                        app:layout_constraintStart_toStartOf="@+id/tvDate" />
-
-                    <LinearLayout
-                        android:id="@+id/kent"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                    <ImageView
+                        android:id="@+id/imageView6"
+                        android:layout_width="10dp"
+                        android:layout_height="15dp"
                         android:layout_gravity="center_vertical"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="gone">
+                        app:srcCompat="@drawable/ic_done" />
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/lato_bold"
-                            android:padding="3dp"
-                            android:text="KNET Paid"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
-                            app:layout_constraintEnd_toEndOf="@+id/tvTime"
-                            app:layout_constraintStart_toStartOf="@+id/tvDate" />
-
-                        <ImageView
-                            android:id="@+id/imageView6"
-                            android:layout_width="10dp"
-                            android:layout_height="15dp"
-                            android:layout_gravity="center_vertical"
-                            app:srcCompat="@drawable/ic_done" />
-
-                    </LinearLayout>
                 </LinearLayout>
-
-            </FrameLayout>
+            </LinearLayout>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

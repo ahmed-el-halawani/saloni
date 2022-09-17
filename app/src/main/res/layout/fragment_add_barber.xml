@@ -41,8 +41,6 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardView2"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -50,7 +48,7 @@
                     android:id="@+id/btnBack"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_back" />
             </androidx.cardview.widget.CardView>
 
@@ -60,7 +58,7 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Add Barber"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="@+id/cardView2"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -608,17 +606,21 @@
 
                     </LinearLayout>
 
-                    <Button
-                        android:id="@+id/btnAddBarber"
+                    <TextView
+                        style="@style/button_style_blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:text="Add"
-                        android:textColor="#263238"
+                        android:gravity="center"
+                        android:paddingVertical="18dp"
+                        android:text="Add barber"
+                        android:layout_marginTop="10dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="18sp"
+                        android:id="@+id/btnAddBarber"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lin4" />
-
+                        app:layout_constraintTop_toBottomOf="@+id/lin4"/>
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

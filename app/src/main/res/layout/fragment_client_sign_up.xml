@@ -129,8 +129,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:paddingVertical="18dp"
-
                 android:text="Sign up"
                 android:textAllCaps="true"
                 android:textColor="@color/white"

@@ -37,15 +37,14 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnBack"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_back" />
             </androidx.cardview.widget.CardView>
 
@@ -55,8 +54,8 @@
                 android:fontFamily="@font/lato_bold"
                 android:text="Report"
                 android:textColor="@color/white"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/cardView2"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,6 +68,8 @@
             android:layout_marginTop="50dp"
             android:paddingHorizontal="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textView14"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout9">
 
             <TextView
@@ -125,9 +126,10 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rcReservation"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:clipToPadding="false"
+                android:layout_height="0dp"
+                android:layout_marginTop="10dp"
+                android:clipToPadding="true"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
@@ -141,7 +143,7 @@
             style="@style/button_style_blue"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginHorizontal="20dp"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal"
             app:layout_constraintBottom_toBottomOf="parent"

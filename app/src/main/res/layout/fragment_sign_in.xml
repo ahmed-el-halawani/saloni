@@ -32,11 +32,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@drawable/edit_text_design"
             android:hint="Email/Mobile number"
             android:inputType="textEmailAddress"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="16dp" />
+            style="@style/edit_text_style"
+            />
 
         <EditText
             android:id="@+id/etPassword"
@@ -44,11 +43,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/edit_text_design"
             android:hint="Password"
             android:inputType="textPassword"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="16dp" />
+            style="@style/edit_text_style"
+            />
 
 
         <TextView
@@ -57,7 +55,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:paddingVertical="18dp"
             android:text="Login"
             android:textAllCaps="true"
             android:textColor="@color/white"

@@ -37,8 +37,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnNotification"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -46,15 +45,13 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_done" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnProfile"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -62,7 +59,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_profile" />
             </androidx.cardview.widget.CardView>
 

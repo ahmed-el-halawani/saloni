@@ -52,23 +52,21 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnAddBarber"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_add__barber" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnReport"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+
                 android:layout_marginStart="10dp"
                 app:layout_constraintStart_toEndOf="@+id/btnAddBarber"
                 app:layout_constraintTop_toTopOf="parent">
@@ -76,15 +74,14 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_report" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnReservation"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
+
                 android:layout_marginEnd="10dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnSalonProfile"
                 app:layout_constraintTop_toTopOf="parent">
@@ -92,22 +89,20 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_reservations" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/btnSalonProfile"
                 style="@style/icon_tool_bar"
-                android:layout_width="38dp"
-                android:layout_height="38dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="10dp"
+                    android:padding="8dp"
                     android:src="@drawable/ic_profile" />
             </androidx.cardview.widget.CardView>
 
@@ -121,6 +116,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/constraintLayout">

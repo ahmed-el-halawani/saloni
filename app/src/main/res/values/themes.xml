@@ -16,6 +16,7 @@
 
 
     <style name="button_style_orange">
+        <item name="android:paddingVertical">16dp</item>
         <item name="android:foreground">?selectableItemBackground</item>
         <item name="android:background">@drawable/button_shape_orange</item>
         <item name="android:clickable">true</item>
@@ -29,13 +30,14 @@
         <item name="android:clickable">true</item>
         <item name="android:fontFamily">@font/lato_bold</item>
         <item name="android:textSize">18sp</item>
+
     </style>
 
     <style name="button_style_white">
         <item name="android:foreground">?selectableItemBackground</item>
         <item name="android:background">@drawable/button_shape_whe</item>
         <item name="android:clickable">true</item>
-        <item name="android:paddingVertical">18dp</item>
+        <item name="android:paddingVertical">16dp</item>
         <item name="android:fontFamily">@font/lato_bold</item>
         <item name="android:textSize">18sp</item>
     </style>
@@ -46,6 +48,8 @@
     </style>
 
     <style name="icon_tool_bar">
+        <item name="android:layout_width">33dp</item>
+        <item name="android:layout_height">33dp</item>
         <item name="android:foreground">?selectableItemBackground</item>
         <item name="android:clickable">true</item>
         <item name="cardCornerRadius">5dp</item>
