@@ -105,10 +105,10 @@
                         android:id="@+id/btnAddImage"
                         android:layout_width="70dp"
                         android:layout_height="70dp"
-                        android:clickable="true"
-                        android:foreground="?selectableItemBackground"
                         android:layout_marginTop="10dp"
                         android:background="@drawable/shape_image_signup"
+                        android:clickable="true"
+                        android:foreground="?selectableItemBackground"
                         app:layout_constraintStart_toStartOf="@+id/textView2"
                         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
@@ -116,7 +116,7 @@
                             android:id="@+id/ivUserProfileImage"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="22dp"
+                            android:padding="5dp"
                             android:src="@drawable/ic_add_image" />
                     </LinearLayout>
 
@@ -152,7 +152,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="10dp"
-                            android:hint="Civil ID" />
+                            android:hint="Civil ID"
+                            android:inputType="number" />
                     </LinearLayout>
 
                     <View
@@ -218,7 +219,6 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="end"
-
                                 tools:ignore="TouchTargetSizeCheck" />
 
                         </LinearLayout>
@@ -237,6 +237,7 @@
                                 android:layout_height="match_parent"
                                 android:background="@drawable/button_shape_whe"
                                 android:hint="Price"
+                                android:inputType="number"
                                 android:padding="10dp"
                                 android:textSize="16sp" />
                         </LinearLayout>
@@ -419,6 +420,7 @@
                                 android:gravity="center"
                                 android:maxLength="2"
                                 android:padding="5dp"
+                                android:inputType="number"
                                 android:text="12"
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
@@ -444,7 +446,9 @@
                                 android:gravity="center"
                                 android:maxLength="2"
                                 android:padding="5dp"
-                                android:text="12"
+                                android:inputType="number"
+
+                                android:text="00"
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
@@ -521,6 +525,8 @@
                                 android:maxLength="2"
                                 android:padding="5dp"
                                 android:text="12"
+                                android:inputType="number"
+
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
@@ -545,7 +551,9 @@
                                 android:gravity="center"
                                 android:maxLength="2"
                                 android:padding="5dp"
-                                android:text="12"
+                                android:text="00"
+                                android:inputType="number"
+
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
@@ -558,9 +566,8 @@
                                 android:background="@drawable/edit_text_design_date"
                                 android:gravity="center"
                                 android:maxLength="2"
-
                                 android:padding="5dp"
-                                android:text="PM"
+                                android:text="AM"
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
@@ -607,20 +614,20 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/btnAddBarber"
                         style="@style/button_style_blue"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
                         android:gravity="center"
                         android:paddingVertical="18dp"
                         android:text="Add barber"
-                        android:layout_marginTop="10dp"
                         android:textAllCaps="false"
                         android:textColor="@color/white"
                         android:textSize="18sp"
-                        android:id="@+id/btnAddBarber"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/lin4"/>
+                        app:layout_constraintTop_toBottomOf="@+id/lin4" />
 
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

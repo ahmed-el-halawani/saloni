@@ -34,7 +34,7 @@ class FragmentHomeSalon : BaseFragment() {
     val vm: HomeSalonViewModel by viewModels()
 
     val barbersAdapter by lazy {
-        rvSingleList(binding.rvBarbers, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = GridLayoutManager(requireContext(), 4)) {
+        rvSingleList(binding.rvBarbers, ItemBarberBinding::inflate, emptyList<Barber>(), layoutManager = GridLayoutManager(requireContext(), 3)) {
             listBuilder { itemBarberBinding, barber ->
                 if (!barber.image.isNullOrBlank())
                     glide().load(Firebase.storage.reference.child(barber.image!!)).into(itemBarberBinding.ivBarberImage)
