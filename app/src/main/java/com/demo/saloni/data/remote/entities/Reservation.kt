@@ -4,6 +4,7 @@ import java.util.*
 
 class Reservation(
     val barberId: String = "",
+    val salonId:String = "",
     val services: List<Service> = emptyList(),
     val date:Date?=Date(),
     val paymentMethod: PaymentMethods = PaymentMethods.Cash,

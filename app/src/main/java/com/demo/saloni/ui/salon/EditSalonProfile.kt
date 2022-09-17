@@ -7,15 +7,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.demo.saloni.databinding.FragmentSalonProfileBinding
 import com.demo.saloni.ui.core.BaseFragment
+
 //////
 class EditSalonProfile : BaseFragment() {
 
     val binding by lazy {
         FragmentSalonProfileBinding.inflate(layoutInflater)
     }
-    val vm:SalonProfileViewModel by viewModels()
+    val vm: SalonProfileViewModel by viewModels()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setBackButton(binding.btnBack)
         return binding.root
     }
 }

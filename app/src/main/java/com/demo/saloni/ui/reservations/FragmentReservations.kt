@@ -93,7 +93,9 @@ class FragmentReservations : BaseFragment() {
                         when (it) {
                             is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             is State.Loading -> Toast.makeText(context, "loading", Toast.LENGTH_SHORT).show()
-                            is State.Success -> reservationAdapter.setList(it.data!!)
+                            is State.Success -> {
+                                reservationAdapter.setList(it.data!!)
+                            }
                         }
                     }
                 }

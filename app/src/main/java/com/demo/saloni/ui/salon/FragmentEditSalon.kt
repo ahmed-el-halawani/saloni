@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.demo.saloni.databinding.FragmentEditSalonProfileBinding
+import com.demo.saloni.ui.core.BaseFragment
 
-class FragmentEditSalon : Fragment() {
+class FragmentEditSalon : BaseFragment() {
 
     val binding by lazy {
         FragmentEditSalonProfileBinding.inflate(layoutInflater)
@@ -20,6 +21,7 @@ class FragmentEditSalon : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setBackButton(binding.btnBack)
         return binding.root
     }
 
@@ -34,7 +36,6 @@ class FragmentEditSalon : Fragment() {
             etSalonName.setText(vm.salonProfile!!.name)
             etMobileNumber.setText(vm.salonProfile!!.name)
             etAddress.setText(vm.salonProfile!!.name)
-
 
         }
     }

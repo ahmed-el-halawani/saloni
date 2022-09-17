@@ -7,7 +7,6 @@ import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.SalonServices
 import com.demo.saloni.data.remote.entities.*
 import com.demo.saloni.ui.core.State
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.flow
 
 class EditBarberViewModel(private val state: SavedStateHandle) : ViewModel() {
@@ -31,7 +30,7 @@ class EditBarberViewModel(private val state: SavedStateHandle) : ViewModel() {
     fun getBarber(barberId: String) = flow<State<Barber>> {
         emit(State.Loading())
         try {
-            salonServices.getBarber(barberId).collect {
+            salonServices.getBarberFlow(barberId).collect {
                 if (it == null)
                     emit(State.Error("barber not found"))
                 else

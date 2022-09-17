@@ -94,6 +94,9 @@
         <action
             android:id="@+id/action_fragmentHomeSalon_to_barberProfile"
             app:destination="@id/barberProfile" />
+        <action
+            android:id="@+id/action_fragmentHomeSalon_to_fragmentSalonScanQr"
+            app:destination="@id/fragmentSalonScanQr" />
     </fragment>
     <fragment
         android:id="@+id/fragmentAddBarber"
@@ -140,8 +143,8 @@
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_fragmentHomeClient_to_clientQrFragment"
-            app:destination="@id/clientQrFragment" />
+            android:id="@+id/action_fragmentHomeClient_to_paymentDone"
+            app:destination="@id/paymentDone" />
     </fragment>
     <fragment
         android:id="@+id/barberProfile"
@@ -184,14 +187,29 @@
             android:name="salon"
             app:argType="com.demo.saloni.data.remote.entities.SalonProfile" />
         <action
-            android:id="@+id/action_fragmentBarberServices_to_clientQrFragment"
-            app:destination="@id/clientQrFragment"
+            android:id="@+id/action_fragmentBarberServices_to_paymentDone"
+            app:destination="@id/paymentDone"
             app:launchSingleTop="true"
             app:popUpTo="@id/fragmentHomeClient" />
+        <action
+            android:id="@+id/action_fragmentBarberServices_to_model3dViewer"
+            app:destination="@id/model3dViewer" />
     </fragment>
     <fragment
-        android:id="@+id/clientQrFragment"
-        android:name="com.demo.saloni.ui.clientQr.ClientQrFragment"
-        android:label="ClientQrFragment" />
+        android:id="@+id/paymentDone"
+        android:name="com.demo.saloni.ui.payment.PaymentDone"
+        android:label="PaymentDone" />
+    <fragment
+        android:id="@+id/fragmentSalonScanQr"
+        android:name="com.demo.saloni.ui.salonqr.FragmentSalonScanQr"
+        android:label="FragmentSalonScanQr" />
+    <fragment
+        android:id="@+id/model3dViewer"
+        android:name="com.demo.saloni.ui.model3dviewer.Model3dViewer"
+        android:label="Model3dViewer" >
+        <argument
+            android:name="link"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

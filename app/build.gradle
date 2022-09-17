@@ -97,5 +97,8 @@ dependencies {
     implementation 'com.afollestad:vvalidator:0.5.2'
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
 
+    implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+
+
 
 }

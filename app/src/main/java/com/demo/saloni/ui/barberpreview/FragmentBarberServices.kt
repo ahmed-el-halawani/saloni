@@ -1,6 +1,8 @@
 package com.demo.saloni.ui.barberpreview
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -54,6 +56,10 @@ class FragmentBarberServices : BaseFragment() {
 
     val barber by lazy {
         args.barber
+    }
+
+    val salon by lazy {
+        args.salon
     }
 
 
@@ -153,6 +159,54 @@ class FragmentBarberServices : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (barber.model3DFirstStyle != null) {
+            binding.ivHairCut3d1.setOnClickListener {
+                findNavController().navigate(
+                    FragmentBarberServicesDirections.actionFragmentBarberServicesToModel3dViewer(barber.model3DFirstStyle!!.link)
+                )
+            }
+
+            if (barber.model3DFirstStyle!!.image.isNotBlank())
+                Glide.with(requireContext()).load(barber.model3DFirstStyle!!.image).into(binding.ivHairCut3d1)
+        } else {
+            binding.ivHairCut3d1.visibility = View.INVISIBLE
+        }
+        if (barber.model3DSecondStyle != null) {
+            binding.ivHairCut3d2.setOnClickListener {
+                findNavController().navigate(
+                    FragmentBarberServicesDirections.actionFragmentBarberServicesToModel3dViewer(barber.model3DSecondStyle!!.link)
+                )
+            }
+
+            if (barber.model3DSecondStyle!!.image.isNotBlank())
+                Glide.with(requireContext()).load(barber.model3DSecondStyle!!.image).into(binding.ivHairCut3d2)
+
+        } else {
+            binding.ivHairCut3d2.visibility = View.INVISIBLE
+        }
+
+
+        vm.isThereAnyReservation().asLiveData().observe(viewLifecycleOwner) {
+            hideMainLoading()
+            when (it) {
+                is State.Error -> {
+                    Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                }
+                is State.Loading -> showMainLoading()
+                is State.Success -> {
+                    if (it.data!!)
+                        AlertDialog.Builder(requireContext()).apply {
+                            setMessage("You have an incomplete reservation?")
+                            setPositiveButton("OK") { _, _ ->
+                                findNavController().popBackStack()
+                            }
+                        }.show()
+                }
+            }
+        }
+
+
         timeAdapter
         binding.apply {
 
@@ -163,7 +217,7 @@ class FragmentBarberServices : BaseFragment() {
             }
 
             tvName.text = barber.name
-            tvSalonName.text = args.salon.name
+            tvSalonName.text = salon.name
             tvPhone.text = barber.phone
 
             cvHairCut.visibility = View.INVISIBLE
@@ -238,10 +292,12 @@ class FragmentBarberServices : BaseFragment() {
                 } else if (vm.selectedTime == null) {
                     Toast.makeText(context, "you must select time", Toast.LENGTH_SHORT).show()
                 } else {
-                    vm.addReservation(args.barber.barberId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner) {
+
+
+                    vm.addReservation(args.barber.barberId, salon.salonId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner) {
                         Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
                         findNavController().navigate(
-                            FragmentBarberServicesDirections.actionFragmentBarberServicesToClientQrFragment()
+                            FragmentBarberServicesDirections.actionFragmentBarberServicesToPaymentDone()
                         )
                     }
                 }

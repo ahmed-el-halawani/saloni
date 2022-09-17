@@ -1,8 +1,8 @@
 package com.demo.saloni.data.remote
 
 import android.net.Uri
-import androidx.core.net.toFile
 import com.demo.saloni.data.remote.Keys.barber_child
+import com.demo.saloni.data.remote.Keys.profiles
 import com.demo.saloni.data.remote.Keys.reports
 import com.demo.saloni.data.remote.Keys.reservations
 import com.demo.saloni.data.remote.entities.*
@@ -19,7 +19,6 @@ import com.google.firebase.storage.ktx.storage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
-import java.util.concurrent.Flow
 
 class SalonServices {
     private val barbersFlow = MutableStateFlow(emptyList<Barber>())
@@ -161,7 +160,7 @@ class SalonServices {
         }
     }
 
-    fun getBarber(barberId: String): StateFlow<Barber?> {
+    fun getBarberFlow(barberId: String): StateFlow<Barber?> {
         barberPath?.removeEventListener(barberEventListener)
         barberPath = barbersPath.child(barberId)
         barberPath?.addValueEventListener(barberEventListener)
@@ -169,9 +168,22 @@ class SalonServices {
     }
 
 
-    suspend fun readQr(reservationId: String): Reservation {
+    suspend fun getBarber(barberId: String): Barber {
+        return Firebase.database.reference.child(barber_child).child(barberId).get().await().getValue(Barber::class.java) ?: throw Exception("barber not found")
+    }
+
+    suspend fun getSalon(salonId: String): SalonProfile {
+        return Firebase.database.reference.child(profiles).child(salonId).get().await().getValue(SalonProfile::class.java) ?: throw Exception("barber not found")
+    }
+
+
+    suspend fun readQr(reservationId: String, salonId: String): Reservation {
         val reservationPath = Firebase.database.reference.child(reservations).child(reservationId)
         val reservation = reservationPath.get().await().getValue(Reservation::class.java) ?: throw Exception("Reservation not exist")
+
+        if (reservation.salonId != salonId)
+            throw Exception("this reservation for another salon")
+
         reservationPath.removeValue().await()
         Firebase.database.reference.child(reports).child(reservationId).setValue(reservation).await()
         return reservation;
