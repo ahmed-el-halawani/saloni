@@ -43,7 +43,7 @@ class SalonProfile(
     }
 }
 
-class Model3D(
-    val link: String = "",
-    val image: String = ""
+data class Model3D(
+    val link: String? = "",
+    val image: String? = ""
 ) : Serializable

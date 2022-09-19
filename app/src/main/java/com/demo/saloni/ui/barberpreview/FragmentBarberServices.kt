@@ -163,24 +163,20 @@ class FragmentBarberServices : BaseFragment() {
 
         if (barber.model3DFirstStyle != null) {
             binding.ivHairCut3d1.setOnClickListener {
-                findNavController().navigate(
-                    FragmentBarberServicesDirections.actionFragmentBarberServicesToModel3dViewer(barber.model3DFirstStyle!!.link)
-                )
+                findNavController().navigate(FragmentBarberServicesDirections.actionFragmentBarberServicesToModel3dViewer(barber.model3DFirstStyle!!.link!!))
             }
 
-            if (barber.model3DFirstStyle!!.image.isNotBlank())
+            if (barber.model3DFirstStyle!!.image!!.isNotBlank())
                 glide().load(barber.model3DFirstStyle!!.image).into(binding.ivHairCut3d1)
         } else {
             binding.ivHairCut3d1.visibility = View.INVISIBLE
         }
         if (barber.model3DSecondStyle != null) {
             binding.ivHairCut3d2.setOnClickListener {
-                findNavController().navigate(
-                    FragmentBarberServicesDirections.actionFragmentBarberServicesToModel3dViewer(barber.model3DSecondStyle!!.link)
-                )
+                findNavController().navigate(FragmentBarberServicesDirections.actionFragmentBarberServicesToModel3dViewer(barber.model3DSecondStyle!!.link!!))
             }
 
-            if (barber.model3DSecondStyle!!.image.isNotBlank())
+            if (barber.model3DSecondStyle!!.image!!.isNotBlank())
                 glide().load(barber.model3DSecondStyle!!.image).into(binding.ivHairCut3d2)
 
         } else {
