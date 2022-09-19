@@ -66,7 +66,6 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="50dp"
-            android:paddingHorizontal="20dp"
             app:layout_constraintBottom_toTopOf="@+id/textView14"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -78,6 +77,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Select barber"
+                android:paddingHorizontal="20dp"
+
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -87,6 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:clipToPadding="false"
+                android:paddingHorizontal="15dp"
+
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -128,7 +131,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_marginTop="10dp"
-                android:clipToPadding="true"
+                android:clipToPadding="false"
+                android:paddingHorizontal="20dp"
+
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

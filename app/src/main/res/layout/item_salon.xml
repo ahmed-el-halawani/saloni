@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="5dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp">
+        android:paddingBottom="5dp"
+        >
 
         <com.makeramen.roundedimageview.RoundedImageView
             android:id="@+id/ivSalonImage"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="130dp"
             android:scaleType="centerCrop"
             android:src="@drawable/placeholder"
             app:layout_constraintEnd_toEndOf="parent"
@@ -28,8 +30,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:fontFamily="@font/lato_bold"
+            android:paddingHorizontal="10dp"
             android:text="Octopus Barbershop"
-            android:textSize="18sp"
+            android:textSize="16sp"
             app:layout_constraintStart_toStartOf="@+id/ivSalonImage"
             app:layout_constraintTop_toBottomOf="@+id/ivSalonImage" />
 
@@ -39,17 +42,17 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="-5dp"
             android:layout_marginTop="5dp"
+            android:paddingStart="10dp"
             android:src="@drawable/ic_baseline_add_location_24"
             app:layout_constraintStart_toStartOf="@+id/tvSalonName"
-            app:layout_constraintTop_toBottomOf="@+id/tvSalonName" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSalonName"
+            tools:ignore="RtlSymmetry" />
 
         <TextView
             android:id="@+id/tvSalonAddress"
             android:layout_width="wrap_content"
-
             android:layout_height="wrap_content"
-
-            android:layout_marginStart="5dp"
+            android:layout_marginStart="2dp"
             android:layout_marginTop="5dp"
             android:text="Jalan DI Pandjation No 8"
             android:textColor="#939BB8"

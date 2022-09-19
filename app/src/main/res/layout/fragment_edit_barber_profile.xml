@@ -84,7 +84,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="60dp"
+            android:layout_marginTop="50dp"
             android:paddingHorizontal="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -242,6 +242,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:gravity="end"
+                                tools:ignore="TouchTargetSizeCheck"
 
                                 />
                         </LinearLayout>
@@ -261,6 +262,7 @@
                                 android:background="@drawable/button_shape_whe"
                                 android:hint="Price"
                                 android:padding="10dp"
+                                android:inputType="number"
                                 android:textSize="16sp" />
                         </LinearLayout>
 
@@ -437,6 +439,8 @@
                                 android:maxLength="2"
                                 android:padding="5dp"
                                 android:text="12"
+                                android:inputType="number"
+
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
@@ -461,21 +465,21 @@
                                 android:gravity="center"
                                 android:maxLength="2"
                                 android:padding="5dp"
-                                android:text="12"
+                                android:text="00"
+                                android:inputType="number"
+
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/etStartAmOrPm"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="2"
                                 android:background="@drawable/edit_text_design_date"
-                                android:editable="false"
                                 android:gravity="center"
                                 android:maxLength="2"
-
                                 android:padding="5dp"
                                 android:text="PM"
                                 android:textColor="@color/splash_color"
@@ -536,6 +540,8 @@
                                 android:layout_weight="2"
                                 android:background="@drawable/edit_text_design_date"
                                 android:gravity="center"
+                                android:inputType="number"
+
                                 android:maxLength="2"
                                 android:padding="5dp"
                                 android:text="12"
@@ -563,23 +569,24 @@
                                 android:gravity="center"
                                 android:maxLength="2"
                                 android:padding="5dp"
-                                android:text="12"
+                                android:text="00"
+                                android:inputType="number"
+
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
-                            <EditText
+                            <TextView
                                 android:id="@+id/etEndAmOrPm"
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_marginStart="10dp"
                                 android:layout_weight="2"
                                 android:background="@drawable/edit_text_design_date"
-                                android:editable="false"
                                 android:gravity="center"
                                 android:maxLength="2"
 
                                 android:padding="5dp"
-                                android:text="PM"
+                                android:text="AM"
                                 android:textColor="@color/splash_color"
                                 android:textSize="30sp" />
 
