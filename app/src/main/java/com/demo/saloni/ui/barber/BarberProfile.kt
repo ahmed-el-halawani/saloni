@@ -63,10 +63,10 @@ class BarberProfile : BaseFragment() {
                     tvPhone.text = barber.phone
                     tvCiviId.text = barber.civilId
 
-                    cvHairCut.visibility = View.INVISIBLE
-                    cvBeardCut.visibility = View.INVISIBLE
-                    cvCleaning.visibility = View.INVISIBLE
-                    cvColoring.visibility = View.INVISIBLE
+                    cvHairCut.visibility = View.GONE
+                    cvBeardCut.visibility = View.GONE
+                    cvCleaning.visibility = View.GONE
+                    cvColoring.visibility = View.GONE
 
                     barber.services.forEach {
                         when (it.id) {

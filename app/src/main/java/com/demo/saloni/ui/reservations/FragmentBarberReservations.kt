@@ -24,6 +24,7 @@ import com.demo.saloni.ui.barberpreview.FragmentBarberServicesDirections
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
 import com.demo.saloni.ui.core.glide
+import com.demo.saloni.ui.core.toMoney
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -54,7 +55,7 @@ class FragmentBarberReservations : BaseFragment() {
                     val date = Calendar.getInstance().apply {
                         time = reservation.date ?: Date()
                     }
-                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toString()
+                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toMoney()
 
                     itemReservationBinding.tvDate.text = dayNumberFormatter.format(date.time)
                     itemReservationBinding.tvTime.text = timeFormatter.format(date.time)

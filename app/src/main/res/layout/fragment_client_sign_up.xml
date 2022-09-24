@@ -100,9 +100,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:inputType="date"
                 android:background="@drawable/edit_text_design"
-                android:hint="Date Of Birth" />
+                android:clickable="true"
+                android:editable="false"
+                android:focusable="false"
+                android:hint="Date Of Birth"
+                android:inputType="date" />
 
             <EditText
                 android:id="@+id/etPassword"

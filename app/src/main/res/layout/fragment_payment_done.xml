@@ -146,7 +146,7 @@
                         android:layout_width="179dp"
                         android:layout_height="122dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/image_salon"
+                        android:src="@drawable/placeholder"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -171,7 +171,7 @@
                                 android:layout_width="89dp"
                                 android:layout_height="91dp"
                                 android:scaleType="centerCrop"
-                                android:src="@drawable/profile"
+                                android:src="@drawable/placeholder"
                                 app:riv_corner_radius="10dp" />
 
                             <TextView
@@ -208,7 +208,7 @@
                             android:id="@+id/ivBarberImage2"
                             android:layout_width="47dp"
                             android:layout_height="46dp"
-                            android:src="@drawable/profile"
+                            android:src="@drawable/placeholder"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
 
@@ -273,25 +273,11 @@
                             app:layout_constraintTop_toTopOf="parent" />
 
 
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:background="@drawable/button_shape_green"
-                            android:fontFamily="@font/lato_bold"
-                            android:padding="3dp"
-                            android:text="20 KNET Paid"
-                            android:textColor="@color/white"
-                            android:textSize="11sp"
-                            app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
-                            app:layout_constraintEnd_toEndOf="@+id/tvTime"
-                            app:layout_constraintStart_toStartOf="@+id/tvDate" />
-
                         <FrameLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
-                            app:layout_constraintEnd_toEndOf="@+id/tvTime"
-                            app:layout_constraintStart_toStartOf="@+id/tvDate">
+                            app:layout_constraintEnd_toEndOf="@+id/tvTime">
 
                             <LinearLayout
                                 android:id="@+id/paymentContainer"

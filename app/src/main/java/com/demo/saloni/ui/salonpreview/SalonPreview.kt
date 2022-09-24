@@ -1,5 +1,7 @@
 package com.demo.saloni.ui.salonpreview
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -83,7 +85,28 @@ class SalonPreview : BaseFragment() {
             tvPhoneNumber.text = salon.phoneNumber
             tvEmail.text = salon.email
 
+            facebook.setOnClickListener {
+                setUrlView(salon.facebook)
+            }
+            insta.setOnClickListener {
+                setUrlView(salon.instagram)
+            }
+            twitter.setOnClickListener {
+                setUrlView(salon.twitter)
+            }
+
+
         }
+    }
+
+
+    private fun setUrlView(urlLink: String) {
+        var url = urlLink
+        if (!url.startsWith("http://") && !url.startsWith("https://"))
+            url = "http://" + url;
+
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url));
+        startActivity(browserIntent)
     }
 
 

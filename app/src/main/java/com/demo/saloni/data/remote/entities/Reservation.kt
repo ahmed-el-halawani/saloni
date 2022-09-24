@@ -1,5 +1,6 @@
 package com.demo.saloni.data.remote.entities
 
+import java.io.Serializable
 import java.util.*
 
 class Reservation(
@@ -10,7 +11,7 @@ class Reservation(
     val paymentMethod: PaymentMethods = PaymentMethods.Cash,
     var reservationId: String = "",
     var client: ClientProfile? = ClientProfile(),
-)
+):Serializable
 
 
 enum class PaymentMethods {

@@ -2,6 +2,7 @@ package com.demo.saloni
 
 import android.os.Bundle
 import android.os.PersistableBundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
@@ -14,7 +15,7 @@ import com.google.firebase.ktx.Firebase
 
 class MainActivity : AppCompatActivity() {
 
-    private val binding by lazy{
+    private val binding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         Firebase.database.reference.child("isWorking").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val isWorking = snapshot.getValue(Boolean::class.java)
-                if(isWorking!=null && !isWorking){
+                if (isWorking != null && !isWorking) {
                     finish()
                 }
             }
@@ -36,5 +37,9 @@ class MainActivity : AppCompatActivity() {
 
         })
 
+    }
+
+    fun getMainLoading(): View {
+        return binding.loadingView
     }
 }

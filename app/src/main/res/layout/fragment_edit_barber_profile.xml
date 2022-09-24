@@ -120,6 +120,8 @@
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btnAddImage"
+                        android:elevation="0dp"
+                        app:cardElevation="0dp"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginTop="5dp"
@@ -128,18 +130,23 @@
                         app:layout_constraintStart_toStartOf="@+id/textView2"
                         app:layout_constraintTop_toBottomOf="@+id/textView2">
 
-                        <androidx.constraintlayout.widget.ConstraintLayout
+                        <FrameLayout
                             android:layout_width="match_parent"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent" >
+
+                            <ImageView
+                                android:id="@+id/imageView4"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="20dp"
+                                android:src="@drawable/ic_add_image" />
 
                             <ImageView
                                 android:id="@+id/ivProfileImage"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:scaleType="center"
-                                android:src="@drawable/image_salon"
                                 app:layout_constraintStart_toStartOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
+                        </FrameLayout>
 
 
                     </androidx.cardview.widget.CardView>
@@ -224,45 +231,36 @@
 
 
                         <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="2"
-                            android:background="@drawable/button_shape_whe">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:hint="Select Services"
-                                android:padding="10dp"
-                                android:textSize="16sp" />
-
-                            <Spinner
-                                android:id="@+id/spServices"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:gravity="end"
-                                tools:ignore="TouchTargetSizeCheck"
-
-                                />
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
                             android:layout_gravity="end"
-                            android:layout_marginStart="10dp"
-                            android:layout_weight="1"
-                            android:background="@drawable/button_shape_whe">
+                            android:layout_weight="1">
+
+                            <FrameLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_marginRight="10dp"
+                                android:layout_weight="3"
+                                android:background="@drawable/button_shape_whe">
+
+                                <Spinner
+                                    android:id="@+id/spServices"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_gravity="center"
+                                    android:gravity="end"
+                                    tools:ignore="TouchTargetSizeCheck" />
+                            </FrameLayout>
 
                             <EditText
                                 android:id="@+id/etPrice"
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="1"
                                 android:background="@drawable/button_shape_whe"
                                 android:hint="Price"
-                                android:padding="10dp"
                                 android:inputType="number"
+                                android:padding="10dp"
                                 android:textSize="16sp" />
                         </LinearLayout>
 

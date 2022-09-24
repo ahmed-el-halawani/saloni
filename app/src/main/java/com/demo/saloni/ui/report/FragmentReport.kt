@@ -18,9 +18,7 @@ import com.demo.saloni.data.remote.entities.PaymentMethods
 import com.demo.saloni.data.remote.entities.Reservation
 import com.demo.saloni.data.remote.entities.Service
 import com.demo.saloni.databinding.*
-import com.demo.saloni.ui.core.BaseFragment
-import com.demo.saloni.ui.core.State
-import com.demo.saloni.ui.core.glide
+import com.demo.saloni.ui.core.*
 import com.demo.saloni.ui.reservations.ReservationSalonViewModel
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -33,32 +31,32 @@ import java.util.*
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentReport.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FragmentReport : BaseFragment() {
     val vm: ReservationSalonViewModel by viewModels()
-
+    val dayNumberFormatter = SimpleDateFormat("dd MMMM,yyyy")
+    val dayMonthFormatter = SimpleDateFormat("dd MMM")
+    val timeFormatter = SimpleDateFormat("h:mm a")
     val binding: FragmentReportBinding by lazy {
         FragmentReportBinding.inflate(layoutInflater)
     }
 
     val reservationAdapter by lazy {
-        val dayNumberFormatter = SimpleDateFormat("dd MMMM,yyyy")
-        val timeFormatter = SimpleDateFormat("h:mm a")
+
 
         rvSingleList(binding.rcReservation, ItemReservationBinding::inflate, emptyList<Reservation>()) {
             listBuilder { itemReservationBinding, reservation ->
-                if (!reservation.client?.image.isNullOrBlank()) {
-                    glide().load(Firebase.storage.reference.child(reservation.client?.image!!)).into(itemReservationBinding.ivUserProfileImage)
-                }
+
                 reservation.apply {
+                    if (!client?.image.isNullOrBlank()) {
+                        firebaseGlide(reservation.client?.image!!, itemReservationBinding.ivUserProfileImage)
+                    }
+
+                    itemReservationBinding.tvUsername.text = client?.name
+                    itemReservationBinding.tvPhoneNumber.text = client?.phoneNumber
                     val date = Calendar.getInstance().apply {
                         time = reservation.date ?: Date()
                     }
-                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toString()
+                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toMoney()
 
                     itemReservationBinding.tvDate.text = dayNumberFormatter.format(date.time)
                     itemReservationBinding.tvTime.text = timeFormatter.format(date.time)
@@ -95,6 +93,7 @@ class FragmentReport : BaseFragment() {
                     ).into(itemBarberBinding.ivBarberImage)
 
                 itemBarberBinding.container.setOnClickListener {
+
                     vm.getReports(barber.barberId).asLiveData().observe(viewLifecycleOwner) {
                         hideMainLoading()
                         when (it) {
@@ -102,7 +101,9 @@ class FragmentReport : BaseFragment() {
                             is State.Loading -> showMainLoading()
                             is State.Success -> {
                                 reservationAdapter.setList(it.data!!)
-                                binding.tvTotalReport.text = it.data.sumOf { it.services.sumOf { it.price } }.toString()
+                                binding.tvTotalReport.text = it.data.sumOf { it.services.sumOf { it.price } }.toMoney()
+                                initDays()
+                                initDateView()
                             }
                         }
                     }
@@ -133,6 +134,56 @@ class FragmentReport : BaseFragment() {
                 }
             }
         }
+        changeWeek()
+        initDays()
+        initDateView()
 
+    }
+
+
+    private fun changeWeek() {
+        binding.apply {
+            btnNextMonth.setOnClickListener {
+                vm.calender.add(Calendar.WEEK_OF_YEAR, 1)
+                initDays()
+            }
+
+            btnPrevMonth.setOnClickListener {
+                vm.calender.add(Calendar.WEEK_OF_YEAR, -1)
+                initDays()
+            }
+
+
+        }
+    }
+
+    fun initDays() {
+        val currentWeek = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
+        val currentSelectedWeek = vm.calender.get(Calendar.WEEK_OF_YEAR);
+        binding.tvMonthYear.text =
+            if (currentSelectedWeek == currentWeek)
+                "Current Week"
+            else if (currentSelectedWeek > currentWeek)
+                "Next ${currentSelectedWeek - currentWeek} Week"
+            else
+                "Last ${currentWeek - currentSelectedWeek} Week"
+
+
+        binding.tvTotalReport.text = reservationAdapter.filter {
+            val calender = Calendar.getInstance().apply { time = it.date }
+            val resDay = calender.get(Calendar.WEEK_OF_YEAR)
+            initDateView()
+            resDay == currentSelectedWeek
+        }.sumOf { it.services.sumOf { it.price } }.toMoney()
+    }
+
+    fun initDateView() {
+        val selectedTimeView = Calendar.getInstance().apply { time = vm.calender.time }
+        selectedTimeView.set(Calendar.DAY_OF_WEEK, 1)
+        val startDate = selectedTimeView.time
+        selectedTimeView.set(Calendar.DAY_OF_WEEK, 1)
+        val endDate = selectedTimeView.time
+        binding.tvFrom.text = dayMonthFormatter.format(startDate)
+        binding.tvTo.text = dayMonthFormatter.format(endDate)
     }
 }

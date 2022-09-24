@@ -24,9 +24,7 @@ import com.demo.saloni.data.remote.entities.ServicesType
 import com.demo.saloni.data.remote.entities.ShiftTime
 import com.demo.saloni.databinding.FragmentEditBarberProfileBinding
 import com.demo.saloni.databinding.ItemBarberServicesBinding
-import com.demo.saloni.ui.core.BaseFragment
-import com.demo.saloni.ui.core.State
-import com.demo.saloni.ui.core.glide
+import com.demo.saloni.ui.core.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -54,7 +52,7 @@ class EditBarberProfile : BaseFragment() {
         ) {
             this.listBuilder { itemServicesBinding, service ->
                 itemServicesBinding.tvServiceTitle.text = service.id.title
-                itemServicesBinding.tvPrice.text = service.price.toString()
+                itemServicesBinding.tvPrice.text = service.price.toMoney()
                 itemServicesBinding.btnRemove.setOnClickListener {
                     vm.selectedServices.remove(service)
                     refreshServiceList()
@@ -197,7 +195,7 @@ class EditBarberProfile : BaseFragment() {
                 if (it.success()) {
                     val servicesType = ServicesType.values().firstOrNull { it.title == binding.spServices.selectedItem.toString() } ?: throw Exception("type not found")
 
-                    val price = binding.etPrice.text.toString().toDouble()
+                    val price = binding.etPrice.text.toString().fromMoney()
 
                     vm.selectedServices.add(Service(servicesType, price))
 

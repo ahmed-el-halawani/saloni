@@ -12,6 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#EBEEF4"
         android:padding="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -36,9 +37,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="4dp"
-                android:textSize="14sp"
                 android:fontFamily="@font/lato_bold"
                 android:text="Username"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/tvDate"
                 app:layout_constraintStart_toEndOf="@+id/ivUserProfileImage"
                 app:layout_constraintTop_toTopOf="@+id/ivUserProfileImage" />
@@ -103,14 +104,15 @@
                 android:padding="2dp"
                 app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/tvUsername"
                 app:layout_constraintTop_toTopOf="@+id/tvPhoneNumber">
 
                 <TextView
                     android:id="@+id/tvTotalPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:fontFamily="@font/lato_bold"
+                    android:gravity="center"
                     android:paddingHorizontal="10dp"
                     android:text="20"
                     android:textColor="@color/white"
@@ -128,6 +130,7 @@
                     android:text="Cash Paid"
                     android:textColor="@color/black"
                     android:textSize="11sp"
+                    android:visibility="visible"
                     app:layout_constraintBottom_toBottomOf="@+id/tvPhoneNumber"
                     app:layout_constraintEnd_toEndOf="@+id/tvTime"
                     app:layout_constraintStart_toStartOf="@+id/tvDate" />

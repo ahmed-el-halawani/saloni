@@ -24,7 +24,15 @@ data class Barber(
         other as Barber
 
         if (barberId != other.barberId) return false
-
+        if (salonId != other.salonId) return false
+        if (name != other.name) return false
+        if (phone != other.phone) return false
+        if (civilId != other.civilId) return false
+        if (image != other.image) return false
+        if (workingDays != other.workingDays) return false
+        if (services != other.services) return false
+        if (shiftStartIn != other.shiftStartIn) return false
+        if (shiftEntIn != other.shiftEntIn) return false
 
         return true
     }
@@ -32,6 +40,14 @@ data class Barber(
     override fun hashCode(): Int {
         var result = barberId.hashCode()
         result = 31 * result + salonId.hashCode()
+        result = 31 * result + name.hashCode()
+        result = 31 * result + phone.hashCode()
+        result = 31 * result + civilId.hashCode()
+        result = 31 * result + (image?.hashCode() ?: 0)
+        result = 31 * result + workingDays.hashCode()
+        result = 31 * result + services.hashCode()
+        result = 31 * result + (shiftStartIn?.hashCode() ?: 0)
+        result = 31 * result + (shiftEntIn?.hashCode() ?: 0)
         return result
     }
 }
@@ -76,5 +92,5 @@ data class Days(
 
 
 enum class ServicesType(val title: String) {
-    Null("No More Service"), HairCut("Hair Cut"), BeardCut("Beard Cut"), Cleaning("Cleaning"), Coloring("Coloring"),
+    Null("Select Service"), HairCut("Hair Cut"), BeardCut("Beard Cut"), Cleaning("Cleaning"), Coloring("Coloring"),
 }

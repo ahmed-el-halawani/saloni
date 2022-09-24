@@ -12,6 +12,7 @@ import kotlinx.coroutines.flow.flow
 class SignUpViewModel : ViewModel() {
     private var authService = AuthServices()
     var imageUri: Uri? = null;
+    var dataOfBirth = MutableLiveData("")
 
     fun signUpClient(image: Uri?, name: String, civilId: String, dataOfBirth: String, phoneNumber: String, email: String, password: String) = flow {
         emit(State.Loading())

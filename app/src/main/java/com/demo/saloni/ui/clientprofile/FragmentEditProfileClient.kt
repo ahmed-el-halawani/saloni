@@ -1,6 +1,7 @@
 package com.demo.saloni.ui.clientprofile
 
 import android.app.Activity
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,7 @@ import com.demo.saloni.ui.core.State
 import com.demo.saloni.ui.core.firebaseGlide
 import com.demo.saloni.ui.salon.EditSalonProfileViewModel
 import java.io.FileNotFoundException
+import java.util.*
 
 
 class FragmentEditProfileClient : BaseFragment() {
@@ -80,8 +82,12 @@ class FragmentEditProfileClient : BaseFragment() {
 
                 etMobileNumber.setText(phoneNumber)
                 etSalonName.setText(name)
-                etDateOfBirth.setText(dataOfBirth)
+                vm.dataOfBirth.value = dataOfBirth
                 binding.etCivilId.setText(civilId)
+            }
+
+            vm.dataOfBirth.observe(viewLifecycleOwner) {
+                binding.etDateOfBirth.setText(it)
             }
 
 
@@ -90,6 +96,10 @@ class FragmentEditProfileClient : BaseFragment() {
 
 
     private fun initForm() {
+        binding.etDateOfBirth.setOnClickListener {
+            datePicker()
+        }
+
         form {
 
             input(binding.etMobileNumber) {
@@ -136,5 +146,15 @@ class FragmentEditProfileClient : BaseFragment() {
         binding.btnAddImage.setOnClickListener {
             startForResult.launch(photoPickerIntent)
         }
+    }
+
+    fun datePicker() {
+        val newCalendar = Calendar.getInstance();
+        DatePickerDialog(requireContext(), datePickerListener, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show()
+    }
+
+
+    private val datePickerListener = DatePickerDialog.OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
+        vm.dataOfBirth.value = "$selectedDay/$selectedMonth/$selectedYear"
     }
 }

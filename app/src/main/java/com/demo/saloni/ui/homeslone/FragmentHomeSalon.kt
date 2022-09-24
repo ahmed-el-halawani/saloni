@@ -75,7 +75,7 @@ class FragmentHomeSalon : BaseFragment() {
 
         initActions()
 
-        vm.getBarbers(vm.salonProfile!!.salonId).asLiveData().observe(viewLifecycleOwner) {
+        vm.getBarbers(vm.salonProfile.salonId).asLiveData().observe(viewLifecycleOwner) {
             hideSubLoading()
             when (it) {
                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()

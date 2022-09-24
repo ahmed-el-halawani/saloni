@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:fontFamily="@font/lato_bold"
-            android:text="( $"
+            android:text="( "
             android:textColor="@color/splash_color"
             android:textSize="16sp" />
 

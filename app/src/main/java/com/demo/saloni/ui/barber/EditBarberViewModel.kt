@@ -27,21 +27,6 @@ class EditBarberViewModel(private val state: SavedStateHandle) : ViewModel() {
         selectedDays.addAll(z.barber.workingDays)
     }
 
-    fun getBarber(barberId: String) = flow<State<Barber>> {
-        emit(State.Loading())
-        try {
-            salonServices.getBarberFlow(barberId).collect {
-                if (it == null)
-                    emit(State.Error("barber not found"))
-                else
-                    emit(State.Success(it))
-            }
-        } catch (e: Throwable) {
-            emit(State.Error(e.message ?: e.localizedMessage))
-        }
-    }
-
-
     fun editBarber(
         barberId: String,
         name: String,

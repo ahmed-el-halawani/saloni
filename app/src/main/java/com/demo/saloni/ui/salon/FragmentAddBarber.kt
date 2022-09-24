@@ -23,6 +23,8 @@ import com.demo.saloni.databinding.*
 import com.demo.saloni.ui.auth.signup.SignUpFragmentDirections
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
+import com.demo.saloni.ui.core.fromMoney
+import com.demo.saloni.ui.core.toMoney
 import com.newcore.easyrecyclergenerator.rvList
 import com.newcore.easyrecyclergenerator.rvSingleList
 import java.io.FileNotFoundException
@@ -45,7 +47,7 @@ class FragmentAddBarber : BaseFragment() {
         ) {
             this.listBuilder { itemServicesBinding, service ->
                 itemServicesBinding.tvServiceTitle.text = service.id.title
-                itemServicesBinding.tvPrice.text = service.price.toString()
+                itemServicesBinding.tvPrice.text = service.price.toMoney()
                 itemServicesBinding.btnRemove.setOnClickListener {
                     vm.selectedServices.remove(service)
                     refreshServiceList()
@@ -135,7 +137,7 @@ class FragmentAddBarber : BaseFragment() {
                 if (it.success()) {
                     val servicesType = ServicesType.values().firstOrNull { it.title == binding.spServices.selectedItem.toString() } ?: throw Exception("type not found")
 
-                    val price = binding.etPrice.text.toString().toDouble()
+                    val price = binding.etPrice.text.toString().fromMoney()
 
                     vm.selectedServices.add(Service(servicesType, price))
 

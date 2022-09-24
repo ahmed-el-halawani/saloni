@@ -1,60 +1,90 @@
 package com.demo.saloni.ui.payment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.demo.saloni.R
+import android.widget.Toast
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.afollestad.vvalidator.form
+import com.demo.saloni.data.remote.entities.Reservation
+import com.demo.saloni.databinding.FragmentPaymentBinding
+import com.demo.saloni.ui.barberpreview.BarberServiceViewModel
+import com.demo.saloni.ui.core.BaseFragment
+import com.demo.saloni.ui.core.toMoney
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FragmentPayment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class FragmentPayment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+class FragmentPayment : BaseFragment() {
+    val binding: FragmentPaymentBinding by lazy {
+        FragmentPaymentBinding.inflate(layoutInflater)
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_payment, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        setBackButton(binding.btnBack)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment FragmentPayment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            FragmentPayment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private val listOfCardNumbers = listOf(
+        Card("4263982640269299", "04", "2023", "123"),
+        Card("6362970000457013", "08", "2023", "345"),
+        Card("5011054488597827", "12", "2023", "567"),
+    )
+
+    val vm: BarberServiceViewModel by viewModels()
+
+    val args: FragmentPaymentArgs by navArgs()
+
+    val reservation: Reservation by lazy {
+        args.reservation
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.tvTotalAmount.text = reservation.services.sumOf { it.price }.toMoney()
+
+        form {
+            input(binding.etCardNumber) {
+                isNotEmpty()
+                length().greaterThan(15).lessThan(21)
+            }
+            input(binding.etPin) {
+                isNotEmpty()
+                this.length().exactly(3)
+            }
+            input(binding.etMonth) {
+                isNotEmpty()
+                this.length().exactly(2)
+            }
+            input(binding.etYear) {
+                isNotEmpty()
+                this.length().exactly(4)
+            }
+
+            submitWith(binding.btnConfirm) {
+                if (it.success()) {
+                    binding.apply {
+                        val card = Card(etCardNumber.text.toString(), etMonth.text.toString(), etYear.text.toString(), etPin.text.toString())
+
+                        if (listOfCardNumbers.contains(card))
+                            vm.addReservation(reservation.barberId, reservation.salonId, reservation.services, reservation.paymentMethod).asLiveData()
+                                .observe(viewLifecycleOwner) {
+                                    Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
+                                    findNavController().navigate(
+                                        FragmentPaymentDirections.actionFragmentPayment2ToPaymentDone()
+                                    )
+                                }
+                        else
+                            Toast.makeText(context, "Your card not supported yet", Toast.LENGTH_SHORT).show()
+                    }
+
                 }
             }
+        }
+
     }
+
+
 }

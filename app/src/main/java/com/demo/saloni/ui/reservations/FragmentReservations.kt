@@ -22,9 +22,7 @@ import com.demo.saloni.databinding.FragmentReservationsBinding
 import com.demo.saloni.databinding.ItemBarberBinding
 import com.demo.saloni.databinding.ItemReservationBinding
 import com.demo.saloni.databinding.ItemServicesBinding
-import com.demo.saloni.ui.core.BaseFragment
-import com.demo.saloni.ui.core.State
-import com.demo.saloni.ui.core.glide
+import com.demo.saloni.ui.core.*
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -46,14 +44,19 @@ class FragmentReservations : BaseFragment() {
 
         rvSingleList(binding.rcReservation, ItemReservationBinding::inflate, emptyList<Reservation>()) {
             listBuilder { itemReservationBinding, reservation ->
-                if (!reservation.client?.image.isNullOrBlank()) {
-                    glide().load(Firebase.storage.reference.child(reservation.client?.image!!)).into(itemReservationBinding.ivUserProfileImage)
-                }
+
                 reservation.apply {
+                    if (!reservation.client?.image.isNullOrBlank()) {
+                        firebaseGlide(reservation.client?.image!!, itemReservationBinding.ivUserProfileImage)
+                    }
+
+                    itemReservationBinding.tvUsername.text = this.client?.name
+                    itemReservationBinding.tvPhoneNumber.text = this.client?.phoneNumber
+
                     val date = Calendar.getInstance().apply {
                         time = reservation.date ?: Date()
                     }
-                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toString()
+                    itemReservationBinding.tvTotalPrice.text = services.sumOf { it.price }.toMoney()
 
                     itemReservationBinding.tvDate.text = dayNumberFormatter.format(date.time)
                     itemReservationBinding.tvTime.text = timeFormatter.format(date.time)
@@ -97,6 +100,8 @@ class FragmentReservations : BaseFragment() {
                             is State.Loading -> showMainLoading()
                             is State.Success -> {
                                 reservationAdapter.setList(it.data!!)
+                                initDays()
+                                initDateView()
                             }
                         }
                     }
@@ -117,6 +122,8 @@ class FragmentReservations : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
         vm.getBarbers(CashedData.salonProfile!!.salonId).asLiveData().observe(viewLifecycleOwner) {
             hideMainLoading()
             when (it) {
@@ -128,5 +135,56 @@ class FragmentReservations : BaseFragment() {
             }
         }
 
+        changeWeek()
+        initDays()
+        initDateView()
+    }
+
+    private fun changeWeek() {
+        binding.apply {
+            btnNextMonth.setOnClickListener {
+                vm.calender.add(Calendar.WEEK_OF_YEAR, 1)
+                initDays()
+            }
+
+            btnPrevMonth.setOnClickListener {
+                vm.calender.add(Calendar.WEEK_OF_YEAR, -1)
+                initDays()
+            }
+
+
+        }
+    }
+
+    fun initDays() {
+        val currentWeek = Calendar.getInstance().get(Calendar.WEEK_OF_YEAR)
+        val currentSelectedWeek = vm.calender.get(Calendar.WEEK_OF_YEAR);
+        binding.tvMonthYear.text =
+            if (currentSelectedWeek == currentWeek)
+                "Current Week"
+            else if (currentSelectedWeek > currentWeek)
+                "Next ${currentSelectedWeek - currentWeek} Week"
+            else
+                "Last ${currentWeek - currentSelectedWeek} Week"
+
+
+        reservationAdapter.filter {
+            val calender = Calendar.getInstance().apply { time = it.date }
+            val resDay = calender.get(Calendar.WEEK_OF_YEAR)
+            initDateView()
+            resDay == currentSelectedWeek
+        }
+    }
+
+    val dayMonthFormatter = SimpleDateFormat("dd MMM")
+
+    fun initDateView() {
+        val selectedTimeView = Calendar.getInstance().apply { time = vm.calender.time }
+        selectedTimeView.set(Calendar.DAY_OF_WEEK, 1)
+        val startDate = selectedTimeView.time
+        selectedTimeView.set(Calendar.DAY_OF_WEEK, 1)
+        val endDate = selectedTimeView.time
+        binding.tvFrom.text = dayMonthFormatter.format(startDate)
+        binding.tvTo.text = dayMonthFormatter.format(endDate)
     }
 }

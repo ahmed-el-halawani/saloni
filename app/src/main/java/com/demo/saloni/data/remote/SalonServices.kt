@@ -22,7 +22,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.tasks.await
 
 class SalonServices {
-    private val barbersFlow = MutableStateFlow(emptyList<Barber>())
+    private val barbersFlow = MutableStateFlow<State<List<Barber>>>(State.Success(emptyList()))
     private val barberFlow = MutableStateFlow<Barber?>(null)
     private val reservationFlow = MutableStateFlow<State<List<Reservation>>>(State.Loading())
     private val reportsFlow = MutableStateFlow<State<List<Reservation>>>(State.Loading())
@@ -110,20 +110,22 @@ class SalonServices {
         return barber;
     }
 
-    fun getBarbers(salonId: String): StateFlow<List<Barber>> {
+    fun getBarbers(salonId: String): StateFlow<State<List<Barber>>> {
+        barbersFlow.value = State.Loading()
+
         Firebase.database.reference.child(barber_child).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                barbersFlow.value = snapshot.children.mapNotNull {
+                barbersFlow.value = State.Success(snapshot.children.mapNotNull {
                     val barber = it.getValue(Barber::class.java)
                     if (barber != null && barber.salonId == salonId)
                         barber
                     else
                         null
-                }
+                })
             }
 
             override fun onCancelled(error: DatabaseError) {
-                throw Exception(error.message)
+                barbersFlow.value = State.Error(error.message)
             }
         })
         return barbersFlow;

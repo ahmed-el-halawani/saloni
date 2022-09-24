@@ -7,10 +7,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
+import com.demo.saloni.MainActivity
 import com.demo.saloni.data.remote.AuthServices
 import com.demo.saloni.databinding.ActivityMainBinding
 import com.demo.saloni.R
@@ -50,27 +52,28 @@ class SplashFragment : BaseFragment() {
                 hideMainLoading()
                 when (it) {
                     is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    is State.Loading -> showMainLoading()
-                    is State.Success -> {
+                    is State.Loading -> (activity as MainActivity).getMainLoading().isVisible = true
 
+                    is State.Success -> {
                         navigateToHome(it.data?.salon ?: false)
                     }
                 }
             }
-        }
+        } else {
 
-        binding.btnLoginAsUser.setOnClickListener {
-            findNavController().navigate(
-                SplashFragmentDirections
-                    .actionSplashFragmentToSignInFragment(false)
-            )
-        }
+            binding.btnLoginAsUser.setOnClickListener {
+                findNavController().navigate(
+                    SplashFragmentDirections
+                        .actionSplashFragmentToSignInFragment(false)
+                )
+            }
 
-        binding.btnLoginAsSalon.setOnClickListener {
-            findNavController().navigate(
-                SplashFragmentDirections
-                    .actionSplashFragmentToSignInFragment(true)
-            )
+            binding.btnLoginAsSalon.setOnClickListener {
+                findNavController().navigate(
+                    SplashFragmentDirections
+                        .actionSplashFragmentToSignInFragment(true)
+                )
+            }
         }
 
 

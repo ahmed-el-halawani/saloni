@@ -8,6 +8,7 @@ import com.demo.saloni.data.remote.entities.Reservation
 import com.demo.saloni.ui.core.State
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.onEach
+import java.util.*
 import java.util.concurrent.Flow
 
 class ReservationSalonViewModel : ViewModel() {
@@ -15,15 +16,10 @@ class ReservationSalonViewModel : ViewModel() {
 
     val salonServices = SalonServices.getInstance()
 
+    val calender = Calendar.getInstance()
 
-    fun getBarbers(salonId: String) = flow {
-        try {
-            emit(State.Loading())
-            salonServices.getBarbers(salonId).collect { emit(State.Success(it)) }
-        } catch (e: Throwable) {
-            emit(State.Error(e.message ?: e.localizedMessage))
-        }
-    }
+
+    fun getBarbers(salonId: String) = salonServices.getBarbers(salonId)
 
     fun getReservations(barberId: String) = salonServices.getReservation(barberId)
     fun getReports(barberId: String) = salonServices.getReports(barberId)

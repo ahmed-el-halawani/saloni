@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.RequestManager
 import com.bumptech.glide.request.RequestOptions
+import com.demo.saloni.MainActivity
 import com.demo.saloni.R
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -18,12 +19,8 @@ import com.google.firebase.storage.ktx.storage
 abstract class BaseFragment : Fragment(), ILoadable by Loadable() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setMainLoaderDialog(ProgressDialog(context).apply {
-            setTitle("please wait")
-        })
-        setSubLoaderDialog(ProgressDialog(context).apply {
-            setTitle("please wait")
-        })
+        setMainLoaderDialog((activity as MainActivity).getMainLoading())
+        setSubLoaderDialog((activity as MainActivity).getMainLoading())
     }
 
     fun setBackButton(view: View) {

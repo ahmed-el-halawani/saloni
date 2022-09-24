@@ -9,13 +9,8 @@ import kotlinx.coroutines.flow.flow
 class SalonPreviewViewModel :ViewModel() {
     val salonServices = SalonServices.getInstance()
 
-    fun getBarbers(salonId:String) = flow {
-        try {
-            emit(State.Loading())
-            salonServices.getBarbers(salonId).collect { emit(State.Success(it)) }
-        } catch (e: Throwable) {
-            emit(State.Error(e.message ?: e.localizedMessage))
-        }
-    }
+    fun getBarbers(salonId:String) =
+            salonServices.getBarbers(salonId)
+
 
 }

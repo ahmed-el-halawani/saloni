@@ -15,13 +15,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.demo.saloni.R
+import com.demo.saloni.data.remote.entities.PaymentMethods
 import com.demo.saloni.databinding.FragmentPaymentBinding
 import com.demo.saloni.databinding.FragmentPaymentDoneBinding
 import com.demo.saloni.databinding.ItemServicesBinding
-import com.demo.saloni.ui.core.BaseFragment
-import com.demo.saloni.ui.core.State
-import com.demo.saloni.ui.core.firebaseGlide
-import com.demo.saloni.ui.core.glide
+import com.demo.saloni.ui.core.*
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.qrcode.QRCodeWriter
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -61,6 +59,11 @@ class PaymentDone : BaseFragment() {
                     val barber = it.data!!
                     binding.tvClientName.text = barber.name
                     binding.tvPhoneNumber.text = barber.phone
+                    if (!barber.image.isNullOrBlank()) {
+                        firebaseGlide(barber.image!!, binding.ivBarberImage2)
+                        firebaseGlide(barber.image!!, binding.ivBarberImage)
+                    }
+                    binding.tvBarberName.text = barber.name
                 }
             }
         }
@@ -117,10 +120,20 @@ class PaymentDone : BaseFragment() {
                         }
                     }
 
-                    binding.tvTotalPrice.text = reservation.services.sumOf { it.price }.toString()
+                    binding.tvTotalPrice.text = reservation.services.sumOf { it.price }.toMoney()
                     binding.tvDate.text = dayNumberFormatter.format(reservation.date ?: Date())
                     binding.tvTime.text = timeFormatter.format(reservation.date ?: Date())
 
+                    when (reservation.paymentMethod) {
+                        PaymentMethods.Cash -> {
+                            binding.paymentContainer.setBackgroundColor(resources.getColor(R.color.white))
+                            binding.tvTotalPrice.setTextColor(resources.getColor(R.color.black))
+                        }
+                        PaymentMethods.Kent -> {
+                            binding.tvCash.isVisible = false
+                            binding.kent.isVisible = true
+                        }
+                    }
                 }
             }
         }

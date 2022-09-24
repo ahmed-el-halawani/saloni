@@ -41,6 +41,7 @@ class PaymentDoneViewModel : ViewModel() {
                         val reservation =
                             snapshot.children.mapNotNull { it.getValue(Reservation::class.java) }.firstOrNull { it.client?.userId == clientProfile?.userId } ?: throw Exception("reservation not found")
                         initBarberData(reservation.barberId)
+                        initSalon(reservation.salonId)
                         reservationFlow!!.value = State.Success(reservation)
                     } catch (e: Exception) {
                         reservationFlow!!.value = State.Error(e.message ?: e.localizedMessage)
@@ -72,7 +73,6 @@ class PaymentDoneViewModel : ViewModel() {
         barber.value = State.Loading()
         try {
             val barberData = salonServices.getBarber(barberId)
-            initSalon(barberData.salonId)
             barber.value = State.Success(barberData)
         } catch (e: Throwable) {
             barber.value = State.Error(e.message ?: e.localizedMessage)

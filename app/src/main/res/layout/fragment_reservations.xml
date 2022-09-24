@@ -94,34 +94,93 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textView2"
-                tools:listitem="@layout/item_barber_reservation" />
+                tools:listitem="@layout/item_barber_reservation" >
+
+            </androidx.recyclerview.widget.RecyclerView>
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_margin="20dp"
                 android:background="@drawable/button_shape_whe"
-                android:visibility="gone"
+                android:padding="10dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/rcBarberList">
 
-                <TextView
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:hint="Select day / Date"
-                    android:padding="10dp"
-                    android:textSize="16sp" />
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                <Spinner
-                    android:id="@+id/spServices"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:gravity="end"
+                    <ImageView
+                        android:id="@+id/btnPrevMonth"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_back_black" />
 
-                    />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="3"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/tvMonthYear"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="20dp"
+                            android:fontFamily="@font/lato_bold"
+                            android:text="current week"
+                            android:textSize="18sp" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/textView4"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="from:  "
+                                android:textAllCaps="true" />
+
+                            <TextView
+                                android:id="@+id/tvFrom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+
+                            <View
+                                android:id="@+id/view7"
+                                android:layout_width="20dp"
+                                android:layout_height="10dp" />
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="to: "
+                                android:textAllCaps="true" />
+
+                            <TextView
+                                android:id="@+id/tvTo"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/btnNextMonth"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_path_1300" />
+
+                </LinearLayout>
+
             </LinearLayout>
 
 
@@ -137,7 +196,9 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
                 tools:itemCount="2"
-                tools:listitem="@layout/item_reservation" />
+                tools:listitem="@layout/item_reservation" >
+
+            </androidx.recyclerview.widget.RecyclerView>
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

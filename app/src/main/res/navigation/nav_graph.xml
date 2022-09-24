@@ -200,6 +200,9 @@
         <action
             android:id="@+id/action_fragmentBarberServices_to_model3dViewer"
             app:destination="@id/model3dViewer" />
+        <action
+            android:id="@+id/action_fragmentBarberServices_to_fragmentPayment2"
+            app:destination="@id/fragmentPayment2" />
     </fragment>
     <fragment
         android:id="@+id/paymentDone"
@@ -242,5 +245,18 @@
         android:id="@+id/fragmentEditProfileClient"
         android:name="com.demo.saloni.ui.clientprofile.FragmentEditProfileClient"
         android:label="FragmentEditProfileClient" />
+    <fragment
+        android:id="@+id/fragmentPayment2"
+        android:name="com.demo.saloni.ui.payment.FragmentPayment"
+        android:label="FragmentPayment" >
+        <action
+            android:id="@+id/action_fragmentPayment2_to_paymentDone"
+            app:destination="@id/paymentDone"
+            app:launchSingleTop="true"
+            app:popUpTo="@id/fragmentHomeClient" />
+        <argument
+            android:name="reservation"
+            app:argType="com.demo.saloni.data.remote.entities.Reservation" />
+    </fragment>
 
 </navigation>

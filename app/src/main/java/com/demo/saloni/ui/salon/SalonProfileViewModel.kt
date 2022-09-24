@@ -2,10 +2,15 @@ package com.demo.saloni.ui.salon
 
 import androidx.lifecycle.ViewModel
 import com.demo.saloni.data.local.CashedData
+import com.demo.saloni.data.remote.entities.SalonProfile
 
-class SalonProfileViewModel :ViewModel() {
+class SalonProfileViewModel : ViewModel() {
 
-    val salonProfile = CashedData.salonProfile;
+    val salonProfile: SalonProfile
+        get() {
+            return CashedData.salonProfile!!
+        }
+
 
 
 }

@@ -1,6 +1,7 @@
 package com.demo.saloni.ui.clientprofile
 
 import android.net.Uri
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.ClientServices
@@ -12,6 +13,7 @@ class ClientProfileViewModel : ViewModel() {
     val profile = CashedData.clientProfile!!
     var imageUri: Uri? = null;
     val clientServices = ClientServices.getInstance()
+    var dataOfBirth = MutableLiveData("")
 
 
     fun editClient(client: ClientProfile) = flow {

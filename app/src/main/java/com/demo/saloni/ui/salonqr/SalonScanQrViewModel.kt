@@ -21,19 +21,14 @@ class SalonScanQrViewModel : ViewModel() {
     var barber: MutableStateFlow<State<Barber>> = MutableStateFlow(State.Loading())
     var salon: MutableStateFlow<State<SalonProfile>> = MutableStateFlow(State.Loading())
 
-    fun getBarbers(salonId: String) = flow {
-        try {
-            emit(State.Loading())
-            salonServices.getBarbers(salonId).collect { emit(State.Success(it)) }
-        } catch (e: Throwable) {
-            emit(State.Error(e.message ?: e.localizedMessage))
-        }
-    }
+    fun getBarbers(salonId: String) = salonServices.getBarbers(salonId)
 
     fun getReservations(barberId: String) = viewModelScope.launch {
         try {
             val reservation = salonServices.readQr(barberId, salonProfile!!.salonId)
             reservationState.value = State.Success(reservation)
+            initSalon(reservation.salonId)
+            initBarberData(reservation.barberId)
         } catch (e: Exception) {
             reservationState.value = State.Error(e.message ?: e.localizedMessage)
         }

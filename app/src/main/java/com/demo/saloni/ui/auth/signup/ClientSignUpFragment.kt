@@ -1,15 +1,20 @@
 package com.demo.saloni.ui.auth.signup
 
 import android.app.Activity
+import android.app.DatePickerDialog
+import android.app.DatePickerDialog.OnDateSetListener
+import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.DatePicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.navigation.fragment.findNavController
@@ -18,6 +23,8 @@ import com.demo.saloni.databinding.FragmentClientSignUpBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
 import java.io.FileNotFoundException
+import java.util.*
+
 
 class ClientSignUpFragment : BaseFragment() {
     private val TAG = "ClientSignUpFragment"
@@ -25,7 +32,6 @@ class ClientSignUpFragment : BaseFragment() {
     private val vm: SignUpViewModel by viewModels()
     private lateinit var binding: FragmentClientSignUpBinding
     private lateinit var startForResult: ActivityResultLauncher<Intent>;
-
 
 
     override fun onCreateView(
@@ -65,6 +71,9 @@ class ClientSignUpFragment : BaseFragment() {
 
 
     private fun initForm() {
+        vm.dataOfBirth.observe(viewLifecycleOwner) {
+            binding.etDateOfBirth.setText(it)
+        }
         form {
             input(binding.etEmail) {
                 isNotEmpty()
@@ -105,16 +114,16 @@ class ClientSignUpFragment : BaseFragment() {
                         binding.etEmail.text.toString(),
                         binding.etPassword.text.toString(),
                     ).asLiveData().observe(viewLifecycleOwner) {
-                            hideMainLoading()
-                            when (it) {
-                                is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
-                                is State.Loading -> showMainLoading()
-                                is State.Success ->
-                                    findNavController().navigate(
-                                        SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(false)
-                                    )
-                            }
+                        hideMainLoading()
+                        when (it) {
+                            is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
+                            is State.Loading -> showMainLoading()
+                            is State.Success ->
+                                findNavController().navigate(
+                                    SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(false)
+                                )
                         }
+                    }
                 }
             }
         }
@@ -126,6 +135,9 @@ class ClientSignUpFragment : BaseFragment() {
                 SignUpFragmentDirections.actionSignUpFragmentToSignInFragment(false)
             )
         }
+        binding.etDateOfBirth.setOnClickListener {
+            datePicker()
+        }
     }
 
     private fun initProfileImage() {
@@ -136,4 +148,14 @@ class ClientSignUpFragment : BaseFragment() {
         }
     }
 
+    fun datePicker() {
+        val newCalendar = Calendar.getInstance();
+        DatePickerDialog(requireContext(), datePickerListener, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH)).show()
+    }
+
+
+    private val datePickerListener = OnDateSetListener { view, selectedYear, selectedMonth, selectedDay ->
+        vm.dataOfBirth.value = "$selectedDay/$selectedMonth/$selectedYear"
+    }
 }
+

@@ -30,6 +30,7 @@ import com.demo.saloni.databinding.ItemTimeBinding
 import com.demo.saloni.ui.core.BaseFragment
 import com.demo.saloni.ui.core.State
 import com.demo.saloni.ui.core.glide
+import com.demo.saloni.ui.core.toMoney
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvList
@@ -220,34 +221,38 @@ class FragmentBarberServices : BaseFragment() {
             tvSalonName.text = salon.name
             tvPhone.text = barber.phone
 
-            cvHairCut.visibility = View.INVISIBLE
-            cvBeardCut.visibility = View.INVISIBLE
-            cvCleaning.visibility = View.INVISIBLE
-            cvColoring.visibility = View.INVISIBLE
+
+
+
+
+            cvHairCut.visibility = View.GONE
+            cvBeardCut.visibility = View.GONE
+            cvCleaning.visibility = View.GONE
+            cvColoring.visibility = View.GONE
 
             barber.services.forEach {
                 when (it.id) {
                     ServicesType.Null -> {}
                     ServicesType.HairCut -> {
                         cvHairCut.isVisible = true
-                        tvHairCutPrice.text = it.price.toString()
+                        tvHairCutPrice.text = it.price.toMoney()
                         cvHairCut.tag = it
                     }
                     ServicesType.BeardCut -> {
                         cvBeardCut.isVisible = true
-                        tvBeardCutPrice.text = it.price.toString()
+                        tvBeardCutPrice.text = it.price.toMoney()
                         cvBeardCut.tag = it
 
                     }
                     ServicesType.Cleaning -> {
                         cvCleaning.isVisible = true
-                        tvCleaningPrice.text = it.price.toString()
+                        tvCleaningPrice.text = it.price.toMoney()
                         cvCleaning.tag = it
 
                     }
                     ServicesType.Coloring -> {
                         cvColoring.isVisible = true
-                        tvColoringPrice.text = it.price.toString()
+                        tvColoringPrice.text = it.price.toMoney()
                         cvColoring.tag = it
 
                     }
@@ -293,13 +298,22 @@ class FragmentBarberServices : BaseFragment() {
                     Toast.makeText(context, "you must select time", Toast.LENGTH_SHORT).show()
                 } else {
 
-
-                    vm.addReservation(args.barber.barberId, salon.salonId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData().observe(viewLifecycleOwner) {
-                        Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
+                    if (vm.isCash)
+                        vm.addReservation(args.barber.barberId, salon.salonId, vm.selectedServices, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent).asLiveData()
+                            .observe(viewLifecycleOwner) {
+                                Toast.makeText(context, "do reservation", Toast.LENGTH_SHORT).show()
+                                findNavController().navigate(
+                                    FragmentBarberServicesDirections.actionFragmentBarberServicesToPaymentDone()
+                                )
+                            }
+                    else
                         findNavController().navigate(
-                            FragmentBarberServicesDirections.actionFragmentBarberServicesToPaymentDone()
+                            FragmentBarberServicesDirections.actionFragmentBarberServicesToFragmentPayment2(
+                                Reservation(
+                                    args.barber.barberId, salon.salonId, vm.selectedServices, vm.date.time, if (vm.isCash) PaymentMethods.Cash else PaymentMethods.Kent
+                                )
+                            )
                         )
-                    }
                 }
             }
 
