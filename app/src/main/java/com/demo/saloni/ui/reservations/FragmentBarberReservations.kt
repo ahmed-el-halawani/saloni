@@ -96,6 +96,8 @@ class FragmentBarberReservations : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.rcBarberList.isVisible = false
         binding.textView2.isVisible = false
+        binding.linearLayout2.isVisible = false
+
         vm.getReservations(args.barberId).asLiveData().observe(viewLifecycleOwner) {
             hideMainLoading()
             when (it) {

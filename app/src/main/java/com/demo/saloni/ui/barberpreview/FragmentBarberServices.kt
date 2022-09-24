@@ -230,6 +230,8 @@ class FragmentBarberServices : BaseFragment() {
             cvCleaning.visibility = View.GONE
             cvColoring.visibility = View.GONE
 
+
+
             barber.services.forEach {
                 when (it.id) {
                     ServicesType.Null -> {}
@@ -258,6 +260,18 @@ class FragmentBarberServices : BaseFragment() {
                     }
                 }
             }
+
+
+            if (cvHairCut.visibility == View.GONE)
+                servicesGrid.removeView(cvHairCut)
+            if (cvBeardCut.visibility == View.GONE)
+                servicesGrid.removeView(cvBeardCut)
+            if (cvCleaning.visibility == View.GONE)
+                servicesGrid.removeView(cvCleaning)
+            if (cvColoring.visibility == View.GONE)
+                servicesGrid.removeView(cvColoring)
+
+
         }
     }
 

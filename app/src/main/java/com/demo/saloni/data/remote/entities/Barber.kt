@@ -15,7 +15,7 @@ data class Barber(
     var shiftStartIn: ShiftTime? = ShiftTime(),
     var shiftEntIn: ShiftTime? = ShiftTime(),
     val model3DFirstStyle: Model3D? = Model3D("https://sketchfab.com/models/0e85a8381b6642b5b2426b7a9585f3c4/embed?autostart=1", ""),
-    val model3DSecondStyle: Model3D? = Model3D("https://sketchfab.com/models/0e85a8381b6642b5b2426b7a9585f3c4/embed?autostart=1", ""),
+    val model3DSecondStyle: Model3D? = Model3D("https://sketchfab.com/models/ada7267d94d641b092382825b3c0ac85/embed?autostart=1", ""),
 ) : Serializable {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

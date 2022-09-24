@@ -27,7 +27,7 @@ class SalonSignUpFragment : BaseFragment() {
     private val TAG = "SalonSignUpFragment"
 
     private val vm: SignUpViewModel by viewModels()
-    private lateinit var startForResult:ActivityResultLauncher<Intent>;
+    private lateinit var startForResult: ActivityResultLauncher<Intent>;
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,25 +36,25 @@ class SalonSignUpFragment : BaseFragment() {
         binding = FragmentSalonSignUpBinding.inflate(inflater, container, false);
 
         startForResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-                if (it.resultCode == RESULT_OK) {
-                    try {
-                        imageUri = it.data?.data
-                        Log.e(TAG, "image.lastPathSegment: "+imageUri?.lastPathSegment, )
-                        binding.ivProfileImage.setImageURI(imageUri)
-                    } catch (e: FileNotFoundException) {
-                        e.printStackTrace()
-                        Toast.makeText(
-                            requireContext(),
-                            "Something went wrong",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                } else {
-                    Log.e(TAG, "Something went wrong: resultCode: " + it.resultCode)
-                    Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_LONG)
-                        .show()
+            if (it.resultCode == RESULT_OK) {
+                try {
+                    imageUri = it.data?.data
+                    Log.e(TAG, "image.lastPathSegment: " + imageUri?.lastPathSegment)
+                    binding.ivProfileImage.setImageURI(imageUri)
+                } catch (e: FileNotFoundException) {
+                    e.printStackTrace()
+                    Toast.makeText(
+                        requireContext(),
+                        "Something went wrong",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
+            } else {
+                Log.e(TAG, "Something went wrong: resultCode: " + it.resultCode)
+                Toast.makeText(requireContext(), "Something went wrong", Toast.LENGTH_LONG)
+                    .show()
             }
+        }
         return binding.root
     }
 
@@ -99,9 +99,9 @@ class SalonSignUpFragment : BaseFragment() {
                         binding.etEmail.text.toString(),
                         binding.etAddress.text.toString(),
                         binding.etPassword.text.toString(),
-                        "facebook",
-                        "insta",
-                        "twitter"
+                        binding.etFacebook.text.toString(),
+                        binding.etInsta.text.toString(),
+                        binding.etTwitter.text.toString()
                     )
                         .asLiveData().observe(viewLifecycleOwner) {
                             hideMainLoading()
@@ -134,7 +134,6 @@ class SalonSignUpFragment : BaseFragment() {
             startForResult.launch(photoPickerIntent)
         }
     }
-
 
 
 }

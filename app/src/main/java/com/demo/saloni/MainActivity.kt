@@ -6,6 +6,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.fragment.NavHostFragment
+import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.databinding.ActivityMainBinding
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -22,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         super.onCreate(savedInstanceState)
+        CashedData.app = this.application
         setContentView(binding.root)
 
         Firebase.database.reference.child("isWorking").addValueEventListener(object : ValueEventListener {

@@ -20,6 +20,7 @@ import com.demo.saloni.data.remote.entities.Service
 import com.demo.saloni.databinding.*
 import com.demo.saloni.ui.core.*
 import com.demo.saloni.ui.reservations.ReservationSalonViewModel
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -40,9 +41,16 @@ class FragmentReport : BaseFragment() {
         FragmentReportBinding.inflate(layoutInflater)
     }
 
+    val snackbar: Snackbar by lazy {
+        Snackbar.make(requireView(), "No complete reservations for this week", Snackbar.LENGTH_LONG)
+    }
+    val snackbar2: Snackbar by lazy {
+        Snackbar.make(requireView(), "No complete reservations yet", Snackbar.LENGTH_LONG)
+    }
+
+    var isSelectedBarber = false
+
     val reservationAdapter by lazy {
-
-
         rvSingleList(binding.rcReservation, ItemReservationBinding::inflate, emptyList<Reservation>()) {
             listBuilder { itemReservationBinding, reservation ->
 
@@ -93,17 +101,22 @@ class FragmentReport : BaseFragment() {
                     ).into(itemBarberBinding.ivBarberImage)
 
                 itemBarberBinding.container.setOnClickListener {
-
+                    binding.textView14.isVisible = true
                     vm.getReports(barber.barberId).asLiveData().observe(viewLifecycleOwner) {
                         hideMainLoading()
                         when (it) {
                             is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             is State.Loading -> showMainLoading()
                             is State.Success -> {
-                                reservationAdapter.setList(it.data!!)
-                                binding.tvTotalReport.text = it.data.sumOf { it.services.sumOf { it.price } }.toMoney()
-                                initDays()
-                                initDateView()
+                                if (it.data!!.isEmpty()) {
+                                    hidAllSnacks()
+                                    snackbar2.show()
+                                } else {
+                                    reservationAdapter.setList(it.data)
+                                    binding.tvTotalReport.text = it.data.sumOf { it.services.sumOf { it.price } }.toMoney()
+                                    initDays()
+                                    initDateView()
+                                }
                             }
                         }
                     }
@@ -130,6 +143,7 @@ class FragmentReport : BaseFragment() {
                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 is State.Loading -> showMainLoading()
                 is State.Success -> {
+                    isSelectedBarber = true
                     barbersAdapter.setList(it.data!!)
                 }
             }
@@ -142,6 +156,7 @@ class FragmentReport : BaseFragment() {
 
 
     private fun changeWeek() {
+        hidAllSnacks()
         binding.apply {
             btnNextMonth.setOnClickListener {
                 vm.calender.add(Calendar.WEEK_OF_YEAR, 1)
@@ -174,7 +189,20 @@ class FragmentReport : BaseFragment() {
             val resDay = calender.get(Calendar.WEEK_OF_YEAR)
             initDateView()
             resDay == currentSelectedWeek
+        }.also {
+            if (it.isEmpty() && isSelectedBarber) {
+                hidAllSnacks()
+                snackbar.show()
+//                Toast.makeText(context, "No complete reservations for this week", Toast.LENGTH_SHORT).show()
+            }
         }.sumOf { it.services.sumOf { it.price } }.toMoney()
+    }
+
+    fun hidAllSnacks() {
+        if (snackbar.isShown)
+            snackbar.dismiss()
+        if (snackbar2.isShown)
+            snackbar2.dismiss()
     }
 
     fun initDateView() {
@@ -185,5 +213,10 @@ class FragmentReport : BaseFragment() {
         val endDate = selectedTimeView.time
         binding.tvFrom.text = dayMonthFormatter.format(startDate)
         binding.tvTo.text = dayMonthFormatter.format(endDate)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        hidAllSnacks()
     }
 }

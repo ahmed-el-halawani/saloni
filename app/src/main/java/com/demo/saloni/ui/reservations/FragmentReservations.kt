@@ -2,7 +2,6 @@ package com.demo.saloni.ui.reservations
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.demo.saloni.R
 import com.demo.saloni.data.local.CashedData
 import com.demo.saloni.data.remote.entities.Barber
@@ -23,6 +21,7 @@ import com.demo.saloni.databinding.ItemBarberBinding
 import com.demo.saloni.databinding.ItemReservationBinding
 import com.demo.saloni.databinding.ItemServicesBinding
 import com.demo.saloni.ui.core.*
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.newcore.easyrecyclergenerator.rvSingleList
@@ -37,6 +36,11 @@ class FragmentReservations : BaseFragment() {
     val binding: FragmentReservationsBinding by lazy {
         FragmentReservationsBinding.inflate(layoutInflater)
     }
+
+    val snackbar: Snackbar by lazy { Snackbar.make(requireView(), "No holding reservations for this week", Snackbar.LENGTH_LONG) }
+    val snackbar2: Snackbar by lazy { Snackbar.make(requireView(), "No holding reservation yet", Snackbar.LENGTH_LONG) }
+
+    var isSelectedBarber = false;
 
     val reservationAdapter by lazy {
         val dayNumberFormatter = SimpleDateFormat("dd MMMM,yyyy")
@@ -99,9 +103,15 @@ class FragmentReservations : BaseFragment() {
                             is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                             is State.Loading -> showMainLoading()
                             is State.Success -> {
-                                reservationAdapter.setList(it.data!!)
-                                initDays()
-                                initDateView()
+                                if (it.data!!.isEmpty()) {
+                                    hidAllSnacks()
+                                    snackbar2.show()
+//                                    Toast.makeText(context, "No holding reservation yet", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    reservationAdapter.setList(it.data)
+                                    initDays()
+                                    initDateView()
+                                }
                             }
                         }
                     }
@@ -130,6 +140,7 @@ class FragmentReservations : BaseFragment() {
                 is State.Error -> Toast.makeText(context, it.message, Toast.LENGTH_SHORT).show()
                 is State.Loading -> showMainLoading()
                 is State.Success -> {
+                    isSelectedBarber = true
                     barbersAdapter.setList(it.data!!)
                 }
             }
@@ -141,6 +152,8 @@ class FragmentReservations : BaseFragment() {
     }
 
     private fun changeWeek() {
+        hidAllSnacks()
+
         binding.apply {
             btnNextMonth.setOnClickListener {
                 vm.calender.add(Calendar.WEEK_OF_YEAR, 1)
@@ -173,6 +186,12 @@ class FragmentReservations : BaseFragment() {
             val resDay = calender.get(Calendar.WEEK_OF_YEAR)
             initDateView()
             resDay == currentSelectedWeek
+        }.also {
+            if (it.isEmpty() && isSelectedBarber) {
+                hidAllSnacks()
+                snackbar.show()
+//                Toast.makeText(context, "No holding reservations for this week", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -186,5 +205,18 @@ class FragmentReservations : BaseFragment() {
         val endDate = selectedTimeView.time
         binding.tvFrom.text = dayMonthFormatter.format(startDate)
         binding.tvTo.text = dayMonthFormatter.format(endDate)
+    }
+
+    fun hidAllSnacks() {
+        if (snackbar.isShown)
+            snackbar.dismiss()
+        if (snackbar2.isShown)
+            snackbar2.dismiss()
+
+    }
+
+    override fun onStop() {
+        super.onStop()
+        hidAllSnacks()
     }
 }

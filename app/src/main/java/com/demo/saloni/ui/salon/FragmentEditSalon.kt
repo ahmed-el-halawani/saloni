@@ -110,7 +110,7 @@ class FragmentEditSalon : BaseFragment() {
                             name = binding.etSalonName.text.toString()
                             phoneNumber = binding.etMobileNumber.text.toString()
                             address = binding.etAddress.text.toString()
-                            facebook = binding.etAddress.text.toString()
+                            facebook = binding.etFacebook.text.toString()
                             instagram = binding.etInsta.text.toString()
                             twitter = binding.etTwitter.text.toString()
                         }

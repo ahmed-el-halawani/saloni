@@ -35,8 +35,6 @@ class SignInFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        test();
-
         form {
             input(binding.etEmail) {
                 isNotEmpty()
@@ -54,12 +52,12 @@ class SignInFragment : BaseFragment() {
 
 
         binding.btnSignUp.setOnClickListener {
-            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment())
+            findNavController().navigate(SignInFragmentDirections.actionSignInFragmentToSignUpFragment(args.isSalon))
         }
     }
 
-    private fun login(user:String,password:String) {
-        vm.signIn(user,password).asLiveData().observe(viewLifecycleOwner) {
+    private fun login(user: String, password: String) {
+        vm.signIn(user, password).asLiveData().observe(viewLifecycleOwner) {
             hideMainLoading()
             when (it) {
                 is State.Error -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
@@ -76,21 +74,20 @@ class SignInFragment : BaseFragment() {
         )
     }
 
-    fun test(){
-        binding.apply {
-
-            btnClient.setOnClickListener {
-                binding.etEmail.setText("client@gmail.com")
-                binding.etPassword.setText("12345678")
-            }
-
-            btnSalon.setOnClickListener {
-                binding.etEmail.setText("user@gmail.com")
-                binding.etPassword.setText("12345678")
-            }
-        }
-    }
-
+//    fun test(){
+//        binding.apply {
+//
+//            btnClient.setOnClickListener {
+//                binding.etEmail.setText("client@gmail.com")
+//                binding.etPassword.setText("12345678")
+//            }
+//
+//            btnSalon.setOnClickListener {
+//                binding.etEmail.setText("user@gmail.com")
+//                binding.etPassword.setText("12345678")
+//            }
+//        }
+//    }
 
 
 }

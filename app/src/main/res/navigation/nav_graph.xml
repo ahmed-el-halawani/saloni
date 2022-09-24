@@ -74,6 +74,9 @@
             app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isSalon"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/fragmentHomeSalon"

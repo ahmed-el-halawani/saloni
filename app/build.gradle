@@ -19,27 +19,30 @@ android {
     }
 
     buildTypes {
+
         release {
             minifyEnabled true
             shrinkResources true
-
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
 
         debug {
             minifyEnabled true
             shrinkResources true
-
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
+
     buildFeatures {
         viewBinding true
     }
@@ -99,6 +102,8 @@ dependencies {
     implementation 'nl.bryanderidder:themed-toggle-button-group:1.4.1'
 
     implementation 'com.github.yuriy-budiyev:code-scanner:2.3.2'
+    implementation 'com.google.code.gson:gson:2.9.1'
+
 
 
 

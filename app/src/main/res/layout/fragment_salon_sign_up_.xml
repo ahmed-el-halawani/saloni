@@ -122,6 +122,7 @@
                 android:background="@color/light_gray_color" />
 
             <EditText
+                android:id="@+id/etFacebook"
                 style="@style/edit_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -134,6 +135,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/etInsta"
                 style="@style/edit_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -147,6 +149,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/etTwitter"
                 style="@style/edit_text_style"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
