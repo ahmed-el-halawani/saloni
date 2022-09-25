@@ -7,7 +7,7 @@
     app:startDestination="@id/splashFragment">
     <fragment
         android:id="@+id/splashFragment"
-        android:name="com.demo.saloni.ui.auth.splash.SplashFragment"
+        android:name="com.demo.barber.ui.auth.splash.SplashFragment"
         android:label="fragment_splash"
         tools:layout="@layout/fragment_splash">
         <action
@@ -37,7 +37,7 @@
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.demo.saloni.ui.auth.signin.SignInFragment"
+        android:name="com.demo.barber.ui.auth.signin.SignInFragment"
         android:label="fragment_sign_up"
         tools:layout="@layout/fragment_sign_in">
         <argument
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.demo.saloni.ui.auth.signup.SignUpFragment"
+        android:name="com.demo.barber.ui.auth.signup.SignUpFragment"
         android:label="SignUpFragment">
         <action
             android:id="@+id/action_signUpFragment_to_signInFragment"
@@ -80,7 +80,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentHomeSalon"
-        android:name="com.demo.saloni.ui.homeslone.FragmentHomeSalon"
+        android:name="com.demo.barber.ui.homeslone.FragmentHomeSalon"
         android:label="FragmentHomeSalon">
         <action
             android:id="@+id/action_fragmentHomeSalon_to_fragmentAddBarber"
@@ -103,16 +103,16 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentAddBarber"
-        android:name="com.demo.saloni.ui.salon.FragmentAddBarber"
+        android:name="com.demo.barber.ui.salon.FragmentAddBarber"
         android:label="fragment_add_barber"
         tools:layout="@layout/fragment_add_barber" />
     <fragment
         android:id="@+id/fragmentEditSalon"
-        android:name="com.demo.saloni.ui.salon.FragmentEditSalon"
+        android:name="com.demo.barber.ui.salon.FragmentEditSalon"
         android:label="FragmentEditSalon" />
     <fragment
         android:id="@+id/fragmentSalonProfile2"
-        android:name="com.demo.saloni.ui.salon.FragmentSalonProfile"
+        android:name="com.demo.barber.ui.salon.FragmentSalonProfile"
         android:label="FragmentSalonProfile">
         <action
             android:id="@+id/action_fragmentSalonProfile2_to_fragmentEditSalon"
@@ -125,16 +125,16 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentReservations"
-        android:name="com.demo.saloni.ui.reservations.FragmentReservations"
+        android:name="com.demo.barber.ui.reservations.FragmentReservations"
         android:label="fragment_reservations"
         tools:layout="@layout/fragment_reservations" />
     <fragment
         android:id="@+id/fragmentReport"
-        android:name="com.demo.saloni.ui.report.FragmentReport"
+        android:name="com.demo.barber.ui.report.FragmentReport"
         android:label="FragmentReport" />
     <fragment
         android:id="@+id/fragmentHomeClient"
-        android:name="com.demo.saloni.ui.homeclient.FragmentHomeClient"
+        android:name="com.demo.barber.ui.homeclient.FragmentHomeClient"
         android:label="fragment_home_client"
         tools:layout="@layout/fragment_home_client" >
         <action
@@ -154,7 +154,7 @@
     </fragment>
     <fragment
         android:id="@+id/barberProfile"
-        android:name="com.demo.saloni.ui.barber.BarberProfile"
+        android:name="com.demo.barber.ui.barber.BarberProfile"
         android:label="BarberProfile" >
         <action
             android:id="@+id/action_barberProfile_to_editBarberProfile"
@@ -168,33 +168,33 @@
     </fragment>
     <fragment
         android:id="@+id/editBarberProfile"
-        android:name="com.demo.saloni.ui.barber.EditBarberProfile"
+        android:name="com.demo.barber.ui.barber.EditBarberProfile"
         android:label="EditBarberProfile" >
         <argument
             android:name="barber"
-            app:argType="com.demo.saloni.data.remote.entities.Barber" />
+            app:argType="com.demo.barber.data.remote.entities.Barber" />
     </fragment>
     <fragment
         android:id="@+id/salonPreview"
-        android:name="com.demo.saloni.ui.salonpreview.SalonPreview"
+        android:name="com.demo.barber.ui.salonpreview.SalonPreview"
         android:label="SalonPreview" >
         <argument
             android:name="salon"
-            app:argType="com.demo.saloni.data.remote.entities.SalonProfile" />
+            app:argType="com.demo.barber.data.remote.entities.SalonProfile" />
         <action
             android:id="@+id/action_salonPreview_to_fragmentBarberServices"
             app:destination="@id/fragmentBarberServices" />
     </fragment>
     <fragment
         android:id="@+id/fragmentBarberServices"
-        android:name="com.demo.saloni.ui.barberpreview.FragmentBarberServices"
+        android:name="com.demo.barber.ui.barberpreview.FragmentBarberServices"
         android:label="FragmentBarberServices" >
         <argument
             android:name="barber"
-            app:argType="com.demo.saloni.data.remote.entities.Barber" />
+            app:argType="com.demo.barber.data.remote.entities.Barber" />
         <argument
             android:name="salon"
-            app:argType="com.demo.saloni.data.remote.entities.SalonProfile" />
+            app:argType="com.demo.barber.data.remote.entities.SalonProfile" />
         <action
             android:id="@+id/action_fragmentBarberServices_to_paymentDone"
             app:destination="@id/paymentDone"
@@ -209,15 +209,15 @@
     </fragment>
     <fragment
         android:id="@+id/paymentDone"
-        android:name="com.demo.saloni.ui.payment.PaymentDone"
+        android:name="com.demo.barber.ui.payment.PaymentDone"
         android:label="PaymentDone" />
     <fragment
         android:id="@+id/fragmentSalonScanQr"
-        android:name="com.demo.saloni.ui.salonqr.FragmentSalonScanQr"
+        android:name="com.demo.barber.ui.salonqr.FragmentSalonScanQr"
         android:label="FragmentSalonScanQr" />
     <fragment
         android:id="@+id/model3dViewer"
-        android:name="com.demo.saloni.ui.model3dviewer.Model3dViewer"
+        android:name="com.demo.barber.ui.model3dviewer.Model3dViewer"
         android:label="Model3dViewer" >
         <argument
             android:name="link"
@@ -225,7 +225,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentBarberReservations"
-        android:name="com.demo.saloni.ui.reservations.FragmentBarberReservations"
+        android:name="com.demo.barber.ui.reservations.FragmentBarberReservations"
         android:label="FragmentBarberReservations" >
         <argument
             android:name="barberId"
@@ -233,7 +233,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentClientProfile"
-        android:name="com.demo.saloni.ui.clientprofile.FragmentClientProfile"
+        android:name="com.demo.barber.ui.clientprofile.FragmentClientProfile"
         android:label="FragmentClientProfile" >
         <action
             android:id="@+id/action_fragmentClientProfile_to_fragmentEditProfileClient"
@@ -246,11 +246,11 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentEditProfileClient"
-        android:name="com.demo.saloni.ui.clientprofile.FragmentEditProfileClient"
+        android:name="com.demo.barber.ui.clientprofile.FragmentEditProfileClient"
         android:label="FragmentEditProfileClient" />
     <fragment
         android:id="@+id/fragmentPayment2"
-        android:name="com.demo.saloni.ui.payment.FragmentPayment"
+        android:name="com.demo.barber.ui.payment.FragmentPayment"
         android:label="FragmentPayment" >
         <action
             android:id="@+id/action_fragmentPayment2_to_paymentDone"
@@ -259,7 +259,7 @@
             app:popUpTo="@id/fragmentHomeClient" />
         <argument
             android:name="reservation"
-            app:argType="com.demo.saloni.data.remote.entities.Reservation" />
+            app:argType="com.demo.barber.data.remote.entities.Reservation" />
     </fragment>
 
 </navigation>

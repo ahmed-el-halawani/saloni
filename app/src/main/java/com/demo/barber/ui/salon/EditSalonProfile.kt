@@ -1,0 +1,23 @@
+package com.demo.barber.ui.salon
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import com.demo.barber.databinding.FragmentSalonProfileBinding
+import com.demo.barber.ui.core.BaseFragment
+
+//////
+class EditSalonProfile : BaseFragment() {
+
+    val binding by lazy {
+        FragmentSalonProfileBinding.inflate(layoutInflater)
+    }
+    val vm: SalonProfileViewModel by viewModels()
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        setBackButton(binding.btnBack)
+        return binding.root
+    }
+}
