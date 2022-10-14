@@ -23,20 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         CashedData.app = this.application
         setContentView(binding.root)
-
-        Firebase.database.reference.child("isWorking").addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val isWorking = snapshot.getValue(Boolean::class.java)
-                if (isWorking != null && !isWorking) {
-                    finish()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-            }
-
-        })
-
     }
 
     fun getMainLoading(): View {

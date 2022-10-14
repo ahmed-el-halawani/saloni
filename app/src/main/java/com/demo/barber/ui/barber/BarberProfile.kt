@@ -111,46 +111,6 @@ class BarberProfile : BaseFragment() {
                         if (cvColoring.visibility != View.GONE)
                             binding.servicesGrid.addView(cvColoring)
                     }
-//
-//                    cvHairCut.visibility = View.GONE
-//                    cvBeardCut.visibility = View.GONE
-//                    cvCleaning.visibility = View.GONE
-//                    cvColoring.visibility = View.GONE
-//
-//                    barber.services.forEach {
-//                        when (it.id) {
-//                            ServicesType.Null -> {}
-//                            ServicesType.HairCut -> {
-//                                cvHairCut.isVisible = true
-//                                tvHairCutPrice.text = it.price.toMoney()
-//                            }
-//                            ServicesType.BeardCut -> {
-//                                cvBeardCut.isVisible = true
-//                                tvBeardCutPrice.text = it.price.toMoney()
-//
-//                            }
-//                            ServicesType.Cleaning -> {
-//                                cvCleaning.isVisible = true
-//                                tvCleaningPrice.text = it.price.toMoney()
-//
-//                            }
-//                            ServicesType.Coloring -> {
-//                                cvColoring.isVisible = true
-//                                tvColoringPrice.text = it.price.toMoney()
-//
-//                            }
-//                        }
-//                    }
-//
-//
-//                    if (cvHairCut.visibility == View.GONE)
-//                        servicesGrid.removeView(cvHairCut)
-//                    if (cvBeardCut.visibility == View.GONE)
-//                        servicesGrid.removeView(cvBeardCut)
-//                    if (cvCleaning.visibility == View.GONE)
-//                        servicesGrid.removeView(cvCleaning)
-//                    if (cvColoring.visibility == View.GONE)
-//                        servicesGrid.removeView(cvColoring)
                 }
             }
         }
